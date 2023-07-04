@@ -233,7 +233,7 @@ def end2end_alphaPowerandiAPF(varargs):
 if __name__ == "__main__":
     varargs = {}
 
-    main_dir = '/data/zhanglab/ggreiner/MENTAL/TDBRAIN'
+    main_dir = '/data/zhanglab/ggreiner/MENTAL/TDBRAIN/'
 
     varargs[      'sourcepath'] =  main_dir + 'derivatives'
     print('Reading data from: '+ varargs['sourcepath'])
