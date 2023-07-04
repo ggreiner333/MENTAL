@@ -106,7 +106,7 @@ def end2end_alphaPowerandiAPF(varargs):
             output['age'].append(np.nan)
             output['sex'].append(np.nan)
         s = s+1
-    output['freqs'] = computeFFT(chandata)[1]
+        output['freqs'] = computeFFT(chandata)[1]
     df = pd.DataFrame(missingsession)
     df.to_csv(varargs['resultspath']+'missingsessionsinpo.csv', sep=',')
     with open (varargs['resultspath'] + '/outputAlphaPower.npy', 'wb') as saveoutput:  # Overwrites any existing file.
