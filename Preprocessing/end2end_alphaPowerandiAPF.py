@@ -51,7 +51,7 @@ def end2end_alphaPowerandiAPF(varargs):
     1rst: Preprocessing using defaults
     }"""
 
-    #autopreprocess_standard(varargs)
+    autopreprocess_standard(varargs)
 
     """{
     2nd: segmentation and frequency analysis
