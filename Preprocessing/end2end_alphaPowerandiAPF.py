@@ -66,7 +66,7 @@ def end2end_alphaPowerandiAPF(varargs):
     if not 'participantspath' in varargs:
         raise ValueError('participantspath not defined')
 
-    tsvdat = pd.read_csv(varargs['participantspath']+'/participants.tsv',sep = '\t')
+    tsvdat = pd.read_csv(varargs['participantspath']+'/participants.csv')
 
     """ compute powerspectrum and make dictionary with results that will be saved in varrags['resultspath']"""
     def computeFFT(data, Fs=500):
@@ -232,19 +232,23 @@ def end2end_alphaPowerandiAPF(varargs):
 
 if __name__ == "__main__":
     varargs = {}
-    varargs['sourcepath'] = sys.argv[1]+ 'derivatives/'
-    print('Reading data from: '+ str(sys.argv[1]) + 'derivatives/')
-    varargs['participantspath'] = sys.argv[1]
-    print('Reading data from: '+ str(sys.argv[1]))
 
-    varargs['preprocpath'] = varargs['sourcepath']+'preprocessed'
+    main_dir = 'C:/Users/glgre/Downloads/TD-BRAIN-SAMPLE/'
+
+    varargs[      'sourcepath'] =  main_dir + 'derivatives'
+    print('Reading data from: '+ varargs['sourcepath'])
+    varargs[     'preprocpath'] =  main_dir + 'preprocessed'
+    varargs['participantspath'] =  main_dir
+    print('Reading data from: '+ varargs['participantspath'])
+
     if not os.path.exists(varargs['preprocpath']):
         os.mkdir(varargs['preprocpath'])
-    print('Writing preprocessed data to: '+varargs['preprocpath'])
-    varargs['resultspath'] = varargs['sourcepath']+'results_manuscript'
+    print('Writing preprocessed data to: ' + varargs['preprocpath'])
+
+    varargs['resultspath'] = main_dir + 'results_manuscript'
     if not os.path.exists(varargs['resultspath']):
         os.mkdir(varargs['resultspath'])
-    print('Writing results to: '+varargs['resultspath'])
+    print('Writing results to: ' + varargs['resultspath'])
 
     varargs['condition']=['EO','EC']
     varargs['chans']='Pz'
