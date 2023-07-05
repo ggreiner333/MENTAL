@@ -184,7 +184,7 @@ def extract_psds(path, out):
                 # filter for the files that contain the preprocessed EEG recordings
                 for f in files:
                     time =    f.split("_")[-1]
-                    sec  = time.split("_")[0]
+                    sec  = time.split(".")[0]
                     if(int(sec) >= 118):
                         pth = os.path.join(data,f)
                         if os.path.isfile(pth):
