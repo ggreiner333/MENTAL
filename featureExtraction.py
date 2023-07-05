@@ -138,17 +138,6 @@ def get_psd(file):
         # add the PSD values for this interval to total data
         all_psds.append(interval_psd)
 
-    # printing
-    #count = 0
-    #cter = 0
-    #for i in all_psds:
-    #    print(str(count) + " to "+ str(count+2))
-    #    for j in i:
-    #        print("\tchannel: " + channel_names[cter] + "PSD: " + str(j))
-    #        cter+=1
-    #   cter = 0
-    #   count+=2
-
     # return a numpy array with the psd information
     np.asarray(all_psds)
 
@@ -177,30 +166,32 @@ def extract_psds(path, out):
     sn = 0
 
     for ind in individuals:
-
+        done = True
         # Generate output folders if they don't already exist
         output = os.path.join(out, ind)
         if(not os.path.isdir(output)):
+            done = False
             os.mkdir(output)
+        
+        if(not done):
+            # Generate PSD values for each session the individual has
+            sessions_dir = os.path.join(preprocess_file_path, ind)
+            for sess in os.listdir(sessions_dir):
+                data  = os.path.join(sessions_dir, sess, "eeg")
+                files = os.listdir(data)
+                sn = sess #saving session info
 
-        # Generate PSD values for each session the individual has
-        sessions_dir = os.path.join(preprocess_file_path, ind)
-        for sess in os.listdir(sessions_dir):
-            data  = os.path.join(sessions_dir, sess, "eeg")
-            files = os.listdir(data)
-            sn = sess #saving session info
-
-            # filter for the files that contain the preprocessed EEG recordings
-            for f in files:
-                time =    f.split("_")[-1]
-                sec  = time.split("_")[0]
-                if(int(sec) >= 118):
-                    pth = os.path.join(data,f)
-                    if os.path.isfile(pth):
-                        # extract psd values using get_psd
-                        res = get_psd(pth)
-                        # where to save the file
-                        write_to = os.path.join(output, sn + ("_EO" if f.__contains__("EO") else "_EC"))
-                        np.save(write_to, res)
+                # filter for the files that contain the preprocessed EEG recordings
+                for f in files:
+                    time =    f.split("_")[-1]
+                    sec  = time.split("_")[0]
+                    if(int(sec) >= 118):
+                        pth = os.path.join(data,f)
+                        if os.path.isfile(pth):
+                            # extract psd values using get_psd
+                            res = get_psd(pth)
+                            # where to save the file
+                            write_to = os.path.join(output, sn + ("_EO" if f.__contains__("EO") else "_EC"))
+                            np.save(write_to, res)
 
 extract_psds(preprocess_file_path, psds_path)
