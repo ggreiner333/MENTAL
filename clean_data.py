@@ -56,21 +56,20 @@ def clean_individuals(path):
     np.savetxt(os.path.join(path,'cleaned_participants.csv'), final, delimiter=',', fmt="%s")
 
 def generate_samples(ptc, psd, out):
-    #survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
     
-    #data = survey[1]
-    #id = data[0]
-    id = 'sub-19681349'
-
-    loc = os.path.join(psd, id)
-    files = os.listdir(loc)
-    for f in files:
-        pth = os.path.join(loc,f)
-        psds = np.load(pth, allow_pickle=True)
-        psds = np.squeeze(psds)
-        psds = psds.flatten()
-        print(psds.shape)
-        print(psds)
+    for ind in survey[1:]:
+        id = ind[0]
+        if(not id[0] == '1'):
+            loc = os.path.join(psd, id)
+            files = os.listdir(loc)
+            for f in files:
+                pth = os.path.join(loc,f)
+                psds = np.load(pth, allow_pickle=True)
+                psds = np.squeeze(psds)
+                psds = psds.flatten()
+                print(psds.shape)
+                print(psds)
 
 generate_samples(ptc_path, psd_path, out_path)
         
