@@ -170,7 +170,7 @@ def extract_psds(path, out, split_num):
     split_start = split_size * split_num
     split_end = split_start + split_size
 
-    for ind in individuals[split_start:split_end]:
+    for ind in individuals[split_start:]:
         # Generate output folders if they don't already exist
         output = os.path.join(out, ind)
         if(not os.path.isdir(output)):
@@ -196,4 +196,4 @@ def extract_psds(path, out, split_num):
                         write_to = os.path.join(output, sn + ("_EO" if f.__contains__("EO") else "_EC"))
                         np.save(write_to, res, allow_pickle=True)
 
-extract_psds(preprocess_file_path, psds_path, 9)
+extract_psds(preprocess_file_path, psds_path, 10)
