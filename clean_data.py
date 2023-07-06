@@ -69,6 +69,7 @@ def generate_samples(ptc, psd, out):
         psds = np.load(pth, allow_pickle=True)
         psds = np.squeeze(psds)
         psds = psds.flatten()
+        print(psds.shape)
         print(psds)
 
 generate_samples(ptc_path, psd_path, out_path)
