@@ -66,7 +66,8 @@ def generate_samples(ptc, psd, out):
     for f in files:
         pth = os.path.join(loc,f)
         with open(pth, 'rb') as f:
-            print(f)
+            test = np.load(f)
+            print(test)
 
 generate_samples(ptc_path, psd_path, out_path)
         
