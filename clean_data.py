@@ -86,9 +86,6 @@ def generate_samples(ptc, psd, out):
                 # Combine survey and PSD data
                 combined = np.concatenate((ind,psds))
 
-                print(combined)
-                print(combined.shape)
-
                 if(f.__contains__("EC")):
                     samples_EC.append(np.asarray(combined))
                 else:
