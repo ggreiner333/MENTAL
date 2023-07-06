@@ -142,6 +142,7 @@ def get_psd(file):
     print(all_psds)
     final = np.array(all_psds)
     print(final)
+    return final
 
 
 def extract_psds(path, out):
