@@ -84,7 +84,7 @@ def generate_samples(ptc, psd, out):
                 psds = psds.flatten()
 
                 # Combine survey and PSD data
-                combined = np.concatenate(np.array(ind),np.array(psds))
+                combined = np.concatenate((ind,psds))
 
                 print(combined)
 
