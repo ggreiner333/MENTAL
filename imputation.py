@@ -22,11 +22,11 @@ diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA
 # Paths for data
 
 #psd_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD'
-psd_path = 'PSD'
+psd_path = 'TDBRAIN/PSD'
 #ptc_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/'
-ptc_path = ''
+ptc_path = 'TDBRAIN'
 #out_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/samples'
-out_path = 'samples'
+out_path = 'TDBRAIN/samples'
 
 def clean_individuals(path):
 
