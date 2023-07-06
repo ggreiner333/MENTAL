@@ -98,10 +98,10 @@ def generate_samples(ptc, psd, out):
     # Save the combined samples into csv files
 
     all_combined_EC = np.array(samples_EC, dtype=object)
-    np.save(os.path.join(out,'combined_samples_EC.csv'), all_combined_EC, allow_pickle=True)
+    np.save(os.path.join(out,'combined_samples_EC'), all_combined_EC, allow_pickle=True)
 
     all_combined_EO = np.array(samples_EO, dtype=object)
-    np.save(os.path.join(out,'combined_samples_EO.csv'), all_combined_EO, allow_pickle=True)
+    np.save(os.path.join(out,'combined_samples_EO'), all_combined_EO, allow_pickle=True)
 
 
 
@@ -147,10 +147,10 @@ def separate_missing_samples(ptc, psd, out):
                 missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples, dtype=object)
-    np.save(os.path.join(out,'complete_samples_EC.csv'), complete_samples, allow_pickle=True)
+    np.save(os.path.join(out,'complete_samples_EC'), complete_samples, allow_pickle=True)
 
     all_missing_samples = np.array(missing_samples, dtype=object)
-    np.save(os.path.join(out,'missing_samples_EC.csv'), missing_samples, allow_pickle=True)
+    np.save(os.path.join(out,'missing_samples_EC'), missing_samples, allow_pickle=True)
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
