@@ -166,11 +166,11 @@ def extract_psds(path, out):
     sn = 0
 
     for ind in individuals:
-        done = True
+        done = False
         # Generate output folders if they don't already exist
         output = os.path.join(out, ind)
         if(not os.path.isdir(output)):
-            done = False
+            #done = False
             os.mkdir(output)
         
         if(not done):
