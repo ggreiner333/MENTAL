@@ -113,6 +113,6 @@ def generate_split():
 
 #generate_samples(ptc_path, psd_path, out_path)
 
-generate_split()       
+generate_split()
 
 
