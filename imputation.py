@@ -21,13 +21,9 @@ diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA
 
 # Paths for data
 
-PSD_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD'
-ptc_path = 'data/zhanglab/ggreienr/MENTAL/TDBRAIN/derivatives'
-
-psd = 'C:/Users/glgre/Downloads/TD-BRAIN-SAMPLE/PSD'
-out = 'C:/Users/glgre/Downloads/TD-BRAIN-SAMPLE/collected'
-ptc = 'C:/Users/glgre/Documents/ResearchCode/MENTAL/TDBRAIN'
-
+psd_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD'
+ptc_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/derivatives'
+out_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/samples'
 
 def clean_individuals(path):
 
@@ -56,28 +52,20 @@ def clean_individuals(path):
     final = np.asarray(samples)
     np.savetxt(os.path.join(path,'cleaned_participants.csv'), final, delimiter=',', fmt="%s")
 
-def test():
-    tester = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD/sub-87980553'
-
-    files = os.listdir(tester)
-    for f in files:
-        pth = os.path.join(tester,f)
-        loaded = np.load(pth, allow_pickle=True)
-        print(loaded)
-
-def generate_samples(survey_path, psd_path, out_path):
-    survey = np.loadtxt(os.path.join(survey_path, "cleaned_participants.csv"), delimiter=",", dtype=str)
+def generate_samples(ptc, psd, out):
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
     
     data = survey[1]
     id = data[0]
 
-    loc = os.path.join(psd_path, id)
+    loc = os.path.join(psd, id)
     files = os.listdir(loc)
     for f in files:
-        print(f)
+        pth = os.path.join(loc,f)
+        loaded = np.load(pth, allow_pickle=True)
+        print(loaded)
 
-#generate_samples(ptc, psd, out)
-test()
+generate_samples(ptc_path, psd_path, out_path)
         
 
 
