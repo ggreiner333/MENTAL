@@ -140,7 +140,7 @@ def get_psd(file):
 
     # return a numpy array with the psd information
     print(all_psds)
-    np.asarray(all_psds)
+    np.array(all_psds)
 
 
 def extract_psds(path, out):
