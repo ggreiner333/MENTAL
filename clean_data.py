@@ -61,6 +61,9 @@ def generate_samples(ptc, psd, out):
     samples_EO = []
     samples_EC = []
 
+    complete_samples = []
+    missing_samples = []
+
     samples_EO.append(np.asarray(survey[0]))
     samples_EC.append(np.asarray(survey[0]))
 
@@ -100,7 +103,62 @@ def generate_samples(ptc, psd, out):
     all_combined_EO = np.array(samples_EO)
     np.save(os.path.join(out,'combined_samples_EO.csv'), all_combined_EO, allow_pickle=True)
 
-generate_samples(ptc_path, psd_path, out_path)
+
+
+def separate_missing_samples(ptc, psd, out):
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
+    
+    missing_samples = []
+    complete_samples = []
+
+    missing_samples.append(np.asarray(survey[0]))
+    complete_samples.append(np.asarray(survey[0]))
+
+    for ind in survey[1:]:
+        
+        # Only consider individuals that we have survey data for
+        # This means excluding the individuals marked for replication
+        id = ind[0]
+        if(not id[0] == '1'):
+
+            # Navigate to the directory with the psd information
+            loc = os.path.join(psd, id)
+            files = os.listdir(loc)
+
+            found = False
+            for f in files:
+                if(f.__contains__("EC")):
+                    found = True
+                    # Load the PSD values from the files
+                    pth = os.path.join(loc,f)
+                    psds = np.load(pth, allow_pickle=True)
+                    psds = np.squeeze(psds)
+                    psds = psds.flatten()
+
+                    # Combine survey and PSD data
+                    combined = np.asarray(np.concatenate((ind,psds)))
+                    if(combined.__contains__('-1')):
+                        missing_samples.append(combined)
+                    else:
+                        complete_samples.append(combined)
+
+            if(not found):
+                combo = np.asarray(np.concatenate((ind, np.zeros(7800))))
+                missing_samples.append(combo)
+            
+    all_complete_samples = np.array(complete_samples)
+    np.save(os.path.join(out,'complete_samples_EC.csv'), complete_samples, allow_pickle=True)
+
+    all_missing_samples = np.array(missing_samples)
+    np.save(os.path.join(out,'missing_samples_EC.csv'), missing_samples, allow_pickle=True)
+
+    print("   Total samples: " + survey.shape)
+    print("Complete samples: " + all_complete_samples.shape)
+    print(" Missing samples: " + all_missing_samples.shape)
+
+
+separate_missing_samples(ptc_path, psd_path, out_path)
+#generate_samples(ptc_path, psd_path, out_path)
 
 
 
