@@ -41,7 +41,6 @@ class VAE(nn.Module):
         self.input_dim  = input_dim
         self.hidden_dim = hidden_dim
         self.z_dim      = z_dim
-        self.output_dim = 63
 
         self.encoder = nn.Sequential(
             nn.Linear(input_dim, 1024),
@@ -50,23 +49,23 @@ class VAE(nn.Module):
             nn.RELU(),
             nn.Linear(512, 128),
             nn.RELU(),
-            nn.Linear(128, 32),
-            nn.RELU(),
-            nn.Linear(32, 16),
+            nn.Linear(128, 64)
         )
 
         self.decoder = nn.Sequential(
-            nn.Linear(16, 24),
+            nn.Linear(64, 128),
             nn.RELU(),
-            nn.Linear(32, 48),
+            nn.Linear(128, 512),
             nn.RELU(),
-            nn.Liner(48, self.output_dim)
+            nn.Linear(512, 1024),
+            nn.RELU(),
+            nn.Linear(1024, input_dim)
         )
 
     def forward(self, input):
         res = self.encoder(input)
         
-        pass
+        return res
     
     def decoder(self, z):
         return self.decoder_net(z)
