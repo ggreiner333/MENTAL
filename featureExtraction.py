@@ -54,10 +54,10 @@ exclude_these = ['artifacts', 'VEOG', 'HEOG', 'Erbs', 'OrbOcc', 'Mass']
 
 
 # path of preprocessed EEG data
-preprocess_file_path = '/data/zhanglab/ggreiner/MENTAL/TDBRAIN/preprocessed'
+preprocess_file_path = 'TDBRAIN/preprocessed'
 
 # path of directory where we will save the PSD features
-psds_path = '/data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD'
+psds_path = 'TDBRAIN/PSD'
 
 
 ##################################################################################################
