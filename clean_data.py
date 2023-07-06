@@ -152,9 +152,9 @@ def separate_missing_samples(ptc, psd, out):
     all_missing_samples = np.array(missing_samples, dtype=object)
     np.save(os.path.join(out,'missing_samples_EC.csv'), missing_samples, allow_pickle=True)
 
-    print("   Total samples: " + survey.shape[1])
-    print("Complete samples: " + all_complete_samples.shape[1])
-    print(" Missing samples: " + all_missing_samples.shape[1])
+    print("   Total samples: " + str(survey.shape[1]))
+    print("Complete samples: " + str(all_complete_samples.shape[1]))
+    print(" Missing samples: " + str(all_missing_samples.shape[1]))
 
 
 separate_missing_samples(ptc_path, psd_path, out_path)
