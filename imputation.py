@@ -18,7 +18,7 @@ from Model.vae import VAE
 
 
 # Create Dataset and Dataset Loader
-mm_dataset = MultiModalDataset('cleaned_participants.csv', 'TDBRAIN')
+mm_dataset = MultiModalDataset('complete_samples_EC.csv', 'TDBRAIN')
 dataset_loader = data.DataLoader(mm_dataset, batch_size=128, shuffle=True)
 
 # Create an instance of the encoder
