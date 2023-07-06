@@ -139,6 +139,7 @@ def get_psd(file):
         all_psds.append(interval_psd)
 
     # return a numpy array with the psd information
+    print(all_psds)
     np.asarray(all_psds)
 
 
