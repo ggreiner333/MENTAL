@@ -190,8 +190,9 @@ def extract_psds(path, out):
                         if(int(sec) >= 118):
                             # extract psd values using get_psd
                             res = get_psd(pth)
+                            print(res)
                             # where to save the file
                             write_to = os.path.join(output, sn + ("_EO" if f.__contains__("EO") else "_EC"))
-                            np.save(write_to, res)
+                            np.save(write_to, res, allow_pickle=True)
 
 extract_psds(preprocess_file_path, psds_path)
