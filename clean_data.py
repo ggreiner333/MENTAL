@@ -105,7 +105,14 @@ def generate_samples(ptc, psd, out):
     np.save(os.path.join(out,'combined_samples_EO.csv'), all_combined_EO, allow_pickle=True)
 
 
-generate_samples(ptc_path, psd_path, out_path)
-        
+def generate_split():
+    ind_path = 'TDBRAIN/preprocessed'
+    all = os.listdir(ind_path)
+    print(len(all))
+
+
+#generate_samples(ptc_path, psd_path, out_path)
+
+generate_split()       
 
 
