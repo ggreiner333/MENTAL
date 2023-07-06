@@ -139,9 +139,7 @@ def get_psd(file):
         all_psds.append(interval_psd)
 
     # return a numpy array with the psd information
-    print(all_psds)
     final = np.array(all_psds)
-    print(final)
     return final
 
 
@@ -193,7 +191,6 @@ def extract_psds(path, out):
                         if(int(sec) >= 118):
                             # extract psd values using get_psd
                             res = get_psd(pth)
-                            print(res)
                             # where to save the file
                             write_to = os.path.join(output, sn + ("_EO" if f.__contains__("EO") else "_EC"))
                             np.save(write_to, res, allow_pickle=True)
