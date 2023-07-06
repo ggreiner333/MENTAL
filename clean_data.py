@@ -93,8 +93,6 @@ def generate_samples(ptc, psd, out):
                 else:
                     samples_EO.append(np.asarray(combined))
 
-                print(psds.shape)
-                print(psds)
 
     # Save the combined samples into csv files
 
@@ -104,15 +102,8 @@ def generate_samples(ptc, psd, out):
     all_combined_EO = np.array(samples_EO)
     np.save(os.path.join(out,'combined_samples_EO.csv'), all_combined_EO, allow_pickle=True)
 
-
-def generate_split():
-    ind_path = 'TDBRAIN/preprocessed'
-    all = os.listdir(ind_path)
-    print(len(all))
+generate_samples(ptc_path, psd_path, out_path)
 
 
-#generate_samples(ptc_path, psd_path, out_path)
-
-generate_split()
 
 
