@@ -61,13 +61,15 @@ def generate_samples(ptc, psd, out):
     #data = survey[1]
     #id = data[0]
     id = 'sub-19681349'
-    
+
     loc = os.path.join(psd, id)
     files = os.listdir(loc)
     for f in files:
         pth = os.path.join(loc,f)
-        test = np.load(pth, allow_pickle=True)
-        print(test)
+        psds = np.load(pth, allow_pickle=True)
+        psds = np.squeeze(psds)
+        psds = psds.flatten()
+        print(psds)
 
 generate_samples(ptc_path, psd_path, out_path)
         
