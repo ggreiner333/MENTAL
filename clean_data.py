@@ -26,7 +26,7 @@ psd_path = 'TDBRAIN/PSD'
 #ptc_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/'
 ptc_path = 'TDBRAIN'
 #out_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/samples'
-out_path = 'TDBRAIN/samples'
+out_path = 'TDBRAIN'
 
 def clean_individuals(path):
 
@@ -58,18 +58,52 @@ def clean_individuals(path):
 def generate_samples(ptc, psd, out):
     survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
     
+    samples_EO = []
+    samples_EC = []
+
+    samples_EO.append(np.asarray(survey[0]))
+    samples_EC.append(np.asarray(survey[0]))
+
     for ind in survey[1:]:
+        
+        # Only consider individuals that we have survey data for
+        # This means excluding the individuals marked for replication
         id = ind[0]
         if(not id[0] == '1'):
+
+            # Navigate to the directory with the psd information
             loc = os.path.join(psd, id)
             files = os.listdir(loc)
+
             for f in files:
+
+                # Load the PSD values from the files
                 pth = os.path.join(loc,f)
                 psds = np.load(pth, allow_pickle=True)
                 psds = np.squeeze(psds)
                 psds = psds.flatten()
+
+                # Combine survey and PSD data
+                combined = np.concatenate(ind,psds)
+
+                print(combined)
+
+                if(f.__contains__("EC")):
+                    samples_EC.append(np.asarray(combined))
+                else:
+                    samples_EO.append(np.asarray(combined))
+
                 print(psds.shape)
                 print(psds)
+
+    # Save the combined samples into csv files
+
+    all_combined_EC = np.array(samples_EC)
+    np.save(os.path.join(out,'combined_samples_EC.csv'), all_combined_EC, allow_pickle=True)
+
+    all_combined_EO = np.array(samples_EO)
+    np.save(os.path.join(out,'combined_samples_EO.csv'), all_combined_EO, allow_pickle=True)
+
 
 generate_samples(ptc_path, psd_path, out_path)
         
