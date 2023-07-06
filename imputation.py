@@ -65,7 +65,7 @@ def generate_samples(ptc, psd, out):
     files = os.listdir(loc)
     for f in files:
         pth = os.path.join(loc,f)
-        loaded = np.loadtxt(pth, allow_pickle=True)
+        loaded = np.loadtxt(pth)
         print(loaded)
 
 generate_samples(ptc_path, psd_path, out_path)
