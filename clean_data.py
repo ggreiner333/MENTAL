@@ -144,10 +144,10 @@ def separate_missing_samples(ptc, psd, out):
                 missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples, dtype=object)
-    np.save(os.path.join(out,'complete_samples_EC'), complete_samples, allow_pickle=True)
+    np.savetxt(os.path.join(out,'complete_samples_EC.csv'), all_complete_samples, delimiter=',', fmt="%s")
 
     all_missing_samples = np.array(missing_samples, dtype=object)
-    np.save(os.path.join(out,'missing_samples_EC'), missing_samples, allow_pickle=True)
+    np.savetxt(os.path.join(out,'missing_samples_EC.csv'), all_missing_samples, delimiter=',', fmt="%s")
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
@@ -175,7 +175,7 @@ separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
-#load_attempt('TDBRAIN/complete_samples_EC.npy')
+load_attempt('TDBRAIN/complete_samples_EC.npy')
 
 
 
