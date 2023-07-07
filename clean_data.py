@@ -156,7 +156,7 @@ def separate_missing_samples(ptc, psd, out):
 
 def load_attempt(path):
 
-    loadeds = np.load(path, allow_pickle=True)
+    loadeds = np.loadtxt(path, delimiter=",", dtype=str)
 
     loaded = loadeds[1]
 
@@ -175,7 +175,7 @@ separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
-load_attempt('TDBRAIN/complete_samples_EC.npy')
+load_attempt('TDBRAIN/complete_samples_EC.csv')
 
 
 
