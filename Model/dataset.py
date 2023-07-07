@@ -10,14 +10,13 @@ class MultiModalDataset(data.Dataset):
     
     def __init__(self, individuals_file, directory):
         self.directory = directory
-        self.individuals = np.loadtxt(os.path.join(directory, individuals_file), delimiter=",", dtype=str)
-        self.individuals = self.individuals[1:]
+        self.individuals = np.loadtxt(os.path.join(directory, individuals_file), delimiter=",", dtype=float)
         
     def __len__(self):
         return np.size(self.individuals)-1
 
     def __getitem__(self, idx):
         individual = self.individuals[idx]
-        indication = individual[2]
-        values = individual[3:]
+        indication = individual[1]
+        values = individual[2:]
         return values, indication
