@@ -159,7 +159,20 @@ def separate_missing_samples(ptc, psd, out):
 
 def load_attempt(path):
 
-    loaded = np.load(path, allow_pickle=True)
+    loadeds = np.load(path, allow_pickle=True)
+
+    loaded = loadeds[1]
+
+    print("ID: " + loaded[0])
+    print("sess ID: " + loaded[1])
+
+    print("Diagnosis: " + loaded[2])
+
+    print("Age, gender, education: ", loaded[3:5])
+
+    print("NEO-FFI: " + loaded[6:65])
+
+    print("EEG : " + loaded[66:])
 
     print(loaded)
 
