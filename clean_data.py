@@ -139,7 +139,7 @@ def separate_missing_samples(ptc, psd, out):
 
                     # Combine survey and PSD data
                     combined = np.asarray(np.concatenate((ind[1:],psds)), dtype=float)
-                    combined[0] = float((ind[0].split("-"))[1])
+                    combined[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
                     if(combined.__contains__(-1)):
                         missing_samples.append(combined)
                     else:
@@ -165,13 +165,6 @@ def load_attempt(path):
     loadeds = np.loadtxt(path, delimiter=",")
 
     loaded = loadeds[1]
-
-    #print("ID: " + loaded[0])
-    #print("sess ID: " + loaded[1])
-
-    #print("Diagnosis: " + loaded[2])
-
-    #print("Age, gender, education: ", loaded[3:6])
 
     print(loaded)
 
