@@ -173,7 +173,7 @@ def load_attempt(path):
 
     print("Age, gender, education: ", loaded[3:6])
 
-    print("NEO-FFI: " + loaded[6:7])
+    print("NEO-FFI: " + loaded)
 
     print(loaded)
 
