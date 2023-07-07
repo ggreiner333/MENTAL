@@ -168,7 +168,7 @@ def load_attempt(path):
 
     print("Diagnosis: " + loaded[2])
 
-    print("Age, gender, education: ", loaded[3:5])
+    print("Age, gender, education: ", loaded[3:6])
 
     print("NEO-FFI: " + loaded[6:])
 
