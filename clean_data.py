@@ -28,7 +28,9 @@ ptc_path = 'TDBRAIN'
 #out_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/samples'
 out_path = 'TDBRAIN'
 
-def clean_individuals(path):
+
+
+def clean_individuals(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAIN"):
 
     # Load Demographic and Survey Data
 
@@ -54,6 +56,8 @@ def clean_individuals(path):
         
     final = np.asarray(samples)
     np.savetxt(os.path.join(path,'cleaned_participants.csv'), final, delimiter=',', fmt="%s")
+
+clean_individuals()
 
 def generate_samples(ptc, psd, out):
     survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
@@ -172,7 +176,8 @@ def load_attempt(path):
 
     print(loaded)
 
-separate_missing_samples(ptc_path, psd_path, out_path)
+
+#separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
