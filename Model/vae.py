@@ -36,7 +36,7 @@ class VAE(nn.Module):
 
     def __init__(self, input_dim, z_dim):
 
-        super().__init_()
+        super().__init__()
 
         # Dimensions of importance for architecture
         self.input_dim  = input_dim
