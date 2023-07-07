@@ -149,10 +149,10 @@ def separate_missing_samples(ptc, psd, out):
                 combo = np.asarray(np.concatenate((ind, np.zeros(7800))))
                 missing_samples.append(combo)
             
-    all_complete_samples = np.array(complete_samples, dtype=str)
+    all_complete_samples = np.array(complete_samples)
     np.savetxt(os.path.join(out,'complete_samples_EC.csv'), all_complete_samples, delimiter=',', fmt="%s")
 
-    all_missing_samples = np.array(missing_samples, dtype=str)
+    all_missing_samples = np.array(missing_samples)
     np.savetxt(os.path.join(out,'missing_samples_EC.csv'), all_missing_samples, delimiter=',', fmt="%s")
 
     print("   Total samples: " + str(survey.shape[0]))
@@ -162,7 +162,7 @@ def separate_missing_samples(ptc, psd, out):
 
 def load_attempt(path):
 
-    loadeds = np.loadtxt(path, delimiter=",", dtype=str)
+    loadeds = np.loadtxt(path, delimiter=",")
 
     loaded = loadeds[1]
 
