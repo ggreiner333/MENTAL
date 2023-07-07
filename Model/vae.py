@@ -44,17 +44,17 @@ class VAE(nn.Module):
 
         self.encoder = nn.Sequential(
             nn.Linear(input_dim, 1024),
-            nn.RELU(),
+            nn.ReLU(),
             nn.Linear(1024, 512),
-            nn.RELU(),
+            nn.ReLU(),
             nn.Linear(512, 128)
         )
 
         self.decoder = nn.Sequential(
             nn.Linear(128, 512),
-            nn.RELU(),
+            nn.ReLU(),
             nn.Linear(512, 1024),
-            nn.RELU(),
+            nn.ReLU(),
             nn.Linear(1024, input_dim)
         )
 
