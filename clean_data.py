@@ -111,9 +111,6 @@ def separate_missing_samples(ptc, psd, out):
     missing_samples = []
     complete_samples = []
 
-    missing_samples.append(np.asarray(survey[0]))
-    complete_samples.append(np.asarray(survey[0]))
-
     for ind in survey[1:]:
         
         # Only consider individuals that we have survey data for
@@ -170,7 +167,7 @@ def load_attempt(path):
 
     print("Age, gender, education: ", loaded[3:6])
 
-    print("NEO-FFI: " + loaded[6:])
+    print("NEO-FFI: " + loaded[6:30])
 
     print(loaded)
 
