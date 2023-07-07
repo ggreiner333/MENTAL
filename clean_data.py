@@ -126,9 +126,10 @@ def separate_missing_samples(ptc, psd, out):
             loc = os.path.join(psd, id)
             files = os.listdir(loc)
 
+            sn = ind[1]
             found = False
             for f in files:
-                if(f.__contains__("EC")):
+                if(f.__contains__("EC") and f.__contains__(sn)):
                     found = True
                     # Load the PSD values from the files
                     pth = os.path.join(loc,f)
