@@ -166,6 +166,8 @@ def load_attempt(path):
 #separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
+load_attempt('TDBRAIN/complete_samples_EC.npy')
+
 
 
 
