@@ -157,7 +157,13 @@ def separate_missing_samples(ptc, psd, out):
     print(" Missing samples: " + str(all_missing_samples.shape[0]))
 
 
-separate_missing_samples(ptc_path, psd_path, out_path)
+def load_attempt(path):
+
+    loaded = np.load(path, allow_pickle=True)
+
+    print(loaded)
+
+#separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
