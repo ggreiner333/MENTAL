@@ -166,14 +166,14 @@ def load_attempt(path):
 
     loaded = loadeds[1]
 
-    print("ID: " + loaded[0])
-    print("sess ID: " + loaded[1])
+    #print("ID: " + loaded[0])
+    #print("sess ID: " + loaded[1])
 
-    print("Diagnosis: " + loaded[2])
+    #print("Diagnosis: " + loaded[2])
 
-    print("Age, gender, education: ", loaded[3:6])
+    #print("Age, gender, education: ", loaded[3:6])
 
-    print("NEO-FFI: " + loaded)
+    print(loaded)
 
 
 
