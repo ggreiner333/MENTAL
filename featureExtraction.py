@@ -89,7 +89,7 @@ def get_psd(file):
     channel_names = loaded['labels'].tolist()
     
     # Create an instance of a raw object that we can use to extract PSD from
-    info = mne.create_info(ch_names= channel_names, ch_types=channel_type, sfreq= sampling_freq, verbose="error")
+    info = mne.create_info(ch_names=channel_names, ch_types=channel_type, sfreq= sampling_freq, verbose="error")
     raw = mne.io.RawArray(data, info, verbose="error")
 
     # Output
