@@ -172,12 +172,12 @@ def load_attempt(path):
 
     print("Age, gender, education: ", loaded[3:6])
 
-    print("NEO-FFI: " + loaded[6:30])
+    print("NEO-FFI: " + loaded[6:7])
 
     print(loaded)
 
 
-separate_missing_samples(ptc_path, psd_path, out_path)
+#separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 

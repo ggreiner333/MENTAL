@@ -1,1 +1,5 @@
-TDBRAIN/
+TDBRAIN/derivatives
+TDBRAIN/preprocessed
+TDBRAIN/PSD
+TDBRAIN/samples
+TDBRAIN/results_manuscript
