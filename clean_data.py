@@ -57,7 +57,7 @@ def clean_individuals(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\T
     final = np.asarray(samples)
     np.savetxt(os.path.join(path,'cleaned_participants.csv'), final, delimiter=',', fmt="%s")
 
-clean_individuals()
+#clean_individuals()
 
 def generate_samples(ptc, psd, out):
     survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
