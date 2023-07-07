@@ -48,6 +48,6 @@ for epoch in range(epochs):
 
         print("-----------------------")
         print("Epoch: " + str(epoch))
-        print(" Loss: " + str(loss) )
+        print(" Loss: " + str(res) )
         print("-----------------------")
 
