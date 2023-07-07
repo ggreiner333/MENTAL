@@ -110,7 +110,7 @@ def generate_samples(ptc, psd, out):
 
 
 def separate_missing_samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=('<U20'))
     
     missing_samples = []
     complete_samples = []
