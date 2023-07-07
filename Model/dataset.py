@@ -18,5 +18,5 @@ class MultiModalDataset(data.Dataset):
     def __getitem__(self, idx):
         individual = self.individuals[idx]
         indication = individual[1]
-        values = individual[2:]
+        values = individual[1:]
         return values, indication
