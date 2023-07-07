@@ -40,10 +40,10 @@ for epoch in range(epochs):
         output = my_encoder.forward(entry)
 
         loss = torch.nn.MSELoss()
-        loss(output, entry)
+        res = loss(output, entry)
 
         optimizer.zero_grad()
-        loss.backward()
+        res.backward()
         optimizer.step()
 
         print("-----------------------")
