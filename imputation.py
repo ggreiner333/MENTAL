@@ -47,7 +47,7 @@ for epoch in range(epochs):
         optimizer.step()
 
         print("-----------------------")
-        print("Epoch: " + epoch)
-        print(" Loss: " + loss )
+        print("Epoch: " + str(epoch))
+        print(" Loss: " + str(loss) )
         print("-----------------------")
 
