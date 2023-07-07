@@ -16,6 +16,9 @@ from Model.vae import VAE
 ##################################################################################################
 ##################################################################################################
 
+test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
+
+print (np.size(test)-1)
 
 # Create Dataset and Dataset Loader
 mm_dataset = MultiModalDataset('complete_samples_EC.csv', 'TDBRAIN')
