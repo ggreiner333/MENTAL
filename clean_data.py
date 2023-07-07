@@ -133,7 +133,7 @@ def separate_missing_samples(ptc, psd, out):
                     psds = psds.flatten()
 
                     # Combine survey and PSD data
-                    combined = np.asarray(np.concatenate((ind,psds)))
+                    combined = np.asarray(np.concatenate((ind,psds)), dtype=object)
                     print(combined)
                     if(combined.__contains__('-1')):
                         missing_samples.append(combined)
