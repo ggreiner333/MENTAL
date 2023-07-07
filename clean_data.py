@@ -166,6 +166,8 @@ def load_attempt(path):
 
     loaded = loadeds[1]
 
+    rest = loaded['<U20']
+
     print("ID: " + loaded[0])
     print("sess ID: " + loaded[1])
 
@@ -173,9 +175,9 @@ def load_attempt(path):
 
     print("Age, gender, education: ", loaded[3:6])
 
-    print("NEO-FFI: " + loaded)
+    #print("NEO-FFI: " + loaded)
 
-    print(loaded)
+    print(rest)
 
 
 separate_missing_samples(ptc_path, psd_path, out_path)
