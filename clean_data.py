@@ -166,11 +166,13 @@ def load_attempt(path):
 
     loaded = loadeds[1]
 
+    print(loaded[0])
+
     print(loaded)
 
 
 
-separate_missing_samples(ptc_path, psd_path, out_path)
+#separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
