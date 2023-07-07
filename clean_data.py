@@ -177,7 +177,7 @@ def load_attempt(path):
     print(loaded)
 
 
-#separate_missing_samples(ptc_path, psd_path, out_path)
+separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
