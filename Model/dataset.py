@@ -7,7 +7,7 @@ import torch
 from torch.utils import data
 
 class MultiModalDataset(data.Dataset):
-    
+
     def __init__(self, individuals_file, directory):
         self.directory = directory
         self.individuals = np.loadtxt(os.path.join(directory, individuals_file), delimiter=",", dtype="float32")
@@ -20,3 +20,6 @@ class MultiModalDataset(data.Dataset):
         indication = individual[1]
         values = individual[1:]
         return values, indication
+    
+    def __getIndividuals__(self):
+        return self.individuals

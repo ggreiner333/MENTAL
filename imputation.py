@@ -33,7 +33,7 @@ my_encoder = VAE(7864, 128)
 optimizer = torch.optim.Adam(my_encoder.parameters(), lr=1e-2, weight_decay=1e-9)
 
 
-epochs = 1000
+epochs = 10
 
 
 for epoch in range(epochs):
@@ -54,3 +54,6 @@ for epoch in range(epochs):
         print(" Loss: " + str(res) )
         print("-----------------------")
 
+predictions = my_encoder(mis_dataset.__getIndividuals__())
+
+print(predictions)
