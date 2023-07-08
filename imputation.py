@@ -54,6 +54,6 @@ for epoch in range(epochs):
         print(" Loss: " + str(res) )
         print("-----------------------")
 
-predictions = my_encoder(mis_dataset.__getIndividuals__())
+predictions = my_encoder(torch.from_numpy(mis_dataset.__getIndividuals__()))
 
 print(predictions)
