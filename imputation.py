@@ -22,7 +22,7 @@ print(test[0])
 
 # Create Dataset and Dataset Loader
 mm_dataset = MultiModalDataset('complete_samples_EC.csv', 'TDBRAIN')
-dataset_loader = data.DataLoader(mm_dataset, batch_size=128, shuffle=True)
+dataset_loader = data.DataLoader(mm_dataset, batch_size=20, shuffle=True)
 
 # Create Missing Dataset
 mis_dataset = MultiModalDataset('missing_samples_EC.csv', 'TDBRAIN')
@@ -33,7 +33,7 @@ my_encoder = VAE(7864, 128)
 optimizer = torch.optim.Adam(my_encoder.parameters(), lr=1e-2, weight_decay=1e-9)
 
 
-epochs = 10
+epochs = 1000
 
 
 for epoch in range(epochs):
