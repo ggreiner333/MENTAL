@@ -154,6 +154,7 @@ def separate_missing_samples(ptc, psd, out):
     all_complete_samples = np.array(complete_samples)
     np.savetxt(os.path.join(out,'complete_samples_EC.csv'), all_complete_samples, delimiter=',', fmt="%s")
 
+    print(missing_samples)
     all_missing_samples = np.array(missing_samples)
     np.savetxt(os.path.join(out,'missing_samples_EC.csv'), all_missing_samples, delimiter=',', fmt="%s")
 
