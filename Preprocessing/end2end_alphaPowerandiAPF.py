@@ -254,17 +254,3 @@ if __name__ == "__main__":
     varargs['chans']='Pz'
 
     end2end_alphaPowerandiAPF(varargs)
-
-
-
-
-
-
-
-
-
-
-
-
-
-

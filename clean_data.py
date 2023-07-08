@@ -177,7 +177,3 @@ def load_attempt(path):
 
 
 load_attempt('TDBRAIN/complete_samples_EC.csv')
-
-
-
-
