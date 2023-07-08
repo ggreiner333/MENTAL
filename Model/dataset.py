@@ -22,4 +22,4 @@ class MultiModalDataset(data.Dataset):
         return values, indication
     
     def __getIndividuals__(self):
-        return self.individuals
+        return self.individuals[1:]
