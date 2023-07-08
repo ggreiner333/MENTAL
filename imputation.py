@@ -32,7 +32,7 @@ my_encoder = VAE(7864, 128)
 
 optimizer = torch.optim.Adam(my_encoder.parameters(), lr=1e-2, weight_decay=1e-9)
 
-epochs = 0
+epochs = 1000
 
 
 for epoch in range(epochs):
