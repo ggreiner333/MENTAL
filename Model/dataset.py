@@ -22,7 +22,7 @@ class MultiModalDataset(data.Dataset):
         return values, indication
     
     def __getIndividuals__(self):
-        res = np.array((self.individuals[0])[1:])
+        res = [(self.individuals[0])[1:]]
         for i in range(1, self.__len__()):
             res.append((self.individuals[i])[1:])
-        return res
+        return np.array(res)
