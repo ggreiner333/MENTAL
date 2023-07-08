@@ -146,7 +146,8 @@ def separate_missing_samples(ptc, psd, out):
                         complete_samples.append(combined)
 
             if(not found):
-                combo = np.asarray(np.concatenate((ind, np.zeros(7800))))
+                combo = np.asarray(np.concatenate((ind, np.zeros(7800))), dtype=float)
+                combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
                 missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples)
