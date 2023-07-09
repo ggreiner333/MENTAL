@@ -32,7 +32,7 @@ my_encoder = VAE(7864, 128)
 
 optimizer = torch.optim.Adam(my_encoder.parameters(), lr=1e-2, weight_decay=1e-9)
 
-epochs = 1000
+epochs = 30
 
 
 for epoch in range(epochs):
@@ -48,10 +48,10 @@ for epoch in range(epochs):
         res.backward()
         optimizer.step()
 
-        print("-----------------------")
-        print("Epoch: " + str(epoch))
-        print(" Loss: " + str(res) )
-        print("-----------------------")
+    print("-----------------------")
+    print("Epoch: " + str(epoch))
+    print(" Loss: " + str(res) )
+    print("-----------------------")
 
 predictions = []
 
