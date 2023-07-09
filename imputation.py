@@ -18,14 +18,13 @@ from Model.vae import VAE
 
 test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
 
-print(test[0])
-
 # Create Dataset and Dataset Loader
 mm_dataset = MultiModalDataset('complete_samples_EC.csv', 'TDBRAIN')
 dataset_loader = data.DataLoader(mm_dataset, batch_size=20, shuffle=True)
 
 # Create Missing Dataset
 mis_dataset = MultiModalDataset('missing_samples_EC.csv', 'TDBRAIN')
+mis_dataset_loader = data.DataLoader(mis_dataset, batch_size=20, shuffle=True)
 
 # Create an instance of the encoder
 my_encoder = VAE(7864, 128)
@@ -55,11 +54,8 @@ for epoch in range(epochs):
 
 predictions = []
 
-for i in range(0, mis_dataset.__len__()):
-    indiv = (mis_dataset.__getitem__(i))[0]
-    print(indiv)
-    res = my_encoder(torch.from_numpy(indiv))
-    print(res)
+for (entry, label) in mis_dataset_loader:
+    res = my_encoder(torch.from_numpy(entry))
     predictions.append(res)
 
 print(predictions)
