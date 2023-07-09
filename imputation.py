@@ -56,6 +56,10 @@ for epoch in range(epochs):
 predictions = []
 
 for i in range(0, mis_dataset.__len__()):
-    predictions.append(my_encoder(torch.from_numpy((mis_dataset.__getitem__(i))[0])))
+    indiv = (mis_dataset.__getitem__(i))[0]
+    print(indiv)
+    res = my_encoder(torch.from_numpy(indiv))
+    print(res)
+    predictions.append(res)
 
 print(predictions)
