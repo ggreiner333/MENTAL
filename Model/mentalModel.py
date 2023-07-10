@@ -20,17 +20,16 @@ from recur import EegRNN
 
 class MENTAL(nn.Module):
 
-    def __init__(self):
+    def __init__(self, input_size, hidden_size, output_size):
 
-        self.attention = AttentionLayer()
+        self.attention = AttentionLayer(60, 60)
 
-        self.rnn = EegRNN()
+        self.rnn = EegRNN(input_size, hidden_size, output_size)
 
 
-    def forward():
+    def forward(self, eeg, neo, h):
 
         # Run attention layer
+        out, res = self.attention(neo, eeg, eeg)
 
-        # Run it through RNN
-
-        pass
+        return self.rnn(out, h)
