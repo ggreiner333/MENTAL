@@ -26,8 +26,6 @@ class EegRNN(nn.Module):
         self.hidden_size = hidden_size
         self.output_size = output_size
 
-        self.attention = AttentionLayer()
-
         self.layer_1 = nn.GRU(input_size, hidden_size)
         self.layer_2 = nn.GRU(hidden_size, output_size)
         self.output = nn.Sequential(
@@ -35,8 +33,7 @@ class EegRNN(nn.Module):
             nn.Linear(output_size, 1)
         )
 
-    def forward(self, eeg, neo, h):
-        x = eeg
+    def forward(self, x, h):
         res, h1 = self.layer_1(  x, h[0])
         res, h2 = self.layer_2(res, h[1])
         return self.output(res), (h1, h2)
