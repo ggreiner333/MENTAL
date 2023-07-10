@@ -16,14 +16,14 @@ from Model.vae import VAE
 ##################################################################################################
 ##################################################################################################
 
-test = np.loadtxt(os.path.join('data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
+test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
 
 # Create Dataset and Dataset Loader
-mm_dataset = MultiModalDataset('complete_samples_EC.csv', 'data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+mm_dataset = MultiModalDataset('complete_samples_EC.csv', 'TDBRAIN')
 dataset_loader = data.DataLoader(mm_dataset, batch_size=20, shuffle=True)
 
 # Create Missing Dataset
-mis_dataset = MultiModalDataset('missing_samples_EC.csv', 'data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+mis_dataset = MultiModalDataset('missing_samples_EC.csv', 'TDBRAIN')
 mis_dataset_loader = data.DataLoader(mis_dataset, batch_size=20, shuffle=True)
 
 # Create an instance of the encoder
