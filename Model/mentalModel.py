@@ -10,8 +10,8 @@ import torch.nn as nn
 
 import mne
 
-from attentionLayer import AttentionLayer
-from recur import EegRNN
+from Model.attentionLayer import AttentionLayer
+from Model.recur import EegRNN
 
 
 ##################################################################################################
