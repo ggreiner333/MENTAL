@@ -6,6 +6,9 @@ import numpy as np
 import torch
 from torch.utils import data
 
+from torch.utils.data import DataLoader, Subset
+from sklearn.model_selection import train_test_split
+
 import mne
 
 
@@ -23,19 +26,21 @@ batch = 20
 
 test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
 
-# Create Dataset and Dataset Loader
-mm_dataset = MultiModalDataset('complete_samples_EC.csv', 'TDBRAIN')
-dataset_loader = data.DataLoader(mm_dataset, batch_size=batch, shuffle=True)
-
 main_dataset = SplitDataset('complete_samples_EC.csv', 'TDBRAIN')
-main_loader  = data.DataLoader(main_dataset, batch_size=batch, shuffle=True)
+
+print(main_dataset.__len__())
+
+#res = data.random_split(main_dataset, [800])
+
+#main_loader  = data.DataLoader(main_dataset, batch_size=batch, shuffle=True)
 
 
-my_mental = MENTAL(60, 3, 3, batch)
 
-optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
+#my_mental = MENTAL(60, 3, 3, batch)
 
-epochs = 1000
+#optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
+
+epochs = 0
 
 for epoch in range(epochs):
 
