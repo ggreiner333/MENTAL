@@ -78,6 +78,8 @@ for epoch in range(epochs):
 
 for (d_entry, n_entry, p_entry, label) in test_loader:
     out, h = my_mental(p, n_entry, h)
-    print("----------------------------------------------")
-    print("Condition : " + str(label))
-    print("Prediction: " + str(out))
+    out = out.flatten()
+    for i in range(0, label.size()):
+        print("----------------------------------------------")
+        print("Condition : " + str(label[i]))
+        print("Prediction: " + str(out[i]))
