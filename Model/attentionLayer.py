@@ -18,15 +18,15 @@ import math
 
 class AttentionLayer(nn.Module):
 
-    def __init__(self, dk, dv):
+    def __init__(self, dk, dv, batch):
         super().__init__()
 
         self.dk = dk
         self.dv = dv
 
-        self.W_q = nn.Linear(1, dk)
-        self.W_k = nn.Linear(1, dk)
-        self.W_v = nn.Linear(1, dv)
+        self.W_q = nn.Linear(batch, dk)
+        self.W_k = nn.Linear(batch, dk)
+        self.W_v = nn.Linear(batch, dv)
 
         self.softmax = nn.Softmax(dim=-1)
 
