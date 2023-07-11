@@ -35,9 +35,9 @@ class AttentionLayer(nn.Module):
         print("K size: " + str(k.size()))
         print("V size: " + str(v.size()))
 
-        q = self.W_q(q.transpose(0,1))
-        k = self.W_k(k.transpose(0,1))
-        v = self.W_v(v.transpose(0,1))
+        q = self.W_q(q)
+        k = self.W_k(k)
+        v = self.W_v(v)
 
         print("Q size: " + str(q.size()))
         print("K size: " + str(k.size()))
