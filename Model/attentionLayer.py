@@ -35,9 +35,7 @@ class AttentionLayer(nn.Module):
         k = self.W_k(k.transpose(0,1))
         v = self.W_v(v.transpose(0,1))
 
-        print(k.size())
         k = k.transpose(0,1)
-        print(k.size())
 
         res = torch.matmul(q,k) / math.sqrt(self.dk)
         res = self.softmax(res)
