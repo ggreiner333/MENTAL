@@ -42,7 +42,7 @@ class EegRNN(nn.Module):
         h[1].unsqueeze_(-1)
         h1 = h[1].transpose(1,2)
         h1 = h1.transpose(0,1)
-        h1.squeeze(-1)
+        h1 = h1.squeeze(-1)
         print(h1.size())
         res, h_1 = self.layer_1(  x, h0)
         res, h_2 = self.layer_2(res, h1)
