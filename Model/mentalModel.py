@@ -29,7 +29,7 @@ class MENTAL(nn.Module):
 
 
     def forward(self, eeg, neo, h):
-        print(h.size())
+        
         # Run attention layer
         out, res = self.attention(neo, eeg, eeg)
 

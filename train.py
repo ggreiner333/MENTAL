@@ -39,9 +39,14 @@ epochs = 1000
 
 for epoch in range(epochs):
 
+    first = True
     for (d_entry, n_entry, p_entry, label) in main_loader:
 
-        output = my_mental.forward(p_entry, n_entry, d_entry)
+        if(first):
+            h = (d_entry, d_entry)
+            first = False
+
+        output, h = my_mental.forward(p_entry, n_entry, h)
 
         loss = torch.nn.MSELoss()
         res = loss(output, label)
