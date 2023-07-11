@@ -31,9 +31,9 @@ class AttentionLayer(nn.Module):
         self.softmax = nn.Softmax(dim=-1)
 
     def forward(self, q, k, v):
-        q = self.W_q(q)
-        k = self.W_k(k)
-        v = self.W_v(v)
+        q = self.W_q(q.transpose(0,1))
+        k = self.W_k(k.transpose(0,1))
+        v = self.W_v(v.transpose(0,1))
 
         k = k.transpose(2,3)
 
