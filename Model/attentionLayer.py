@@ -24,9 +24,9 @@ class AttentionLayer(nn.Module):
         self.dk = dk
         self.dv = dv
 
-        self.W_q = nn.Linear(dk, dk)
-        self.W_k = nn.Linear(dv, dk)
-        self.W_v = nn.Linear(dv, dv)
+        self.W_q = nn.Linear(1, dk)
+        self.W_k = nn.Linear(1, dk)
+        self.W_v = nn.Linear(1, dv)
 
         self.softmax = nn.Softmax(dim=-1)
 
