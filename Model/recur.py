@@ -33,6 +33,7 @@ class EegRNN(nn.Module):
 
     def forward(self, x, h):
         x.unsqueeze_(-1)
+        x.transpose(0,1)
         print(x.size())
         h[0].unsqueeze_(-1)
         h[0].transpose(0,1)
