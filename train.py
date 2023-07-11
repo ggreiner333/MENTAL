@@ -18,17 +18,20 @@ from Model.mentalModel import MENTAL
 ##################################################################################################
 ##################################################################################################
 
+batch = 20
+
+
 test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
 
 # Create Dataset and Dataset Loader
 mm_dataset = MultiModalDataset('complete_samples_EC.csv', 'TDBRAIN')
-dataset_loader = data.DataLoader(mm_dataset, batch_size=20, shuffle=True)
+dataset_loader = data.DataLoader(mm_dataset, batch_size=batch, shuffle=True)
 
 main_dataset = SplitDataset('complete_samples_EC.csv', 'TDBRAIN')
-main_loader  = data.DataLoader(main_dataset, batch_size=20, shuffle=True)
+main_loader  = data.DataLoader(main_dataset, batch_size=batch, shuffle=True)
 
 
-my_mental = MENTAL(60, 30, 15)
+my_mental = MENTAL(60, 30, 15, batch)
 
 optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
 
