@@ -35,6 +35,10 @@ class AttentionLayer(nn.Module):
         k = self.W_k(k.transpose(0,1))
         v = self.W_v(v.transpose(0,1))
 
+        print("Q size: " + str(q.size()))
+        print("K size: " + str(k.size()))
+        print("V size: " + str(v.size()))
+
         k = k.transpose(0,1)
 
         res = torch.matmul(q,k) / math.sqrt(self.dk)
