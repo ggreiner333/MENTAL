@@ -50,6 +50,8 @@ class AttentionLayer(nn.Module):
 
         out = torch.matmul(res, v)
 
+        print(out.size())
+
         return out, res
 
         
