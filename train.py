@@ -42,16 +42,18 @@ for epoch in range(epochs):
     for (d_entry, n_entry, p_entry, label) in main_loader:
 
         h = (d_entry, d_entry)
+
         h[0].unsqueeze_(-1)
         h0 = h[0].transpose(1,2)
         h0 = h0.transpose(0,1)
-        print(h0.size())
+
         h[1].unsqueeze_(-1)
         h1 = h[1].transpose(1,2)
         h1 = h1.transpose(0,1)
         h1 = h1.squeeze(-1)
-        print(h1.size())
+
         h = (h0,h1)
+        
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)
 
