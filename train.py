@@ -34,9 +34,10 @@ test_loader  = data.DataLoader(res[1], batch_size=batch)
 
 for (d_entry, n_entry, p_entry, label) in test_loader:
     print(d_entry)
-    print(n_entry)
-    print(p_entry)
-    print(label)
+    print()
+    #print(n_entry)
+    #print(p_entry)
+    #print(label)
 
 my_mental = MENTAL(60, 3, 3, batch)
 
