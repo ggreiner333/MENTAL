@@ -42,7 +42,9 @@ class SplitDataset(data.Dataset):
         indication = individual[1]
         dem_val = individual[2:5]
         neo_val = individual[5:65]
-        psd_val = individual[65:]
+        psd_val = []
+        for i in range(0,7800, 130):
+            psd_val.append(individual[i:(i+130)]) 
         return dem_val, neo_val, psd_val, indication
     
     def __getIndividuals__(self):
