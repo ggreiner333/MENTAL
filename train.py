@@ -32,18 +32,11 @@ res = data.random_split(main_dataset, [770,192])
 train_loader = data.DataLoader(res[0], batch_size=batch, shuffle=True)
 test_loader  = data.DataLoader(res[1], batch_size=batch)
 
-for (d_entry, n_entry, p_entry, label) in test_loader:
-    print(d_entry)
-    print()
-    #print(n_entry)
-    #print(p_entry)
-    #print(label)
-
 my_mental = MENTAL(60, 3, 3, batch)
 
 optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
 
-epochs = 0
+epochs = 1
 
 for epoch in range(epochs):
 
@@ -83,3 +76,8 @@ for epoch in range(epochs):
     print(" Loss: " + str(res) )
     print("-----------------------")
 
+for (d_entry, n_entry, p_entry, label) in test_loader:
+    out, h = my_mental(p, n_entry, h)
+    print("----------------------------------------------")
+    print("Condition : " + str(label))
+    print("Prediction: " + str(out))
