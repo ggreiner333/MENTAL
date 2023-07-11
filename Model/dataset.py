@@ -40,9 +40,9 @@ class SplitDataset(data.Dataset):
     def __getitem__(self, idx):
         individual = self.individuals[idx]
         indication = individual[1]
-        dem_val = np.array(individual[2:5])
-        neo_val = np.array([individual[5:65]])
-        psd_val = np.array([individual[65:]])
+        dem_val = np.array([np.asarray(individual[2:5])])
+        neo_val = np.array([np.asarray(individual[5:65])])
+        psd_val = np.array([np.asarray(individual[65:])])
         return dem_val, neo_val, psd_val, indication
     
     def __getIndividuals__(self):
