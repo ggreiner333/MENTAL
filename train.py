@@ -27,21 +27,26 @@ main_dataset = SplitDataset('complete_samples_EC.csv', 'TDBRAIN')
 
 print(main_dataset.__len__())
 
-#res = data.random_split(main_dataset, [800])
+res = data.random_split(main_dataset, [770,192])
 
-#main_loader  = data.DataLoader(main_dataset, batch_size=batch, shuffle=True)
+train_loader = data.DataLoader(res[0], batch_size=batch, shuffle=True)
+test_loader  = data.DataLoader(res[1], batch_size=batch)
 
+for (d_entry, n_entry, p_entry, label) in test_loader:
+    print(d_entry)
+    print(n_entry)
+    print(p_entry)
+    print(label)
 
+my_mental = MENTAL(60, 3, 3, batch)
 
-#my_mental = MENTAL(60, 3, 3, batch)
-
-#optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
+optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
 
 epochs = 0
 
 for epoch in range(epochs):
 
-    for (d_entry, n_entry, p_entry, label) in main_loader:
+    for (d_entry, n_entry, p_entry, label) in train_loader:
 
         h = (d_entry, d_entry)
 
