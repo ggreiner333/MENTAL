@@ -78,6 +78,8 @@ for epoch in range(epochs):
             for j in range(0, 35):
                 cur = output[i][0][j]
                 if cur > max:
+                    print('   ')
+                    print('here')
                     max = cur 
                     idx = j
             idxs.append(j)
