@@ -18,6 +18,13 @@ from Model.mentalModel import MENTAL
 ##################################################################################################
 ##################################################################################################
 
+diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
+             'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
+             'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
+             'STROKE', 'TBI', 'ANOREXIA', 'CONVERSION DX', 'DPS', 'DYSPRAXIA', 'LYME', 'MSA-C', 
+             'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
+
+
 batch = 20
 
 
@@ -36,7 +43,7 @@ my_mental = MENTAL(60, 3, 3, batch)
 
 optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-6, weight_decay=1e-9)
 
-epochs = 1000
+epochs = 1
 
 for epoch in range(epochs):
 
@@ -60,10 +67,10 @@ for epoch in range(epochs):
 
         output.squeeze_(-1)
         output.squeeze_(-1)
-        #print("---------------------------")
-        #print(output)
-        #print(label)
-        #print("---------------------------")
+        print("---------------------------")
+        print(output)
+        print(label)
+        print("---------------------------")
         loss = torch.nn.MSELoss()
         res = loss(output, label)
 
