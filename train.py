@@ -18,6 +18,11 @@ from Model.mentalModel import MENTAL
 ##################################################################################################
 ##################################################################################################
 
+def create_label(label):
+    output = torch.zeros([35])
+    output[int(label)] = 1
+    return output
+
 diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
              'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
              'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
@@ -71,27 +76,24 @@ for epoch in range(epochs):
         print(output)
         print(label)
         print("---------------------------")
-        idxs = []
+        preds = []
         for i in range(0, 20):
-            max = 0
-            idx = 0
-            print('--------------------------------')
-            for j in range(0, 35):
-                cur = output[i][0][j]
-                print('cur: ' + str(cur))
-                print('max: ' + str(max))
-                print('idx: ' + str(idx))
-                if cur > max:
-                    print('   ')
-                    max = cur 
-                    idx = j
-            idxs.append(float(idx))
-        idxs = np.array(idxs)
-        idxs = torch.from_numpy(idxs)
-        print(idxs)
+            preds.append(output[i][0])
+
+        preds = np.array(preds)
+        preds = torch.from_numpy(preds)
+        print(preds)
+        
+        labels = []
+        for l in label:
+            labels.append(create_label(l))
+
+        labels = np.array(labels)
+        labels = torch.from_numpyl(labels)
+        print(labels)
 
         loss = torch.nn.MSELoss()
-        res = loss(idxs, label)
+        res = loss(preds, label)
 
         optimizer.zero_grad()
         res.backward()
