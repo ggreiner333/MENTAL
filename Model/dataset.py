@@ -39,15 +39,24 @@ class SplitDataset(data.Dataset):
 
     def __getitem__(self, idx):
         individual = self.individuals[idx]
+
         indication = individual[1]
         output = torch.zeros([35])
         output[int(indication)] = 1
+
         dem_val = individual[2:5]
+        dem_out = torch.zeros([30])
+        dem_out[0] = dem_val[0]
+        dem_out[1] = dem_val[1]
+        dem_out[2] = dem_val[2]
+
         neo_val = individual[5:65]
+
         psd_val = []
         for i in range(0,7800, 130):
             psd_val.append(individual[i:(i+130)]) 
-        return dem_val, neo_val, psd_val, output
+
+        return dem_out, neo_val, psd_val, output
     
     def __getIndividuals__(self):
         res = []
