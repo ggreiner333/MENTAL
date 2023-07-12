@@ -85,7 +85,7 @@ for epoch in range(epochs):
                     print('   ')
                     max = cur 
                     idx = j
-            idxs.append(j)
+            idxs.append(idx)
         idxs = np.array(idxs)
         print(idxs)
 
