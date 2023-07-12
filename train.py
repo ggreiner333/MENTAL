@@ -66,11 +66,11 @@ for epoch in range(epochs):
             output, h = my_mental.forward(p, n_entry, h)
 
         output = output.squeeze_(1)
-        print(output)
-        print(output.size())
+        #print(output)
+        #print(output.size())
 
-        print(label)
-        print(label.size())
+        #print(label)
+        #print(label.size())
 
         loss = torch.nn.MSELoss()
         res = loss(output, label)
@@ -86,6 +86,7 @@ for epoch in range(epochs):
 
 for (d_entry, n_entry, p_entry, label) in test_loader:
     out, h = my_mental(p, n_entry, h)
+    print(out)
     out = out.flatten()
     for i in range(0, label.size()[0]):
         print("----------------------------------------------")
