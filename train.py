@@ -67,13 +67,23 @@ for epoch in range(epochs):
 
         output = output.squeeze_(-1)
         output = output.squeeze_(-1)
-        output.squeeze_(-1)
         print("---------------------------")
         print(output)
         print(label)
         print("---------------------------")
+        idxs = []
+        for i in range(0, 20):
+            max = 0
+            idx = 0
+            for j in range(0, 35):
+                cur = output[i][0][j]
+                if cur > max:
+                    max = cur 
+                    idx = j
+            idxs.append(j)
+        idxs = np.array(res)
         loss = torch.nn.MSELoss()
-        res = loss(output, label)
+        res = loss(idxs, label)
 
         optimizer.zero_grad()
         res.backward()
