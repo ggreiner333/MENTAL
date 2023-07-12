@@ -72,7 +72,7 @@ for epoch in range(epochs):
 
         output = output.squeeze_(1)
         #print(output)
-        print(output.shape())
+        print(output.size())
   
         labels = []
         for l in label:
@@ -80,7 +80,7 @@ for epoch in range(epochs):
 
         labels = np.array(labels)
         labels = torch.from_numpy(labels)
-        print(labels.shape())
+        print(labels.size())
 
         loss = torch.nn.MSELoss()
         res = loss(output, label)
