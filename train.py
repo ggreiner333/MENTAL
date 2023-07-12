@@ -80,6 +80,7 @@ for epoch in range(epochs):
 
         labels = np.array(labels)
         labels = torch.from_numpy(labels)
+        labels.unsqueeze_(-1)
         print(labels.size())
 
         loss = torch.nn.MSELoss()
