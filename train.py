@@ -67,6 +67,7 @@ for epoch in range(epochs):
 
         output.squeeze_(-1)
         output.squeeze_(-1)
+        output.squeeze_(-1)
         print("---------------------------")
         print(output)
         print(label)
