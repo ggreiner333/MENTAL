@@ -71,7 +71,8 @@ for epoch in range(epochs):
             output, h = my_mental.forward(p, n_entry, h)
 
         output = output.squeeze_(1)
-        print(output)
+        #print(output)
+        print(output.shape())
   
         labels = []
         for l in label:
@@ -79,7 +80,7 @@ for epoch in range(epochs):
 
         labels = np.array(labels)
         labels = torch.from_numpy(labels)
-        print(labels)
+        print(labels.shape())
 
         loss = torch.nn.MSELoss()
         res = loss(output, label)
