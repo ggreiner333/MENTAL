@@ -119,7 +119,7 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         if(same): 
             correct += 1
 
-total = test_loader.__len__()
+total = (test_loader.__len__())*batch
 
 print("------------------------------------")
 print("------------------------------------")
