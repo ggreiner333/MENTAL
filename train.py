@@ -85,7 +85,7 @@ for epoch in range(epochs):
                     print('   ')
                     max = cur 
                     idx = j
-            idxs.append(idx)
+            idxs.append(float(idx))
         idxs = np.array(idxs)
         idxs = torch.from_numpy(idxs)
         print(idxs)
