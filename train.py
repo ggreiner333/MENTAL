@@ -72,14 +72,7 @@ for epoch in range(epochs):
 
         output = output.squeeze_(-1)
         output = output.squeeze_(-1)
-
-        preds = []
-        for i in range(0, 20):
-            preds.append(output[i][0])
-
-        print(preds)
-
-        
+  
         labels = []
         for l in label:
             labels.append(create_label(l))
@@ -89,7 +82,7 @@ for epoch in range(epochs):
         print(labels)
 
         loss = torch.nn.MSELoss()
-        res = loss(preds, label)
+        res = loss(output, label)
 
         optimizer.zero_grad()
         res.backward()
