@@ -72,6 +72,7 @@ for epoch in range(epochs):
 
         output = output.squeeze_(-1)
         output = output.squeeze_(-1)
+        print(output)
   
         labels = []
         for l in label:
