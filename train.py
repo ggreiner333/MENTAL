@@ -85,7 +85,7 @@ for epoch in range(epochs):
             labels.append(create_label(l))
 
         labels = np.array(labels)
-        labels = torch.from_numpyl(labels)
+        labels = torch.from_numpy(labels)
         print(labels)
 
         loss = torch.nn.MSELoss()
