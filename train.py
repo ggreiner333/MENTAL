@@ -82,6 +82,7 @@ for epoch in range(epochs):
                     idx = j
             idxs.append(j)
         idxs = np.array(idxs)
+        print(idxs)
 
         loss = torch.nn.MSELoss()
         res = loss(idxs, label)
