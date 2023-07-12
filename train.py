@@ -91,9 +91,9 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
     preds = []
     for i in range(0, 20):
         idx = 0
-        min = abs(out[i][0][0], 1.0)
+        min = abs(out[i][0][0]-1.0)
         for j in range(1, 35):
-            dist = abs(out[i][0][j], 1.0)
+            dist = abs(out[i][0][j]-1.0)
             if(dist < min):
                 idx = j
                 min = dist
