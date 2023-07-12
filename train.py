@@ -81,7 +81,8 @@ for epoch in range(epochs):
                     max = cur 
                     idx = j
             idxs.append(j)
-        idxs = np.array(res)
+        idxs = np.array(idxs)
+
         loss = torch.nn.MSELoss()
         res = loss(idxs, label)
 
