@@ -65,8 +65,8 @@ for epoch in range(epochs):
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)
 
-        output.squeeze_(-1)
-        output.squeeze_(-1)
+        output = output.squeeze_(-1)
+        output = output.squeeze_(-1)
         output.squeeze_(-1)
         print("---------------------------")
         print(output)
