@@ -75,11 +75,14 @@ for epoch in range(epochs):
         for i in range(0, 20):
             max = 0
             idx = 0
+            print('--------------------------------')
             for j in range(0, 35):
                 cur = output[i][0][j]
+                print('cur: ' + str(cur))
+                print('max: ' + str(max))
+                print('idx: ' + str(idx))
                 if cur > max:
                     print('   ')
-                    print('here')
                     max = cur 
                     idx = j
             idxs.append(j)
