@@ -7,6 +7,7 @@ import torch
 from torch.utils import data
 
 import mne
+import math
 
 
 from Model.dataset import MultiModalDataset
@@ -86,9 +87,23 @@ for epoch in range(epochs):
 
 for (d_entry, n_entry, p_entry, label) in test_loader:
     out, h = my_mental(p, n_entry, h)
-    print(out)
-    out = out.flatten()
+    #print(out)
+    preds = []
+    for i in range(0, 20):
+        idx = 0
+        min = math.abs(out[i][0][0], 1.0)
+        for j in range(1, 35):
+            dist = math.abs(out[i][0][j], 1.0)
+            if(dist < min):
+                idx = j
+                min = dist
+        temp = torch.zeros([35])
+        temp[int(idx)] = 1.0
+        preds.append(temp)
+        
+
+
     for i in range(0, label.size()[0]):
         print("----------------------------------------------")
         print("Condition : " + str(label[i]))
-        print("Prediction: " + str(out[i]))
+        print("Prediction: " + str(preds[i]))
