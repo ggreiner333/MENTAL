@@ -72,17 +72,13 @@ for epoch in range(epochs):
 
         output = output.squeeze_(-1)
         output = output.squeeze_(-1)
-        print("---------------------------")
-        print(output)
-        print(label)
-        print("---------------------------")
+
         preds = []
         for i in range(0, 20):
             preds.append(output[i][0])
 
         print(preds)
-        preds = torch.from_numpy(preds)
-        print(preds)
+
         
         labels = []
         for l in label:
