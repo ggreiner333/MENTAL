@@ -18,11 +18,6 @@ from Model.mentalModel import MENTAL
 ##################################################################################################
 ##################################################################################################
 
-def create_label(label):
-    output = torch.zeros([35])
-    output[int(label)] = 1
-    return output
-
 diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
              'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
              'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
@@ -73,15 +68,8 @@ for epoch in range(epochs):
         output = output.squeeze_(1)
         #print(output)
         print(output.size())
-  
-        labels = []
-        for l in label:
-            labels.append(create_label(l))
 
-        labels = np.array(labels)
-        labels = torch.from_numpy(labels)
-        labels.unsqueeze_(-1)
-        print(labels.size())
+        print(label.size())
 
         loss = torch.nn.MSELoss()
         res = loss(output, label)
