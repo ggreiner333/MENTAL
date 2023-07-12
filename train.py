@@ -85,6 +85,7 @@ for epoch in range(epochs):
     print(" Loss: " + str(res) )
     print("-----------------------")
 
+correct = 0
 for (d_entry, n_entry, p_entry, label) in test_loader:
     out, h = my_mental(p, n_entry, h)
     #print(out)
@@ -102,8 +103,28 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         preds.append(temp)
         
 
-
+    
     for i in range(0, label.size()[0]):
+        lb = label[i]
+        pd = preds[i]
         print("----------------------------------------------")
-        print("Condition : " + str(label[i]))
-        print("Prediction: " + str(preds[i]))
+        print("Condition : " + str(lb))
+        print("Prediction: " + str(pd))
+        ret = torch.eq(lb, pd)
+        print("Equal?    : " + str(ret))
+        if(ret): 
+            correct += 1
+
+total = test_loader.__len__()
+
+print("------------------------------------")
+print("------------------------------------")
+print("------------------------------------")
+print("------------------------------------")
+
+print("Correct : " + str(correct))
+print("Total   : " + str(total))
+print("Accuracy: " + str(correct/total))
+
+
+
