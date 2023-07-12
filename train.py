@@ -111,8 +111,12 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         print("Condition : " + str(lb))
         print("Prediction: " + str(pd))
         ret = torch.eq(lb, pd)
-        print("Equal?    : " + str(ret))
-        if(ret): 
+        same = True
+        for i in range(0, ret.size()[0]):
+            if(not ret[i]):
+                same = False
+        print("Equal?    : " + str(same))
+        if(same): 
             correct += 1
 
 total = test_loader.__len__()
