@@ -80,7 +80,7 @@ for epoch in range(epochs):
         for i in range(0, 20):
             preds.append(output[i][0])
 
-        preds = np.array(preds)
+        print(preds)
         preds = torch.from_numpy(preds)
         print(preds)
         
