@@ -106,7 +106,7 @@ for epoch in range(epochs):
             conds = []
             for i in range(0, 20):
                 temp = torch.zeros([35])
-                temp[0] = label[i][j]
+                temp[0] = label[i][0]
                 conds.append(temp)
             
             for i in range(0, len(conds)):
