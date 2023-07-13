@@ -33,7 +33,7 @@ test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=
 
 main_dataset = SplitDataset('complete_samples_EC.csv', 'TDBRAIN')
 
-print(main_dataset.__len__())
+#print(main_dataset.__len__())
 
 res = data.random_split(main_dataset, [760,200, 2])
 
@@ -43,6 +43,9 @@ test_loader  = data.DataLoader(res[1], batch_size=batch)
 my_mental = MENTAL(60, 30, 35, batch)
 
 optimizer = torch.optim.Adam(my_mental.parameters(), lr=2e-7, weight_decay=1e-9)
+
+print("parameters : ")
+print(my_mental.parameters())
 
 epochs = 100
 
@@ -103,11 +106,22 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         temp = torch.zeros([35])
         temp[int(idx)] = 1.0
         preds.append(temp)
-        
 
+    conds = []
+    for i in range(0, 20):
+        temp = torch.zeros([35])
+        temp[0] = label[i][0]
+        temp[1] = label[i][1]
+        temp[2] = label[i][2]
+        temp[3] = label[i][3]
+        temp[4] = label[i][4]
+        preds.append(temp)
     
-    for i in range(0, label.size()[0]):
-        lb = label[i]
+    conds = np.array(conds)
+    conds = torch.from_numpy(conds)
+    
+    for i in range(0, conds.size()[0]):
+        lb = conds[i]
         pd = preds[i]
         print("----------------------------------------------")
         print("Condition : " + str(lb))
