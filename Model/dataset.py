@@ -41,11 +41,11 @@ class SplitDataset(data.Dataset):
         individual = self.individuals[idx]
 
         indication = individual[1]
-        output = torch.zeros([5])
-        if(int(indication) <= 4):
-            output[int(indication)] = 1
-        else:
-            output[0] = 1
+        #output = torch.zeros([5])
+        #if(int(indication) <= 4):
+        #    output[int(indication)] = 1
+        #else:
+        #    output[0] = 1
 
         dem_val = individual[2:5]
         dem_out = np.zeros(30, dtype="float32")
@@ -60,7 +60,7 @@ class SplitDataset(data.Dataset):
         for i in range(0,7800, 130):
             psd_val.append(individual[i:(i+130)]) 
 
-        return dem_out, neo_val, psd_val, output
+        return dem_out, neo_val, psd_val, indication
     
     def __getIndividuals__(self):
         res = []

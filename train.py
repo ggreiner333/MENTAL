@@ -75,9 +75,7 @@ for epoch in range(epochs):
 
         #print(label)
         #print(label.size())
-
-        temp = torch.zeros([35])
-
+        
         loss = torch.nn.MSELoss()
         res = loss(output, label)
 
@@ -90,7 +88,34 @@ for epoch in range(epochs):
     print(" Loss: " + str(res) )
     print("-----------------------")
 
+
     if((epoch!=0) and epoch%100==0):
+        correct = 0
+        for (d_entry, n_entry, p_entry, label) in test_loader:
+            out, h = my_mental(p, n_entry, h)
+            
+            for i in range(0, label.size()[0]):
+                lb = label[i]
+                pd = math.floor(out[i])
+                print("----------------------------------------------")
+                print("Condition : " + str(lb))
+                print("Prediction: " + str(pd))
+                if(lb == pd):
+                    correct += 1
+                    print("Equal?    : true")
+                else:
+                    print("Equal?    : false")
+
+        total = (test_loader.__len__())*batch
+
+        print("------------------------------------")
+        print("------------------------------------")
+
+        print("Correct : " + str(correct))
+        print("Total   : " + str(total))
+        print("Accuracy: " + str(correct/total))
+
+    """if((epoch!=0) and epoch%100==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
             out, h = my_mental(p, n_entry, h)
@@ -143,7 +168,35 @@ for epoch in range(epochs):
         print("Correct : " + str(correct))
         print("Total   : " + str(total))
         print("Accuracy: " + str(correct/total))
+    """
 
+correct = 0
+for (d_entry, n_entry, p_entry, label) in test_loader:
+    out, h = my_mental(p, n_entry, h)
+    
+    for i in range(0, label.size()[0]):
+        lb = label[i]
+        pd = math.floor(out[i])
+        print("----------------------------------------------")
+        print("Condition : " + str(lb))
+        print("Prediction: " + str(pd))
+        if(lb == pd):
+            correct += 1
+            print("Equal?    : true")
+        else:
+            print("Equal?    : false")
+
+total = (test_loader.__len__())*batch
+
+print("------------------------------------")
+print("------------------------------------")
+
+print("Correct : " + str(correct))
+print("Total   : " + str(total))
+print("Accuracy: " + str(correct/total))
+
+
+"""
 correct = 0
 for (d_entry, n_entry, p_entry, label) in test_loader:
     out, h = my_mental(p, n_entry, h)
@@ -199,3 +252,4 @@ print("Accuracy: " + str(correct/total))
 
 
 
+"""
