@@ -45,9 +45,9 @@ my_mental = MENTAL(60, 30, 35, batch)
 optimizer = torch.optim.Adam(my_mental.parameters(), lr=2e-7, weight_decay=1e-9)
 
 print("parameters : ")
-print(my_mental.parameters())
+print(list(my_mental.parameters()))
 
-epochs = 1000
+epochs = 0
 
 for epoch in range(epochs):
 
