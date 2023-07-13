@@ -47,7 +47,7 @@ optimizer = torch.optim.Adam(my_mental.parameters(), lr=2e-7, weight_decay=1e-9)
 print("parameters : ")
 print(my_mental.parameters())
 
-epochs = 10
+epochs = 1000
 
 for epoch in range(epochs):
 
@@ -89,6 +89,60 @@ for epoch in range(epochs):
     print("Epoch: " + str(epoch))
     print(" Loss: " + str(res) )
     print("-----------------------")
+
+    if((epoch!=0) and epoch%100==0):
+        correct = 0
+        for (d_entry, n_entry, p_entry, label) in test_loader:
+            out, h = my_mental(p, n_entry, h)
+            #print(out)
+            preds = []
+            for i in range(0, 20):
+                idx = 0
+                min = abs(out[i][0][0]-1.0)
+                for j in range(1, 5):
+                    dist = abs(out[i][0][j]-1.0)
+                    if(dist < min):
+                        idx = j
+                        min = dist
+                temp = torch.zeros([35])
+                temp[int(idx)] = 1.0
+                preds.append(temp)
+
+            conds = []
+            for i in range(0, 20):
+                temp = torch.zeros([35])
+                temp[0] = label[i][0]
+                temp[1] = label[i][1]
+                temp[2] = label[i][2]
+                temp[3] = label[i][3]
+                temp[4] = label[i][4]
+                conds.append(temp)
+            
+            for i in range(0, len(conds)):
+                lb = conds[i]
+                pd = preds[i]
+                print("----------------------------------------------")
+                print("Condition : " + str(lb))
+                print("Prediction: " + str(pd))
+                ret = torch.eq(lb, pd)
+                same = True
+                for i in range(0, ret.size()[0]):
+                    if(not ret[i]):
+                        same = False
+                print("Equal?    : " + str(same))
+                if(same): 
+                    correct += 1
+
+        total = (test_loader.__len__())*batch
+
+        print("------------------------------------")
+        print("------------------------------------")
+        print("------------------------------------")
+        print("------------------------------------")
+
+        print("Correct : " + str(correct))
+        print("Total   : " + str(total))
+        print("Accuracy: " + str(correct/total))
 
 correct = 0
 for (d_entry, n_entry, p_entry, label) in test_loader:
