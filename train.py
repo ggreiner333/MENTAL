@@ -89,7 +89,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-    if((epoch!=0) and epoch%10==0):
+    if((epoch!=0) and epoch==1):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
             h = (d_entry, d_entry)
@@ -109,7 +109,7 @@ for epoch in range(epochs):
                 output, h = my_mental.forward(p, n_entry, h)
 
             out = output.squeeze_(1)
-            #print(out)
+            print(out)
             preds = []
             for i in range(0, 20):
                 temp = torch.zeros([35])
