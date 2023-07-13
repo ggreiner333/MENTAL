@@ -44,8 +44,8 @@ my_mental = MENTAL(10, 5, 5, batch)
 
 optimizer = torch.optim.Adam(my_mental.parameters(), lr=2e-7, weight_decay=1e-9)
 
-print("parameters : ")
-print(list(my_mental.parameters()))
+#print("parameters : ")
+#print(list(my_mental.parameters()))
 
 epochs = 0
 
