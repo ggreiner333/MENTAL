@@ -98,7 +98,7 @@ for epoch in range(epochs):
             for i in range(0, 20):
                 idx = 0
                 min = abs(out[i][0][0]-1.0)
-                for j in range(1, 20):
+                for j in range(1, 2):
                     dist = abs(out[i][0][j]-1.0)
                     if(dist < min):
                         idx = j
@@ -110,7 +110,7 @@ for epoch in range(epochs):
             conds = []
             for i in range(0, 20):
                 temp = torch.zeros([35])
-                for j in range(0,20):
+                for j in range(0,2):
                     temp[j] = label[i][j]
                 conds.append(temp)
             
