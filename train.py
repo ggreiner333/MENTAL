@@ -47,7 +47,7 @@ optimizer = torch.optim.Adam(my_mental.parameters(), lr=2e-7, weight_decay=1e-9)
 print("parameters : ")
 print(my_mental.parameters())
 
-epochs = 1000
+epochs = 100
 
 for epoch in range(epochs):
 
@@ -69,7 +69,7 @@ for epoch in range(epochs):
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)
 
-        output = output.squeeze_(1)
+        output = output.squeeze_(-1)
         #print(output)
         #print(output.size())
 
@@ -89,7 +89,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-    if((epoch!=0) and epoch%100==0):
+    if((epoch!=0) and epoch%10==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
             out, h = my_mental(p, n_entry, h)
