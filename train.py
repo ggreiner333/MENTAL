@@ -69,12 +69,12 @@ for epoch in range(epochs):
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)
 
-        output = output.squeeze_(-1)
-        #print(output)
-        #print(output.size())
+        output = output.squeeze(-1)
+        print(output)
+        print(output.size())
 
-        #print(label)
-        #print(label.size())
+        print(label)
+        print(label.size())
         
         loss = torch.nn.MSELoss()
         res = loss(output, label)
