@@ -113,8 +113,8 @@ for epoch in range(epochs):
             preds = []
             for i in range(0, 20):
                 temp = torch.zeros([35])
-                dist_1 = abs(out[i][0][0]-1.0)
-                dist_0 = abs(out[i][0][0])
+                dist_1 = abs(out[i][0]-1.0)
+                dist_0 = abs(out[i][0])
                 if(dist_1 <= dist_0):
                     temp[0] = 1.0
                 preds.append(temp)
@@ -177,8 +177,8 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
     preds = []
     for i in range(0, 20):
         temp = torch.zeros([35])
-        dist_1 = abs(out[i][0][0]-1.0)
-        dist_0 = abs(out[i][0][0])
+        dist_1 = abs(out[i][0]-1.0)
+        dist_0 = abs(out[i][0])
         if(dist_1 <= dist_0):
             temp[0] = 1.0
         preds.append(temp)
