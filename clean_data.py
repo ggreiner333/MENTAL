@@ -22,7 +22,7 @@ diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA
 # Paths for data
 
 #psd_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD'
-psd_path = 'TDBRAIN/PSD'
+psd_path = 'TDBRAIN/PSD_all'
 #ptc_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/'
 ptc_path = 'TDBRAIN'
 #out_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/samples'
@@ -146,17 +146,17 @@ def separate_missing_samples(ptc, psd, out):
                         complete_samples.append(combined)
 
             if(not found):
-                combo = np.concatenate((ind[1:], np.zeros(7800)))
+                combo = np.concatenate((ind[1:], np.zeros(300)))
                 combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
                 combo = np.asarray(combo, dtype=float)
                 missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples)
-    np.savetxt(os.path.join(out,'complete_samples_EC.csv'), all_complete_samples, delimiter=',', fmt="%s")
+    np.savetxt(os.path.join(out,'small_complete_samples_EC.csv'), all_complete_samples, delimiter=',', fmt="%s")
 
     print(missing_samples)
     all_missing_samples = np.array(missing_samples)
-    np.savetxt(os.path.join(out,'missing_samples_EC.csv'), all_missing_samples, delimiter=',', fmt="%s")
+    np.savetxt(os.path.join(out,'small_missing_samples_EC.csv'), all_missing_samples, delimiter=',', fmt="%s")
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
