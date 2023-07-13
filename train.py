@@ -89,7 +89,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-    if((epoch!=0) and epoch%10==0):
+    if((epoch!=0) and epoch%100==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
             h = (d_entry, d_entry)
@@ -129,8 +129,8 @@ for epoch in range(epochs):
                 lb = conds[i]
                 pd = preds[i]
                 print("----------------------------------------------")
-                print("Condition : " + str(lb))
-                print("Prediction: " + str(pd))
+                print("Condition : " + str(lb[0]))
+                print("Prediction: " + str(pd[0]))
                 ret = torch.eq(lb, pd)
                 same = True
                 for i in range(0, ret.size()[0]):
@@ -193,8 +193,8 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         lb = conds[i]
         pd = preds[i]
         print("----------------------------------------------")
-        print("Condition : " + str(lb))
-        print("Prediction: " + str(pd))
+        print("Condition : " + str(lb[0]))
+        print("Prediction: " + str(pd[0]))
         ret = torch.eq(lb, pd)
         same = True
         for i in range(0, ret.size()[0]):
