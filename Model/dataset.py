@@ -42,8 +42,8 @@ class SplitDataset(data.Dataset):
 
         indication = individual[1]
         output = torch.zeros([2])
-        if(int(indication) < 2):
-            output[int(indication)] = 1
+        if(int(indication) == 2):
+            output[1] = 1
         else:
             output[0] = 1
 
