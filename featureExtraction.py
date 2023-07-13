@@ -88,7 +88,7 @@ def get_psd(file):
 
     # Load preprocessed EEG data saved in an .npy file
     loaded = np.load(file, allow_pickle=True)
-    data = np.squeeze(loaded['data'])
+    data = np.squeeze(loaded['data']) 
     channel_names = loaded['labels'].tolist()
     
     # Create an instance of a raw object that we can use to extract PSD from
