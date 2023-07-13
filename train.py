@@ -115,7 +115,7 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         temp[2] = label[i][2]
         temp[3] = label[i][3]
         temp[4] = label[i][4]
-        preds.append(temp)
+        conds.append(temp)
     
     for i in range(0, len(conds)):
         lb = conds[i]
