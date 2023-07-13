@@ -89,7 +89,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-    if((epoch!=0) and epoch%10==0):
+    if((epoch!=0) and epoch%100==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
             out, h = my_mental(p, n_entry, h)
@@ -102,9 +102,9 @@ for epoch in range(epochs):
                 print("Prediction: " + str(pd))
                 if(lb == pd):
                     correct += 1
-                    print("Equal?    : true")
+                    print("Equal?    : TRUE")
                 else:
-                    print("Equal?    : false")
+                    print("Equal?    : f")
 
         total = (test_loader.__len__())*batch
 
