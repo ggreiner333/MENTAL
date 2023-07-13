@@ -46,6 +46,9 @@ all_channels = [ "Fp1",  "Fp2",   "F7",   "F3",    "Fz",    "F4",   "F8", "FC3",
                   "C4",   "T8",  "CP3",  "CPz",   "CP4",    "P7",   "P3",  "Pz",  "P4",  "P8", "O1", "Oz", "O2", 
            "artifacts", "VEOG", "HEOG", "Erbs", "OrbOcc", "Mass" ]
 
+all_included = [ "Fp1",  "Fp2",   "F7",   "F3",    "Fz",    "F4",   "F8", "FC3", "FCz", "FC4", "T7", "C3", "Cz",
+                  "C4",   "T8",  "CP3",  "CPz",   "CP4",    "P7",   "P3",  "Pz",  "P4",  "P8", "O1", "Oz", "O2" ]
+
 channel_type = [ "eeg",  "eeg",  "eeg",  "eeg",  "eeg",  "eeg",  "eeg", "eeg", "eeg", "eeg", "eeg", "eeg", "eeg",
                  "eeg",  "eeg",  "eeg",  "eeg",  "eeg",  "eeg",  "eeg", "eeg", "eeg", "eeg", "eeg", "eeg", "eeg", 
                 "misc", "misc", "misc", "misc", "misc", "misc" ]
@@ -57,7 +60,7 @@ exclude_these = ['artifacts', 'VEOG', 'HEOG', 'Erbs', 'OrbOcc', 'Mass']
 preprocess_file_path = 'TDBRAIN/preprocessed'
 
 # path of directory where we will save the PSD features
-psds_path = 'TDBRAIN/PSD'
+psds_path = 'TDBRAIN/PSD_all'
 
 
 ##################################################################################################
@@ -142,6 +145,77 @@ def get_psd(file):
     final = np.array(all_psds)
     return final
 
+def get_psd_all(file):
+
+    """
+
+    This function extracts PSD values from each channel in the five frequency bands 
+    (delta, theta, alpha, beta, gamma) from the 2-min EEG data.
+
+    Parameters
+    ----------
+        file: location of numpy file that contains the EEG data
+
+    Returns
+    ----------
+        all_psds: numpy array that contains the psd values
+
+    """
+
+
+    # Load preprocessed EEG data saved in an .npy file
+    loaded = np.load(file, allow_pickle=True)
+    data = np.squeeze(loaded['data'])
+    channel_names = loaded['labels'].tolist()
+    
+    # Create an instance of a raw object that we can use to extract PSD from
+    info = mne.create_info(ch_names=channel_names, ch_types=channel_type, sfreq= sampling_freq, verbose="error")
+    raw = mne.io.RawArray(data, info, verbose="error")
+
+    # Output
+    all_psds = []
+
+    for t in range(0,120,2):
+        interval_psd =[]
+        
+        # extract average delta PSD for the given 2-sec interval
+        d_psd = raw.compute_psd(fmin=delta_min, fmax=delta_max, tmin=t, tmax=t+2, picks=all_included, verbose="error")
+        d_vals, d_freqs = d_psd.get_data(return_freqs=True)
+        avg = np.average(d_vals)
+        interval_psd.append(avg)
+
+        # extract average theta PSD for the given 2-sec interval
+        t_psd = raw.compute_psd(fmin=theta_min, fmax=theta_max, tmin=t, tmax=t+2, picks=all_included, verbose="error")
+        t_vals, t_freqs = t_psd.get_data(return_freqs=True)
+        avg = np.average(t_vals)
+        interval_psd.append(avg)
+
+        # extract average alpha PSD for the given 2-sec interval
+        a_psd = raw.compute_psd(fmin=alpha_min, fmax=alpha_max, tmin=t, tmax=t+2, picks=all_included, verbose="error")
+        a_vals, a_freqs = a_psd.get_data(return_freqs=True)
+        avg = np.average(a_vals)
+        interval_psd.append(avg)
+
+        # extract average beta PSD for the given 2-sec interval
+        b_psd = raw.compute_psd(fmin=beta_min, fmax=beta_max, tmin=t, tmax=t+2, picks=all_included, verbose="error")
+        b_vals, b_freqs = b_psd.get_data(return_freqs=True)
+        avg = np.average(b_vals)
+        interval_psd.append(avg)
+
+        # extract average gamma PSD for the given 2-sec interval
+        g_psd = raw.compute_psd(fmin=gamma_min, fmax=gamma_max, tmin=t, tmax=t+2, picks=all_included, verbose="error")
+        g_vals, g_freqs = g_psd.get_data(return_freqs=True)
+        avg = np.average(g_vals)
+        interval_psd.append(avg)
+
+        # add the PSD values for this interval to total data
+        all_psds.append(interval_psd)
+
+    # return a numpy array with the psd information
+    final = np.array(all_psds)
+    return final
+
+
 
 def extract_psds(path, out):
 
@@ -191,7 +265,7 @@ def extract_psds(path, out):
                         sec  = time.split(".")[0]
                         if(int(sec) >= 118):
                             # extract psd values using get_psd
-                            res = get_psd(pth)
+                            res = get_psd_all(pth)
                             # where to save the file
                             write_to = os.path.join(output, sn + ("_EO" if f.__contains__("EO") else "_EC"))
                             np.save(write_to, res, allow_pickle=True)
