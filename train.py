@@ -73,6 +73,8 @@ for epoch in range(epochs):
         #print(label)
         #print(label.size())
 
+        temp = torch.zeros([35])
+
         loss = torch.nn.MSELoss()
         res = loss(output, label)
 

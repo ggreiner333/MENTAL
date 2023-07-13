@@ -41,8 +41,11 @@ class SplitDataset(data.Dataset):
         individual = self.individuals[idx]
 
         indication = individual[1]
-        output = torch.zeros([35])
-        output[int(indication)] = 1
+        output = torch.zeros([5])
+        if(int(indication) <= 4):
+            output[int(indication)] = 1
+        else:
+            output[0] = 1
 
         dem_val = individual[2:5]
         dem_out = np.zeros(30, dtype="float32")
