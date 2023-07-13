@@ -24,7 +24,7 @@ class EegRNN(nn.Module):
         self.hidden_size = hidden_size
         self.output_size = output_size
 
-        self.sig_layer = nn.Sigmoid()
+        self.final_layer = nn.ReLU()
 
         self.layer_1 = nn.GRU(input_size, hidden_size, batch_first=True)
         self.layer_2 = nn.GRU(hidden_size, hidden_size, batch_first=True)
@@ -43,7 +43,7 @@ class EegRNN(nn.Module):
         res, h_2 = self.layer_2(res, h[1])
 
         out = self.output(res)
-        ret = self.sig_layer(out)*20
+        ret = self.final_layer(out)*20
 
         return ret, (h_1, h_2)
         
