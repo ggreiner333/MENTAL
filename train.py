@@ -93,7 +93,7 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
     for i in range(0, 20):
         idx = 0
         min = abs(out[i][0][0]-1.0)
-        for j in range(1, 35):
+        for j in range(1, 5):
             dist = abs(out[i][0][j]-1.0)
             if(dist < min):
                 idx = j
