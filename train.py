@@ -92,7 +92,7 @@ for epoch in range(epochs):
     if((epoch!=0) and epoch%100==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
-            out, h = my_mental(p, n_entry, h)
+            out, h = my_mental(p_entry, n_entry, h)
             #print(out)
             preds = []
             for i in range(0, 20):
@@ -140,7 +140,7 @@ for epoch in range(epochs):
 
 correct = 0
 for (d_entry, n_entry, p_entry, label) in test_loader:
-    out, h = my_mental(p, n_entry, h)
+    out, h = my_mental(p_entry, n_entry, h)
     #print(out)
     preds = []
     for i in range(0, 20):
