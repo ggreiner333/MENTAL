@@ -23,7 +23,7 @@ class MENTAL(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, batch):
         super().__init__()
 
-        self.attention = AttentionLayer(60, 60, batch)
+        self.attention = AttentionLayer(60, 10, batch)
 
         self.rnn = EegRNN(input_size, hidden_size, output_size)
 
