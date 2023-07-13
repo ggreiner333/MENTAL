@@ -117,10 +117,7 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         temp[4] = label[i][4]
         preds.append(temp)
     
-    conds = np.array(conds)
-    conds = torch.from_numpy(conds)
-    
-    for i in range(0, conds.size()[0]):
+    for i in range(0, len(conds)):
         lb = conds[i]
         pd = preds[i]
         print("----------------------------------------------")
