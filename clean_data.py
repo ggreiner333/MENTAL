@@ -179,4 +179,4 @@ separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
-load_attempt('TDBRAIN/small_complete_samples_EC.csv')
+#load_attempt('TDBRAIN/small_complete_samples_EC.csv')
