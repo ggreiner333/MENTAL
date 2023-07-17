@@ -155,6 +155,7 @@ for epoch in range(epochs):
 
 
 correct = 0
+all_diffs = []
 for (d_entry, n_entry, p_entry, label) in test_loader:
     h = (d_entry, d_entry)
 
@@ -175,6 +176,7 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
     out = output.squeeze_(1)
     #print(out)
     preds = []
+    diffs = []
     for i in range(0, 20):
         temp = torch.zeros([35])
         dist_1 = abs(out[i][0]-1.0)
@@ -182,6 +184,7 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         if(dist_1 <= dist_0):
             temp[0] = 1.0
         preds.append(temp)
+        diffs.append(abs(out[i][0]-label[i][0]))
 
     conds = []
     for i in range(0, 20):
@@ -204,6 +207,9 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         if(same): 
             correct += 1
 
+    for d in diffs:
+        all_diffs.append(d)
+
 total = (test_loader.__len__())*batch
 
 print("------------------------------------")
@@ -214,3 +220,33 @@ print("------------------------------------")
 print("Correct : " + str(correct))
 print("Total   : " + str(total))
 print("Accuracy: " + str(correct/total))
+
+
+# Calculate MAE
+
+sum_mae = sum(all_diffs)
+
+print("MAE     : " + str(sum_mae/(len(all_diffs))))
+
+
+
+# Calculate RMSE
+
+squared_diff = []
+
+for d in all_diffs:
+    squared_diff.append(d**2)
+
+mean_square_diff = sum(squared_diff)/len(all_diffs)
+
+print("RMSE    : " + str(np.sqrt(mean_square_diff)))
+
+
+
+# Calculate RAE
+
+test = []
+
+
+
+# Calculate RRSE
