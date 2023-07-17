@@ -47,7 +47,7 @@ optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-4, weight_decay=1e-7)
 #print("parameters : ")
 #print(list(my_mental.parameters()))
 
-epochs = 1000
+epochs = 1
 
 for epoch in range(epochs):
 
@@ -238,6 +238,8 @@ for d in all_diffs:
     squared_diff.append(d**2)
 
 mean_square_diff = sum(squared_diff)/len(all_diffs)
+
+print(mean_square_diff)
 
 print("RMSE    : " + str(np.sqrt(mean_square_diff)))
 
