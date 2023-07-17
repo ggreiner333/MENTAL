@@ -249,8 +249,6 @@ print("RMSE    : " + str(np.sqrt(mean_square_diff.item())))
 
 # Calculate RAE
 
-test = []
-
 cond_avg = sum(cond_full)/len(cond_full)
 
 res = 0.0
@@ -260,6 +258,17 @@ for c in cond_full:
 
 rae = sum(all_diffs)/res
 
-print("RAE     : " + str(rae))
+print("RAE     : " + str(rae.item()))
+
+
 
 # Calculate RRSE
+
+res2= 0.0
+
+for c in cond_full:
+    res2 += abs(c-cond_avg)**2
+
+rrse = sum(squared_diff)/res2
+
+print("RRSE    : " + str(np.sqrt(rrse.item())))
