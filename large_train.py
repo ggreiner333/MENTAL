@@ -216,15 +216,19 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
 
 total = (test_loader.__len__())*batch
 
-print("------------------------------------")
-print("------------------------------------")
-print("------------------------------------")
-print("------------------------------------")
+print("----------------------------------------------")
+print()
+print()
+print("----------------------------------------------")
 
 print("Correct : " + str(correct))
 print("Total   : " + str(total))
 print("Accuracy: " + str(correct/total))
 
+print("----------------------------------------------")
+print()
+print()
+print("----------------------------------------------")
 
 # Calculate MAE
 
@@ -269,6 +273,6 @@ res2= 0.0
 for c in cond_full:
     res2 += abs(c-cond_avg)**2
 
-rrse = sum(squared_diff)/res2
+rrse = sum(squared_diff)/res2 
 
 print("RRSE    : " + str(np.sqrt(rrse.item())))
