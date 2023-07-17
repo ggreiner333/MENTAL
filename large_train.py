@@ -225,10 +225,6 @@ print("Correct : " + str(correct))
 print("Total   : " + str(total))
 print("Accuracy: " + str(correct/total))
 
-print("----------------------------------------------")
-print()
-print()
-print("----------------------------------------------")
 
 # Calculate MAE
 
@@ -276,3 +272,9 @@ for c in cond_full:
 rrse = sum(squared_diff)/res2 
 
 print("RRSE    : " + str(np.sqrt(rrse.item())))
+
+
+print("----------------------------------------------")
+print()
+print()
+print("----------------------------------------------")
