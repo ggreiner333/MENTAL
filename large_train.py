@@ -42,7 +42,7 @@ test_loader  = data.DataLoader(res[1], batch_size=batch)
 
 my_mental = MENTAL(60, 30, 1, batch)
 
-optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-6, weight_decay=1e-9)
+optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-4, weight_decay=1e-9)
 
 #print("parameters : ")
 #print(list(my_mental.parameters()))
