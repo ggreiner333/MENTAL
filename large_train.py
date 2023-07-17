@@ -67,7 +67,8 @@ for epoch in range(epochs):
         h = (h0,h1)
 
         for p in p_entry:
-            print(p)
+            print(p.size())
+            print(n_entry.size())
             output, h = my_mental.forward(p, n_entry, h)
 
         output = output.squeeze_(1)
