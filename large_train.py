@@ -47,7 +47,7 @@ optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-4, weight_decay=1e-7)
 #print("parameters : ")
 #print(list(my_mental.parameters()))
 
-epochs = 100
+epochs = 10
 
 for epoch in range(epochs):
 
