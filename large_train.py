@@ -241,7 +241,7 @@ mean_square_diff = sum(squared_diff)/len(all_diffs)
 
 print(mean_square_diff)
 
-print("RMSE    : " + str(np.sqrt(mean_square_diff[0])))
+print("RMSE    : " + str(np.sqrt(mean_square_diff.item())))
 
 
 
