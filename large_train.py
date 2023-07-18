@@ -186,7 +186,7 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         if(dist_1 <= dist_0):
             temp[0] = 1.0
         preds.append(temp)
-        pred_full.append(out[i][0])
+        pred_full.append(temp[0])
         diffs.append(abs(out[i][0]-label[i][0]))
 
     conds = []
