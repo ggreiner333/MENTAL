@@ -296,10 +296,10 @@ for i in range(0,len(cond_full)):
 tn = cond_full.count(0)
 tp = cond_full.count(1)
 
-print("False Positive: " + fp)
-print("False Negative: " + fn)
-print(" True Positive: " + tp)
-print(" True Negative: " + tn)
+print("False Positive: " + str(fp))
+print("False Negative: " + str(fn))
+print(" True Positive: " + str(tp))
+print(" True Negative: " + str(tn))
 
 print("----------------------------------------------")
 print()
@@ -309,8 +309,8 @@ print("----------------------------------------------")
 tpr = tp/(tp+fn)
 fpr = fp/(fp+tn)
 
-print(" True Positive Rate: " + tpr)
-print("False Positive Rate: " + fpr)
+print(" True Positive Rate: " + str(tpr))
+print("False Positive Rate: " + str(fpr))
 
 
 print("----------------------------------------------")
