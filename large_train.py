@@ -288,6 +288,8 @@ fp = 0
 fn = 0
 
 for i in range(0,len(cond_full)):
+    print("Prediction : " + str(int(pred_full[i])))
+    print("Condition  : " + str(int(cond_full[i])))
     if int(pred_full[i]) == 1 and int(cond_full[i]) == 0:
         fp += 1
     if int(pred_full[i]) == 0 and int(cond_full[i]) == 1:
