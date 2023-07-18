@@ -288,13 +288,13 @@ fp = 0
 fn = 0
 
 for i in range(0,len(cond_full)):
-    if pred_full[i] == 1 and cond_full[i] == 0:
+    if pred_full[i] == 1.0 and cond_full[i] == 0.0:
         fp += 1
-    if pred_full[i] == 0 and cond_full[i] == 1:
+    if pred_full[i] == 0.0 and cond_full[i] == 1.0:
         fn += 1
 
-tn = cond_full.count(0)
-tp = cond_full.count(1)
+tn = cond_full.count(0.0)
+tp = cond_full.count(1.0)
 
 print("False Positive: " + str(fp))
 print("False Negative: " + str(fn))
