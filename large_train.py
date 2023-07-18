@@ -274,6 +274,45 @@ rrse = sum(squared_diff)/res2
 print("RRSE    : " + str(np.sqrt(rrse.item())))
 
 
+
+print("----------------------------------------------")
+print()
+print()
+print("----------------------------------------------")
+
+
+
+# Plotting ROC Curve
+
+fp = 0
+fn = 0
+
+for i in range(0,len(cond_full)):
+    if pred_full[i] == 1 and cond_full[i] == 0:
+        fp += 1
+    if pred_full[i] == 0 and cond_full[i] == 1:
+        fn += 1
+
+tn = cond_full.count(0)
+tp = cond_full.count(1)
+
+print("False Positive: " + fp)
+print("False Negative: " + fn)
+print(" True Positive: " + tp)
+print(" True Negative: " + tn)
+
+print("----------------------------------------------")
+print()
+print()
+print("----------------------------------------------")
+
+tpr = tp/(tp+fn)
+fpr = fp/(fp+tn)
+
+print(" True Positive Rate: " + tpr)
+print("False Positive Rate: " + fpr)
+
+
 print("----------------------------------------------")
 print()
 print()
