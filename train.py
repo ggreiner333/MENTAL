@@ -185,16 +185,16 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
     for p in p_entry:
         output, h = my_mental.forward(p, n_entry, h)
 
-    #print(output)
+    out = output.squeeze_(1)
     preds = []
     for i in range(0, 20):
         maxIdx = 0
-        print(output[i])
+        print(out[i])
         sum = 0
-        for j in range(0, len(output[i])):
-            if output[i][j] >= output[i][maxIdx]:
+        for j in range(0, len(out[i])):
+            if out[i][j] >= out[i][maxIdx]:
                 maxIdx=j
-            sum = sum + output[i][j]
+            sum = sum + out[i][j]
         preds.append(j)
         maxIdx=0
         print(sum)
