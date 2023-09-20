@@ -142,7 +142,7 @@ for epoch in range(epochs):
                     if(label[i][j] > 0):
                         conds.append(j)
                         break
-
+            '''
             for i in range(0, len(conds)):
                 lb = conds[i]
                 pd = preds[i]
@@ -152,6 +152,7 @@ for epoch in range(epochs):
                 print("Equal?    : " + str(lb==pd))
                 if(lb==pd): 
                     correct += 1
+            '''
 
         total = (test_loader.__len__())*batch
 
