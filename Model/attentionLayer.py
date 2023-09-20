@@ -28,7 +28,7 @@ class AttentionLayer(nn.Module):
         self.W_k = nn.Linear(130, dk)
         self.W_v = nn.Linear(130, dv)
 
-        self.softmax = nn.Softmax()
+        self.softmax = nn.Softmax(dim=1)
 
     def forward(self, q, k, v):
         #print("Q size: " + str(q.size()))
