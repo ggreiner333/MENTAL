@@ -29,9 +29,9 @@ diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA
 batch = 20
 
 
-test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
+test = np.loadtxt(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
 
-main_dataset = SplitDataset('complete_samples_EC.csv', 'TDBRAIN')
+main_dataset = SplitDataset('complete_samples_EC.csv', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
 #print(main_dataset.__len__())
 
@@ -242,5 +242,5 @@ with open('out.txt', 'w') as f:
         f.write(line)
         f.write('\n')
 
-        
+
 
