@@ -95,7 +95,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-    if((epoch!=0) and epoch%10==0):
+    if((epoch!=0) and epoch%1==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
             h = (d_entry, d_entry)
@@ -122,12 +122,12 @@ for epoch in range(epochs):
             preds = []
             for i in range(0, 20):
                 maxIdx = 0
-                #print(output[i])
+                print(output[i])
                 sum = 0
-                for j in range(0, len(output[i][1])):
-                    if output[i][1][j] >= output[i][1][maxIdx]:
+                for j in range(0, len(output[i])):
+                    if output[i][j] >= output[i][maxIdx]:
                         maxIdx=j
-                    sum = sum + output[i][1][j]
+                    sum = sum + output[i][j]
                 preds.append(j)
                 maxIdx=0
                 print(sum)
@@ -135,9 +135,9 @@ for epoch in range(epochs):
 
             conds = []
             for i in range(0, 20):
-                for j in range(0, len(label[i][1])):
-                    if(int(label[i][1][j]) > 0):
-                        conds.append(int(label[i][1][j]))
+                for j in range(0, len(label[i])):
+                    if(int(label[i][j]) > 0):
+                        conds.append(int(label[i][j]))
                         break
             
             for i in range(0, len(conds)):
@@ -189,12 +189,12 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
     preds = []
     for i in range(0, 20):
         maxIdx = 0
-        #print(output[i])
+        print(output[i])
         sum = 0
-        for j in range(0, len(output[i][1])):
-            if output[i][1][j] >= output[i][1][maxIdx]:
+        for j in range(0, len(output[i])):
+            if output[i][j] >= output[i][maxIdx]:
                 maxIdx=j
-            sum = sum + output[i][1][j]
+            sum = sum + output[i][j]
         preds.append(j)
         maxIdx=0
         print(sum)
@@ -202,9 +202,9 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
 
     conds = []
     for i in range(0, 20):
-        for j in range(0, len(label[i][1])):
-            if(int(label[i][1][j]) > 0):
-                conds.append(int(label[i][1][j]))
+        for j in range(0, len(label[i])):
+            if(int(label[i][j]) > 0):
+                conds.append(int(label[i][j]))
                 break
     
     for i in range(0, len(conds)):
