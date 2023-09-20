@@ -9,6 +9,8 @@ from torch.utils import data
 import mne
 import math
 
+import matplotlib.pyplot as plt 
+
 
 from Model.dataset import MultiModalDataset
 from Model.dataset import SplitDataset
