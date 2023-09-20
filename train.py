@@ -33,8 +33,6 @@ test = np.loadtxt(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'comple
 
 main_dataset = SplitDataset('complete_samples_EC.csv', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-#print(main_dataset.__len__())
-
 res = data.random_split(main_dataset, [760,200, 2])
 
 train_loader = data.DataLoader(res[0], batch_size=batch, shuffle=True)
@@ -42,10 +40,7 @@ test_loader  = data.DataLoader(res[1], batch_size=batch)
 
 my_mental = MENTAL(60, 30, 1, batch)
 
-optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
-
-#print("parameters : ")
-#print(list(my_mental.parameters()))
+optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-6, weight_decay=1e-9)
 
 strs = []
 
@@ -69,20 +64,9 @@ for epoch in range(epochs):
         h = (h0,h1)
 
         label = np.reshape(label, (20,1,1))
-        #print(label.shape)
-        #print(label)
 
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)
-
-        #print(output.shape)
-
-        #output = output.squeeze_(1)
-        #print(output)
-        #print(output.size())
-
-        #print(label)
-        #print(label.size())
         
         loss = torch.nn.BCELoss()
         res = loss(output, label)
@@ -90,12 +74,6 @@ for epoch in range(epochs):
         optimizer.zero_grad()
         res.backward()
         optimizer.step()
-
-    #print("-----------------------")
-    #print("Epoch: " + str(epoch))
-    #print(" Loss: " + str(res) )
-    #print("-----------------------")
-
     
     if((epoch!=0) and epoch%50==0):
         correct = 0
