@@ -136,13 +136,18 @@ for epoch in range(epochs):
                 print(sum)
 
 
-
+            label = label.squeeze_(1)
+            print(label)
             conds = []
             for i in range(0, 20):
                 for j in range(0, len(label[i])):
                     if(label[i][j] > 0):
-                        conds.append(label[i][j])
+                        conds.append(j)
+                        print("j")
+                        print(j)
                         break
+
+            
             
             for i in range(0, len(conds)):
                 lb = conds[i]
