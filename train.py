@@ -95,7 +95,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-    if((epoch!=0) and epoch%1==0):
+    if((epoch!=0) and epoch%10==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
             h = (d_entry, d_entry)
@@ -122,18 +122,18 @@ for epoch in range(epochs):
             preds = []
             for i in range(0, 20):
                 maxIdx = 0
-                #print(out[i])
+                print(out[i])
                 sum = 0
                 for j in range(0, len(out[i])):
                     if out[i][j] >= out[i][maxIdx]:
                         maxIdx=j
                     sum = sum + out[i][j]
                 preds.append(maxIdx)
-                #print("max")
-                #print(maxIdx)
+                print("max")
+                print(maxIdx)
                 maxIdx=0
-                #print("sum")
-                #print(sum)
+                print("sum")
+                print(sum)
 
             label = label.squeeze_(1)
             conds = []
