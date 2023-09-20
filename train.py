@@ -129,7 +129,10 @@ for epoch in range(epochs):
                         maxIdx=j
                     sum = sum + out[i][j]
                 preds.append(j)
+                print("max")
+                print(maxIdx)
                 maxIdx=0
+                print("sum")
                 print(sum)
 
 
@@ -137,8 +140,8 @@ for epoch in range(epochs):
             conds = []
             for i in range(0, 20):
                 for j in range(0, len(label[i])):
-                    if(int(label[i][j]) > 0):
-                        conds.append(int(label[i][j]))
+                    if(label[i][j] > 0):
+                        conds.append(label[i][j])
                         break
             
             for i in range(0, len(conds)):
