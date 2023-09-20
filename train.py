@@ -118,22 +118,26 @@ for epoch in range(epochs):
             for p in p_entry:
                 output, h = my_mental.forward(p, n_entry, h)
 
-            print(output)
+            #print(output)
             preds = []
             for i in range(0, 20):
                 maxIdx = 0
-                for j in range(0, len(output[i])):
-                    if output[i][j] >= output[i][maxIdx]:
+                #print(output[i])
+                sum = 0
+                for j in range(0, len(output[i][1])):
+                    if output[i][1][j] >= output[i][1][maxIdx]:
                         maxIdx=j
+                    sum = sum + output[i][1][j]
                 preds.append(j)
                 maxIdx=0
+                print(sum)
 
 
             conds = []
             for i in range(0, 20):
-                for j in range(0, len(label[i])):
-                    if(int(label[i][j]) > 0):
-                        conds.append(int(label[i][j]))
+                for j in range(0, len(label[i][1])):
+                    if(int(label[i][1][j]) > 0):
+                        conds.append(int(label[i][1][j]))
                         break
             
             for i in range(0, len(conds)):
@@ -198,9 +202,9 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
 
     conds = []
     for i in range(0, 20):
-        for j in range(0, len(label[i])):
-            if(int(label[i][j]) > 0):
-                conds.append(int(label[i][j]))
+        for j in range(0, len(label[i][1])):
+            if(int(label[i][1][j]) > 0):
+                conds.append(int(label[i][1][j]))
                 break
     
     for i in range(0, len(conds)):
