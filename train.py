@@ -64,14 +64,14 @@ for epoch in range(epochs):
         h1 = h1.transpose(0,1)
         h1 = h1.squeeze(-1)
 
-        print(label.shape)
+        #print(label.shape)
 
         h = (h0,h1)
 
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)
 
-        print(output.shape)
+        #print(output.shape)
 
         #output = output.squeeze_(1)
         #print(output)
