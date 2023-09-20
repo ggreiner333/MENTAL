@@ -29,9 +29,9 @@ diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA
 batch = 20
 
 
-test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
+test = np.loadtxt(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
 
-main_dataset = SplitDataset('complete_samples_EC.csv', 'TDBRAIN')
+main_dataset = SplitDataset('complete_samples_EC.csv', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
 #print(main_dataset.__len__())
 
@@ -47,7 +47,9 @@ optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
 #print("parameters : ")
 #print(list(my_mental.parameters()))
 
-epochs = 5
+strs = []
+
+epochs = 1000
 
 for epoch in range(epochs):
 
@@ -94,8 +96,8 @@ for epoch in range(epochs):
     #print(" Loss: " + str(res) )
     #print("-----------------------")
 
-    '''
-    if((epoch!=0) and epoch%10==0):
+    
+    if((epoch!=0) and epoch%50==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
             h = (d_entry, d_entry)
@@ -111,9 +113,7 @@ for epoch in range(epochs):
 
             h = (h0,h1)
 
-            label = np.reshape(label, (20,1,2))
-            #print(label.shape)
-            #print(label)
+            label = np.reshape(label, (20,1,1))
 
             for p in p_entry:
                 output, h = my_mental.forward(p, n_entry, h)
@@ -121,52 +121,37 @@ for epoch in range(epochs):
             out = output.squeeze_(1)
             preds = []
             for i in range(0, 20):
-                maxIdx = 0
-                print(out[i])
-                sum = 0
                 for j in range(0, len(out[i])):
-                    if out[i][j] >= out[i][maxIdx]:
-                        maxIdx=j
-                    sum = sum + out[i][j]
-                preds.append(maxIdx)
-                print("max")
-                print(maxIdx)
-                maxIdx=0
-                print("sum")
-                print(sum)
+                    if(out[i][j] >= 0.5):
+                        preds.append(1)
+                    else:
+                        preds.append(0)
 
             label = label.squeeze_(1)
             conds = []
             for i in range(0, 20):
                 for j in range(0, len(label[i])):
-                    if(label[i][j] > 0):
-                        conds.append(j)
-                        break
-            
+                    conds.append(label[i][j])
+
             for i in range(0, len(conds)):
                 lb = conds[i]
                 pd = preds[i]
-                #print("----------------------------------------------")
-                #print("Condition : " + str(lb))
-                #print("Prediction: " + str(pd))
-                #print("Equal?    : " + str(lb==pd))
                 if(lb==pd): 
                     correct += 1
-            
 
         total = (test_loader.__len__())*batch
-
-        print("------------------------------------")
-        print("------------------------------------")
-        print("------------------------------------")
-        print("------------------------------------")
-
-        print("Correct : " + str(correct))
-        print("Total   : " + str(total))
-        print("Accuracy: " + str(correct/total))
-        '''
-    
-
+        s1 = "Correct : " + str(correct)
+        s2 = "Total   : " + str(total)
+        s3 = "Accuracy: " + str(correct/total)
+        s4 = "-------------------------------------"
+        s5 = "Epoch" + str(epoch)
+        strs.append(s4)
+        strs.append(s5)
+        strs.append(s1)
+        strs.append(s2)
+        strs.append(s3)
+        strs.append(s4)
+        
 
 correct = 0
 for (d_entry, n_entry, p_entry, label) in test_loader:
@@ -207,23 +192,20 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
     for i in range(0, len(conds)):
         lb = conds[i]
         pd = preds[i]
-        #print("----------------------------------------------")
-        #print("Condition : " + str(lb))
-        #print("Prediction: " + str(pd))
-        #print("Equal?    : " + str(lb==pd))
         if(lb==pd): 
             correct += 1
 
 total = (test_loader.__len__())*batch
-#print("------------------------------------")
-#print("------------------------------------")
-#print("------------------------------------")
-#print("------------------------------------")
+
+str4 = "________________________________"
 str1 = "Correct : " + str(correct)
 str2 = "Total   : " + str(total)
 str3 = "Accuracy: " + str(correct/total)
 
-strs = [str1, str2, str3]
+strs.append(str4)
+strs.append(str1)
+strs.append(str2)
+strs.append(str3)
 
 with open('out.txt', 'w') as f:
     for line in strs:
