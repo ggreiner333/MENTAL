@@ -110,7 +110,7 @@ for epoch in range(epochs):
                 output, h = my_mental.forward(p, n_entry, h)
 
             out = output.squeeze_(1)
-            print(out)
+            #print(out)
             preds = []
             for i in range(0, 20):
                 temp = torch.zeros([35])
