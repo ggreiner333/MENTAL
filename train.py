@@ -66,6 +66,7 @@ for epoch in range(epochs):
 
         label = np.reshape(label, (20,1,36))
         print(label.shape)
+        print(label)
 
         h = (h0,h1)
 
