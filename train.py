@@ -40,7 +40,7 @@ res = data.random_split(main_dataset, [760,200, 2])
 train_loader = data.DataLoader(res[0], batch_size=batch, shuffle=True)
 test_loader  = data.DataLoader(res[1], batch_size=batch)
 
-my_mental = MENTAL(60, 30, 36, batch)
+my_mental = MENTAL(60, 30, 2, batch)
 
 optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-6, weight_decay=1e-9)
 
@@ -66,7 +66,7 @@ for epoch in range(epochs):
 
         h = (h0,h1)
 
-        label = np.reshape(label, (20,1,36))
+        label = np.reshape(label, (20,1,2))
         #print(label.shape)
         #print(label)
 
@@ -111,7 +111,7 @@ for epoch in range(epochs):
 
             h = (h0,h1)
 
-            label = np.reshape(label, (20,1,36))
+            label = np.reshape(label, (20,1,2))
             #print(label.shape)
             #print(label)
 
@@ -183,7 +183,7 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
 
     h = (h0,h1)
 
-    label = np.reshape(label, (20,1,36))
+    label = np.reshape(label, (20,1,2))
 
     for p in p_entry:
         output, h = my_mental.forward(p, n_entry, h)
