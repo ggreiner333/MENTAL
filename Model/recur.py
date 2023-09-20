@@ -38,6 +38,7 @@ class EegRNN(nn.Module):
         #print(x.size())
         res, h_1 = self.layer_1(  x, h[0])
         res, h_2 = self.layer_2(res, h[1])
+        print(res.shape)
 
         return self.output(res), (h_1, h_2)
         

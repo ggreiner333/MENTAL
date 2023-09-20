@@ -40,7 +40,7 @@ res = data.random_split(main_dataset, [760,200, 2])
 train_loader = data.DataLoader(res[0], batch_size=batch, shuffle=True)
 test_loader  = data.DataLoader(res[1], batch_size=batch)
 
-my_mental = MENTAL(60, 30, 33, batch)
+my_mental = MENTAL(60, 30, 36, batch)
 
 optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-6, weight_decay=1e-9)
 
