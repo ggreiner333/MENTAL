@@ -29,9 +29,9 @@ diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA
 batch = 20
 
 
-test = np.loadtxt(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
+test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
 
-main_dataset = SplitDataset('complete_samples_EC.csv', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+main_dataset = SplitDataset('complete_samples_EC.csv', 'TDBRAIN')
 
 #print(main_dataset.__len__())
 
@@ -40,14 +40,14 @@ res = data.random_split(main_dataset, [760,200, 2])
 train_loader = data.DataLoader(res[0], batch_size=batch, shuffle=True)
 test_loader  = data.DataLoader(res[1], batch_size=batch)
 
-my_mental = MENTAL(60, 30, 2, batch)
+my_mental = MENTAL(60, 30, 1, batch)
 
-optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-8)
+optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
 
 #print("parameters : ")
 #print(list(my_mental.parameters()))
 
-epochs = 1000
+epochs = 10
 
 for epoch in range(epochs):
 
@@ -66,7 +66,7 @@ for epoch in range(epochs):
 
         h = (h0,h1)
 
-        label = np.reshape(label, (20,1,2))
+        label = np.reshape(label, (20,1,1))
         #print(label.shape)
         #print(label)
 
@@ -82,7 +82,7 @@ for epoch in range(epochs):
         #print(label)
         #print(label.size())
         
-        loss = torch.nn.MSELoss()
+        loss = torch.nn.BCELoss()
         res = loss(output, label)
 
         optimizer.zero_grad()
@@ -190,31 +190,19 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         output, h = my_mental.forward(p, n_entry, h)
 
     out = output.squeeze_(1)
-
     preds = []
     for i in range(0, 20):
-        maxIdx = 0
-        #print(out[i])
-        sum = 0
         for j in range(0, len(out[i])):
-            if out[i][j] >= out[i][maxIdx]:
-                maxIdx=j
-            sum = sum + out[i][j]
-        preds.append(maxIdx)
-        #print("max")
-        #print(maxIdx)
-        maxIdx=0
-        #print("sum")
-        #print(sum)
-
+            if(out[i][j] >= 0.5):
+                preds.append(1)
+            else:
+                preds.append(0)
 
     label = label.squeeze_(1)
     conds = []
     for i in range(0, 20):
         for j in range(0, len(label[i])):
-            if(label[i][j] > 0):
-                conds.append(j)
-                break
+            conds.append(label[i][j])
 
     for i in range(0, len(conds)):
         lb = conds[i]
