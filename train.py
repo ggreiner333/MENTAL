@@ -128,27 +128,21 @@ for epoch in range(epochs):
                     if out[i][j] >= out[i][maxIdx]:
                         maxIdx=j
                     sum = sum + out[i][j]
-                preds.append(j)
+                preds.append(maxIdx)
                 print("max")
                 print(maxIdx)
                 maxIdx=0
                 print("sum")
                 print(sum)
 
-
             label = label.squeeze_(1)
-            print(label)
             conds = []
             for i in range(0, 20):
                 for j in range(0, len(label[i])):
                     if(label[i][j] > 0):
                         conds.append(j)
-                        print("j")
-                        print(j)
                         break
 
-            
-            
             for i in range(0, len(conds)):
                 lb = conds[i]
                 pd = preds[i]
@@ -195,6 +189,7 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
         output, h = my_mental.forward(p, n_entry, h)
 
     out = output.squeeze_(1)
+
     preds = []
     for i in range(0, 20):
         maxIdx = 0
@@ -204,18 +199,22 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
             if out[i][j] >= out[i][maxIdx]:
                 maxIdx=j
             sum = sum + out[i][j]
-        preds.append(j)
+        preds.append(maxIdx)
+        print("max")
+        print(maxIdx)
         maxIdx=0
+        print("sum")
         print(sum)
 
 
+    label = label.squeeze_(1)
     conds = []
     for i in range(0, 20):
         for j in range(0, len(label[i])):
-            if(int(label[i][j]) > 0):
-                conds.append(int(label[i][j]))
+            if(label[i][j] > 0):
+                conds.append(j)
                 break
-    
+
     for i in range(0, len(conds)):
         lb = conds[i]
         pd = preds[i]
