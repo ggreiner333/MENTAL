@@ -64,11 +64,11 @@ for epoch in range(epochs):
         h1 = h1.transpose(0,1)
         h1 = h1.squeeze(-1)
 
+        h = (h0,h1)
+
         label = np.reshape(label, (20,1,36))
         print(label.shape)
         print(label)
-
-        h = (h0,h1)
 
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)
@@ -95,7 +95,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-    if((epoch!=0) and epoch%100==0):
+    if((epoch!=0) and epoch%10==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
             h = (d_entry, d_entry)
@@ -111,39 +111,39 @@ for epoch in range(epochs):
 
             h = (h0,h1)
 
+            label = np.reshape(label, (20,1,36))
+            print(label.shape)
+            print(label)
+
             for p in p_entry:
                 output, h = my_mental.forward(p, n_entry, h)
 
-            out = output.squeeze_(1)
-            print(out)
+            print(output)
             preds = []
             for i in range(0, 20):
-                temp = torch.zeros([35])
-                dist_1 = abs(out[i][0]-1.0)
-                dist_0 = abs(out[i][0])
-                if(dist_1 <= dist_0):
-                    temp[0] = 1.0
-                preds.append(temp)
+                maxIdx = 0
+                for j in range(0, len(output[i])):
+                    if output[i][j] >= output[i][maxIdx]:
+                        maxIdx=j
+                preds.append(j)
+                maxIdx=0
+
 
             conds = []
             for i in range(0, 20):
-                temp = torch.zeros([35])
-                temp[0] = label[i][0]
-                conds.append(temp)
+                for j in range(0, len(label[i])):
+                    if(int(label[i][j]) > 0):
+                        conds.append(int(label[i][j]))
+                        break
             
             for i in range(0, len(conds)):
                 lb = conds[i]
                 pd = preds[i]
                 print("----------------------------------------------")
-                print("Condition : " + str(lb[0]))
-                print("Prediction: " + str(pd[0]))
-                ret = torch.eq(lb, pd)
-                same = True
-                for i in range(0, ret.size()[0]):
-                    if(not ret[i]):
-                        same = False
-                print("Equal?    : " + str(same))
-                if(same): 
+                print("Condition : " + str(lb))
+                print("Prediction: " + str(pd))
+                print("Equal?    : " + str(lb==pd))
+                if(lb==pd): 
                     correct += 1
 
         total = (test_loader.__len__())*batch
@@ -162,6 +162,7 @@ for epoch in range(epochs):
 
 correct = 0
 for (d_entry, n_entry, p_entry, label) in test_loader:
+   
     h = (d_entry, d_entry)
 
     h[0].unsqueeze_(-1)
@@ -175,48 +176,44 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
 
     h = (h0,h1)
 
+    label = np.reshape(label, (20,1,36))
+
     for p in p_entry:
         output, h = my_mental.forward(p, n_entry, h)
 
-    out = output.squeeze_(1)
-    #print(out)
+    print(output)
     preds = []
     for i in range(0, 20):
-        temp = torch.zeros([35])
-        dist_1 = abs(out[i][0]-1.0)
-        dist_0 = abs(out[i][0])
-        if(dist_1 <= dist_0):
-            temp[0] = 1.0
-        preds.append(temp)
+        maxIdx = 0
+        for j in range(0, len(output[i])):
+            if output[i][j] >= output[i][maxIdx]:
+                maxIdx=j
+        preds.append(j)
+        maxIdx=0
+
 
     conds = []
     for i in range(0, 20):
-        temp = torch.zeros([35])
-        temp[0] = label[i][0]
-        conds.append(temp)
+        for j in range(0, len(label[i])):
+            if(int(label[i][j]) > 0):
+                conds.append(int(label[i][j]))
+                break
     
     for i in range(0, len(conds)):
         lb = conds[i]
         pd = preds[i]
         print("----------------------------------------------")
-        print("Condition : " + str(lb[0]))
-        print("Prediction: " + str(pd[0]))
-        ret = torch.eq(lb, pd)
-        same = True
-        for i in range(0, ret.size()[0]):
-            if(not ret[i]):
-                same = False
-        print("Equal?    : " + str(same))
-        if(same): 
+        print("Condition : " + str(lb))
+        print("Prediction: " + str(pd))
+        print("Equal?    : " + str(lb==pd))
+        if(lb==pd): 
             correct += 1
 
 total = (test_loader.__len__())*batch
-
 print("------------------------------------")
 print("------------------------------------")
 print("------------------------------------")
 print("------------------------------------")
-
 print("Correct : " + str(correct))
 print("Total   : " + str(total))
 print("Accuracy: " + str(correct/total))
