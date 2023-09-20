@@ -28,9 +28,9 @@ class EegRNN(nn.Module):
         self.layer_2 = nn.GRU(hidden_size, hidden_size, batch_first=True)
         self.output = nn.Sequential(
             nn.ReLU(),
-            nn.Linear(hidden_size, output_size)
+            nn.Linear(hidden_size, output_size),
+            nn.Softmax()
         )
-        self.softmax = nn.Softmax()
 
     def forward(self, x, h):
         x.unsqueeze_(-1)
@@ -39,5 +39,5 @@ class EegRNN(nn.Module):
         res, h_1 = self.layer_1(  x, h[0])
         res, h_2 = self.layer_2(res, h[1])
 
-        return self.softmax(self.output(res)), (h_1, h_2)
+        return self.output(res), (h_1, h_2)
         
