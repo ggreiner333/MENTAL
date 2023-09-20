@@ -42,7 +42,7 @@ test_loader  = data.DataLoader(res[1], batch_size=batch)
 
 my_mental = MENTAL(60, 30, 2, batch)
 
-optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-6, weight_decay=1e-9)
+optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-8)
 
 #print("parameters : ")
 #print(list(my_mental.parameters()))
@@ -89,12 +89,12 @@ for epoch in range(epochs):
         res.backward()
         optimizer.step()
 
-    print("-----------------------")
-    print("Epoch: " + str(epoch))
-    print(" Loss: " + str(res) )
-    print("-----------------------")
+    #print("-----------------------")
+    #print("Epoch: " + str(epoch))
+    #print(" Loss: " + str(res) )
+    #print("-----------------------")
 
-
+    '''
     if((epoch!=0) and epoch%10==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
@@ -164,8 +164,8 @@ for epoch in range(epochs):
         print("Correct : " + str(correct))
         print("Total   : " + str(total))
         print("Accuracy: " + str(correct/total))
+        '''
     
-
 
 
 correct = 0
@@ -219,18 +219,28 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
     for i in range(0, len(conds)):
         lb = conds[i]
         pd = preds[i]
-        print("----------------------------------------------")
-        print("Condition : " + str(lb))
-        print("Prediction: " + str(pd))
-        print("Equal?    : " + str(lb==pd))
+        #print("----------------------------------------------")
+        #print("Condition : " + str(lb))
+        #print("Prediction: " + str(pd))
+        #print("Equal?    : " + str(lb==pd))
         if(lb==pd): 
             correct += 1
 
 total = (test_loader.__len__())*batch
-print("------------------------------------")
-print("------------------------------------")
-print("------------------------------------")
-print("------------------------------------")
-print("Correct : " + str(correct))
-print("Total   : " + str(total))
-print("Accuracy: " + str(correct/total))
+#print("------------------------------------")
+#print("------------------------------------")
+#print("------------------------------------")
+#print("------------------------------------")
+str1 = "Correct : " + str(correct)
+str2 = "Total   : " + str(total)
+str3 = "Accuracy: " + str(correct/total)
+
+strs = [str1, str2, str3]
+
+with open('out.txt', 'w') as f:
+    for line in strs:
+        f.write(line)
+        f.write('\n')
+
+        
+
