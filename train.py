@@ -67,8 +67,8 @@ for epoch in range(epochs):
         h = (h0,h1)
 
         label = np.reshape(label, (20,1,36))
-        print(label.shape)
-        print(label)
+        #print(label.shape)
+        #print(label)
 
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)
@@ -112,8 +112,8 @@ for epoch in range(epochs):
             h = (h0,h1)
 
             label = np.reshape(label, (20,1,36))
-            print(label.shape)
-            print(label)
+            #print(label.shape)
+            #print(label)
 
             for p in p_entry:
                 output, h = my_mental.forward(p, n_entry, h)
