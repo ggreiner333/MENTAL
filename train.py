@@ -64,7 +64,7 @@ for epoch in range(epochs):
         h1 = h1.transpose(0,1)
         h1 = h1.squeeze(-1)
 
-        print(label.shape())
+        print(label.shape)
 
         h = (h0,h1)
 
