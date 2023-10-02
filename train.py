@@ -134,7 +134,7 @@ for epoch in range(epochs):
 correct = 0
 for (d_entry, n_entry, p_entry, label) in test_loader:
    
-    h = (d_entry, d_entry)
+    h = d_entry
 
     h.unsqueeze_(-1)
     h0 = h.transpose(1,2)
