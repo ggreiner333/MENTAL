@@ -185,7 +185,7 @@ strs.append(str1)
 strs.append(str2)
 strs.append(str3)
 
-with open('out_1e2_1e9.txt', 'w') as f:
+with open('out_1e3_1e9.txt', 'w') as f:
     for line in strs:
         f.write(line)
         f.write('\n')
