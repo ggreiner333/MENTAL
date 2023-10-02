@@ -50,23 +50,23 @@ for epoch in range(epochs):
 
     for (d_entry, n_entry, p_entry, label) in train_loader:
 
-        h = (d_entry, d_entry)
+        h = d_entry
 
-        h[0].unsqueeze_(-1)
-        h0 = h[0].transpose(1,2)
+        h.unsqueeze_(-1)
+        h0 = h.transpose(1,2)
         h0 = h0.transpose(0,1)
 
-        h[1].unsqueeze_(-1)
-        h1 = h[1].transpose(1,2)
-        h1 = h1.transpose(0,1)
-        h1 = h1.squeeze(-1)
+        #h[1].unsqueeze_(-1)
+        #h1 = h[1].transpose(1,2)
+        #h1 = h1.transpose(0,1)
+        #h1 = h1.squeeze(-1)
 
-        h = (h0,h1)
+        #h = (h0,h1)
 
         label = np.reshape(label, (20,1,1))
 
         for p in p_entry:
-            output, h = my_mental.forward(p, n_entry, h)
+            output, h0 = my_mental.forward(p, n_entry, h0)
         
         loss = torch.nn.BCELoss()
         res = loss(output, label)
@@ -78,23 +78,23 @@ for epoch in range(epochs):
     if((epoch!=0) and epoch%50==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
-            h = (d_entry, d_entry)
+            h = d_entry
 
-            h[0].unsqueeze_(-1)
-            h0 = h[0].transpose(1,2)
+            h.unsqueeze_(-1)
+            h0 = h.transpose(1,2)
             h0 = h0.transpose(0,1)
 
-            h[1].unsqueeze_(-1)
-            h1 = h[1].transpose(1,2)
-            h1 = h1.transpose(0,1)
-            h1 = h1.squeeze(-1)
+            #h[1].unsqueeze_(-1)
+            #h1 = h[1].transpose(1,2)
+            #h1 = h1.transpose(0,1)
+            #h1 = h1.squeeze(-1)
 
-            h = (h0,h1)
+            #h = (h0,h1)
 
             label = np.reshape(label, (20,1,1))
 
             for p in p_entry:
-                output, h = my_mental.forward(p, n_entry, h)
+                output, h0 = my_mental.forward(p, n_entry, h0)
 
             out = output.squeeze_(1)
             preds = []
@@ -136,21 +136,21 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
    
     h = (d_entry, d_entry)
 
-    h[0].unsqueeze_(-1)
-    h0 = h[0].transpose(1,2)
+    h.unsqueeze_(-1)
+    h0 = h.transpose(1,2)
     h0 = h0.transpose(0,1)
 
-    h[1].unsqueeze_(-1)
-    h1 = h[1].transpose(1,2)
-    h1 = h1.transpose(0,1)
-    h1 = h1.squeeze(-1)
+    #h[1].unsqueeze_(-1)
+    #h1 = h[1].transpose(1,2)
+    #h1 = h1.transpose(0,1)
+    #h1 = h1.squeeze(-1)
 
-    h = (h0,h1)
+    #h = (h0,h1)
 
     label = np.reshape(label, (20,1,1))
 
     for p in p_entry:
-        output, h = my_mental.forward(p, n_entry, h)
+        output, h0 = my_mental.forward(p, n_entry, h0)
 
     out = output.squeeze_(1)
     preds = []

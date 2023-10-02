@@ -25,7 +25,7 @@ class EegRNN(nn.Module):
         self.output_size = output_size
 
         self.layer_1 = nn.GRU(input_size, hidden_size, batch_first=True)
-        self.layer_2 = nn.GRU(hidden_size, hidden_size, batch_first=True)
+        #self.layer_2 = nn.GRU(hidden_size, hidden_size, batch_first=True)
         self.output = nn.Sequential(
             nn.ReLU(),
             nn.Linear(hidden_size, output_size),
@@ -36,9 +36,9 @@ class EegRNN(nn.Module):
         x.unsqueeze_(-1)
         x = x.transpose(1,2)
         #print(x.size())
-        res, h_1 = self.layer_1(  x, h[0])
-        res, h_2 = self.layer_2(res, h[1])
+        res, h_1 = self.layer_1(x, h)
+        #res, h_2 = self.layer_2(res, h[1])
         #print(res.shape)
 
-        return self.output(res), (h_1, h_2)
+        return self.output(res), h_1
         
