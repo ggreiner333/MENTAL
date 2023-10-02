@@ -258,17 +258,17 @@ def plot_female_disorder(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL
     f, ax = plt.subplots(2, 1, figsize=(11, 22), gridspec_kw={'height_ratios': [1, 1.0/37]})
 
 
-    sns.heatmap(female_idx[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=ylabels, xticklabels=False, ax=ax[0], cmap="Blues", cbar=False, vmin=0, vmax=50)
-    g = sns.heatmap(female_idx[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=['Total'], xticklabels=x_tick_labels, ax=ax[1], cmap="Greens", cbar=False, vmin=0, vmax=118)
+    sns.heatmap(female_idx[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=ylabels, xticklabels=False, ax=ax[0], cmap="Oranges", cbar=False, vmin=0, vmax=50)
+    g = sns.heatmap(female_idx[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=['Total'], xticklabels=x_tick_labels, ax=ax[1], cmap="Purples", cbar=False, vmin=0, vmax=118)
     g.set_yticklabels(g.get_yticklabels(), rotation=0)
 
-    ax[1].set_xlabel('Data of Interest', fontsize = 15)
-    ax[0].set_title('Number of Females with Disorders', fontsize = 15)
-    ax[0].set_ylabel('Disorder', fontsize=15)
+    ax[1].set_xlabel('Age Range (years)', fontsize = 12)
+    ax[0].set_title('Number of Females with Disorders', fontsize = 12)
+    ax[0].set_ylabel('Disorder', fontsize=12)
 
-    plt.tight_layout()
+    #plt.tight_layout()
     plt.subplots_adjust(hspace=0)
     plt.show()
 
-plot_male_disorder()
+#plot_male_disorder()
 plot_female_disorder()
