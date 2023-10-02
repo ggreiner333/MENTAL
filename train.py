@@ -40,7 +40,7 @@ test_loader  = data.DataLoader(res[1], batch_size=batch)
 
 my_mental = MENTAL(60, 30, 1, batch)
 
-optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-7, weight_decay=1e-9)
+optimizer = torch.optim.Adam(my_mental.parameters(), lr=1e-6, weight_decay=1e-9)
 
 strs = []
 
@@ -185,7 +185,7 @@ strs.append(str1)
 strs.append(str2)
 strs.append(str3)
 
-with open('out_1e7_1e9.txt', 'w') as f:
+with open('out_1e6_1e9.txt', 'w') as f:
     for line in strs:
         f.write(line)
         f.write('\n')
