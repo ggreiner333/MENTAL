@@ -53,7 +53,10 @@ for epoch in range(epochs):
         h_1 = np.zeros(30, dtype="float32")
         h_2 = np.zeros(15, dtype="float32")
 
-        h=(h_1,h_2)
+        h_1t = torch.from_numpy(h_1)
+        h_2t = torch.from_numpy(h_2)
+
+        h=(h_1t,h_2t)
 
         h[0].unsqueeze_(-1)
         h0 = h[0].transpose(1,2)
@@ -84,7 +87,9 @@ for epoch in range(epochs):
             h_1 = np.zeros(30, dtype="float32")
             h_2 = np.zeros(15, dtype="float32")
 
-            h=(h_1,h_2)
+            h_1t = torch.from_numpy(h_1)
+            h_2t = torch.from_numpy(h_2)
+            h=(h_1t,h_2t)
 
             h[0].unsqueeze_(-1)
             h0 = h[0].transpose(1,2)
@@ -149,8 +154,11 @@ for (d_entry, n_entry, p_entry, label) in test_loader:
     h_1 = np.zeros(30, dtype="float32")
     h_2 = np.zeros(15, dtype="float32")
 
-    h=(h_1,h_2)
+    h_1t = torch.from_numpy(h_1)
+    h_2t = torch.from_numpy(h_2)
 
+    h=(h_1t,h_2t)
+    
     h[0].unsqueeze_(-1)
     h0 = h[0].transpose(1,2)
     h0 = h0.transpose(0,1)
