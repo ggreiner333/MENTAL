@@ -75,7 +75,7 @@ for epoch in range(epochs):
         res.backward()
         optimizer.step()
     
-    if((epoch!=0) and epoch%50==0):
+    if((epoch!=0) and epoch%10==0):
         correct = 0
         for (h_entry, n_entry, p_entry, label) in test_loader:
 
