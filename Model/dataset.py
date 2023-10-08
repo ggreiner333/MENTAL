@@ -48,11 +48,19 @@ class SplitDataset(data.Dataset):
             output[0] = 0
 
         dem_val = individual[2:5]
-        dem_out = np.zeros(30, dtype="float32")
-        dem_out[0] = dem_val[0]
-        dem_out[1] = dem_val[1]
-        dem_out[2] = dem_val[2]
-        dem_out = torch.from_numpy(dem_out)
+        #dem_out = np.zeros(30, dtype="float32")
+        #dem_out[0] = dem_val[0]
+        #dem_out[1] = dem_val[1]
+        #dem_out[2] = dem_val[2]
+        #dem_out = torch.from_numpy(dem_out)
+
+        h_1 = np.zeros(30, dtype="float32")
+        h_2 = np.zeros(15, dtype="float32")
+
+        h_1t = torch.from_numpy(h_1)
+        h_2t = torch.from_numpy(h_2)
+
+        h_out = (h_1t, h_2t)
 
         neo_val = individual[5:65]
 
@@ -60,7 +68,7 @@ class SplitDataset(data.Dataset):
         for i in range(0,7800, 130):
             psd_val.append(individual[i:(i+130)]) 
 
-        return dem_out, neo_val, psd_val, output
+        return h_out, neo_val, psd_val, output
     
     def __getIndividuals__(self):
         res = []

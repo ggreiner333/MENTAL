@@ -48,15 +48,9 @@ epochs = 1000
 
 for epoch in range(epochs):
 
-    for (d_entry, n_entry, p_entry, label) in train_loader:
+    for (h_entry, n_entry, p_entry, label) in train_loader:
 
-        h_1 = np.zeros(30, dtype="float32")
-        h_2 = np.zeros(15, dtype="float32")
-
-        h_1t = torch.from_numpy(h_1)
-        h_2t = torch.from_numpy(h_2)
-
-        h=(h_1t,h_2t)
+        h=(h_entry[0],h_entry[1])
 
         h[0].unsqueeze_(-1)
         h0 = h[0].transpose(1,2)
@@ -83,13 +77,9 @@ for epoch in range(epochs):
     
     if((epoch!=0) and epoch%50==0):
         correct = 0
-        for (d_entry, n_entry, p_entry, label) in test_loader:
-            h_1 = np.zeros(30, dtype="float32")
-            h_2 = np.zeros(15, dtype="float32")
+        for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            h_1t = torch.from_numpy(h_1)
-            h_2t = torch.from_numpy(h_2)
-            h=(h_1t,h_2t)
+            h=(h_entry[0],h_entry[1])
 
             h[0].unsqueeze_(-1)
             h0 = h[0].transpose(1,2)
@@ -149,15 +139,9 @@ for epoch in range(epochs):
         
 
 correct = 0
-for (d_entry, n_entry, p_entry, label) in test_loader:
+for (h_entry, n_entry, p_entry, label) in test_loader:
    
-    h_1 = np.zeros(30, dtype="float32")
-    h_2 = np.zeros(15, dtype="float32")
-
-    h_1t = torch.from_numpy(h_1)
-    h_2t = torch.from_numpy(h_2)
-
-    h=(h_1t,h_2t)
+    h=(h_entry[0],h_entry[1])
     
     h[0].unsqueeze_(-1)
     h0 = h[0].transpose(1,2)
