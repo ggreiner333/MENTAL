@@ -47,11 +47,11 @@ class VAE(nn.Module):
             nn.ReLU(),
             nn.Linear(1024, 512),
             nn.ReLU(),
-            nn.Linear(512, 128)
+            nn.Linear(512, z_dim)
         )
 
         self.decoder = nn.Sequential(
-            nn.Linear(128, 512),
+            nn.Linear(z_dim, 512),
             nn.ReLU(),
             nn.Linear(512, 1024),
             nn.ReLU(),

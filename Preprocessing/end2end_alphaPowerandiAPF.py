@@ -68,7 +68,7 @@ def end2end_alphaPowerandiAPF(varargs):
 
     tsvdat = pd.read_csv(varargs['participantspath']+'/participants.csv')
 
-    """ compute powerspectrum and make dictionary with results that will be saved in varrags['resultspath']"""
+    """ compute powerspectrum and make dictionary with results that will be saved in varrags['resultspath'] """
     def computeFFT(data, Fs=500):
         from scipy.signal import hann
         hannwin = np.array(hann(data.shape[-1]))
@@ -195,8 +195,9 @@ def end2end_alphaPowerandiAPF(varargs):
     sns.lmplot(x='age', y='iapf', data = set1, fit_reg=False, palette=colors)
     plt.title('iAPF')
     plt.show()
+    
 
-    """ plot age distributions for males and females """
+    """plot age distributions for males and females """
 
     maleages = np.unique(tsvdat['age'][tsvdat['gender']==1])
     femaleages = np.unique(tsvdat['age'][tsvdat['gender']==0])
@@ -206,7 +207,7 @@ def end2end_alphaPowerandiAPF(varargs):
 
     fig, axis = plt.subplots(nrows=1, ncols = 2, sharey=False,figsize=(5,5))
     g=0
-    colors = np.array(['lightseagreen','darkblue'])
+    colors = np.array(['darkorange','darkred'])
     for ax in axis.ravel():
         ax.hist(np.array(ages[g]),bins=[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90],color=colors[g], orientation='horizontal', alpha=0.7, edgecolor='white', linewidth=0.2)
         if g==0:
@@ -226,7 +227,7 @@ def end2end_alphaPowerandiAPF(varargs):
             ax.spines['top'].set_visible(False)
         g=g+1
 
-    plt.suptitle('age distribution')
+    plt.suptitle('Age Distribution')
     plt.subplots_adjust(wspace=0.22)
     plt.show()
 

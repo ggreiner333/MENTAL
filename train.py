@@ -50,7 +50,10 @@ for epoch in range(epochs):
 
     for (d_entry, n_entry, p_entry, label) in train_loader:
 
-        h = (d_entry, d_entry)
+        h_1 = np.zeros(30, dtype="float32")
+        h_2 = np.zeros(15, dtype="float32")
+
+        h=(h_1,h_2)
 
         h[0].unsqueeze_(-1)
         h0 = h[0].transpose(1,2)
@@ -78,7 +81,10 @@ for epoch in range(epochs):
     if((epoch!=0) and epoch%50==0):
         correct = 0
         for (d_entry, n_entry, p_entry, label) in test_loader:
-            h = (d_entry, d_entry)
+            h_1 = np.zeros(30, dtype="float32")
+            h_2 = np.zeros(15, dtype="float32")
+
+            h=(h_1,h_2)
 
             h[0].unsqueeze_(-1)
             h0 = h[0].transpose(1,2)
@@ -134,7 +140,10 @@ for epoch in range(epochs):
 correct = 0
 for (d_entry, n_entry, p_entry, label) in test_loader:
    
-    h = (d_entry, d_entry)
+    h_1 = np.zeros(30, dtype="float32")
+    h_2 = np.zeros(15, dtype="float32")
+
+    h=(h_1,h_2)
 
     h[0].unsqueeze_(-1)
     h0 = h[0].transpose(1,2)
@@ -185,7 +194,7 @@ strs.append(str1)
 strs.append(str2)
 strs.append(str3)
 
-with open('out_2layer_1e5_1e8.txt', 'w') as f:
+with open('out_test.txt', 'w') as f:
     for line in strs:
         f.write(line)
         f.write('\n')
