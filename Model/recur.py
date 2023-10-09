@@ -29,7 +29,7 @@ class EegRNN(nn.Module):
         self.output = nn.Sequential(
             nn.ReLU(),
             nn.Linear(15, output_size),
-            nn.Sigmoid()
+            nn.ReLU()
         )
 
     def forward(self, x, h):
