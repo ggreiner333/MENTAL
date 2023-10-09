@@ -136,6 +136,7 @@ def run_train(lr, outfile):
             strs.append(s2)
             strs.append(s3)
             strs.append(s4)
+            print(s3)
             
 
     correct = 0
