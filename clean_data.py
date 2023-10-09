@@ -146,7 +146,7 @@ def generate_samples(ptc, psd, out):
     all_combined_EO = np.array(samples_EO, dtype=object)
     #np.save(os.path.join(out,'combined_samples_EO'), all_combined_EO, allow_pickle=True)
 
-generate_samples()
+generate_samples(ptc_path, psd_path, out_path)
 
 
 def separate_missing_samples(ptc, psd, out):
