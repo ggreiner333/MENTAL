@@ -77,7 +77,7 @@ def run_train(lr, outfile):
             res.backward()
             optimizer.step()
         
-        if((epoch!=0) and epoch%10==0):
+        if((epoch!=0) and epoch%100==0):
             correct = 0
             for (h_entry, n_entry, p_entry, label) in test_loader:
 
@@ -136,7 +136,7 @@ def run_train(lr, outfile):
             strs.append(s2)
             strs.append(s3)
             strs.append(s4)
-            print(s3)
+            #print(s3)
             
 
     correct = 0
@@ -205,7 +205,9 @@ def run_train(lr, outfile):
 #run_train(lr=1e-7, outfile='1e-7.txt')
 #run_train(lr=1e-6, outfile='1e-6.txt')
 #run_train(lr=1e-5, outfile='1e-5.txt')
-run_train(lr=4e-4, outfile='1e-4.txt')
+run_train(lr=1e-4, outfile='1e-4_small.txt')
+run_train(lr=1e-5, outfile='1e-5_small.txt')
+run_train(lr=1e-6, outfile='1e-6_small.txt')
 #run_train(lr=1e-3, outfile='1e-3.txt')
 #run_train(lr=1e-2, outfile='1e-2.txt')
 
