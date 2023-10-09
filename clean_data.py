@@ -57,7 +57,7 @@ def clean_individuals(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\T
     final = np.asarray(samples)
     np.savetxt(os.path.join(path,'cleaned_participants.csv'), final, delimiter=',', fmt="%s")
 
-def clean_individuals_depression_or_not(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAIN"):
+def clean_individuals_depression_or_not(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     # Load Demographic and Survey Data
 
