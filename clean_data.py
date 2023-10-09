@@ -91,14 +91,14 @@ def clean_individuals_depression_or_not(path="/data/zhanglab/ggreiner/MENTAL/TDB
             samples.append(res)
         
     final = np.asarray(samples)
-    print(final.size)
+    print(final)
     np.savetxt(os.path.join(path,'cleaned_participants_depression.csv'), final, delimiter=',', fmt="%s")
 
-clean_individuals_depression_or_not()
+#clean_individuals_depression_or_not()
 #clean_individuals()
 
 def generate_samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_depression.csv"), delimiter=",", dtype=str)
     
     samples_EO = []
     samples_EC = []
@@ -114,6 +114,7 @@ def generate_samples(ptc, psd, out):
         # Only consider individuals that we have survey data for
         # This means excluding the individuals marked for replication
         id = ind[0]
+        print(id)
         if(not id[0] == '1'):
 
             # Navigate to the directory with the psd information
@@ -140,11 +141,12 @@ def generate_samples(ptc, psd, out):
     # Save the combined samples into csv files
 
     all_combined_EC = np.array(samples_EC, dtype=object)
-    np.save(os.path.join(out,'combined_samples_EC'), all_combined_EC, allow_pickle=True)
+    #np.save(os.path.join(out,'combined_samples_EC'), all_combined_EC, allow_pickle=True)
 
     all_combined_EO = np.array(samples_EO, dtype=object)
-    np.save(os.path.join(out,'combined_samples_EO'), all_combined_EO, allow_pickle=True)
+    #np.save(os.path.join(out,'combined_samples_EO'), all_combined_EO, allow_pickle=True)
 
+generate_samples()
 
 
 def separate_missing_samples(ptc, psd, out):
