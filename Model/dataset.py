@@ -54,7 +54,7 @@ class SplitDataset(data.Dataset):
         #dem_out[2] = dem_val[2]
         #dem_out = torch.from_numpy(dem_out)
 
-        h_1 = np.zeros([2,30], dtype="float32")
+        h_1 = torch.zeros([2,30], dtype="float32")
         #h_2 = np.zeros(15, dtype="float32")
 
         #h_1t = torch.from_numpy(h_1)
@@ -66,7 +66,7 @@ class SplitDataset(data.Dataset):
 
         psd_val = []
         for i in range(65,7865, 130):
-            psd_val.append(individual[i:(i+130)]) 
+            psd_val.append(individual[i:(i+130)])
 
         return h_1, neo_val, psd_val, output
     
