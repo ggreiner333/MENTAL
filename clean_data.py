@@ -57,6 +57,44 @@ def clean_individuals(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\T
     final = np.asarray(samples)
     np.savetxt(os.path.join(path,'cleaned_participants.csv'), final, delimiter=',', fmt="%s")
 
+def clean_individuals_depression_or_not(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAIN"):
+
+    # Load Demographic and Survey Data
+
+    inds = np.loadtxt(os.path.join(path, "participants.csv"), delimiter=",", dtype=str)
+
+    samples = []
+
+    cols = []
+    for name in inds[0]:
+        cols.append(name)
+    samples.append(cols)
+
+    for i in inds[1:]:
+        id = i[0]
+        disorders = (i[2].upper()).split("/")
+    
+        found = False
+        for d in disorders:
+            if(diagnoses.index(d.strip()) == 2):
+                res = []
+                for info in i:
+                    res.append(info)
+                res[2] = diagnoses.index(d.strip())
+                samples.append(res)
+                found = True
+        if(not found):
+            res = []
+            for info in i:
+                res.append(info)
+            res[2] = 0
+            samples.append(res)
+        
+    final = np.asarray(samples)
+    print(final.shape())
+    np.savetxt(os.path.join(path,'cleaned_participants_depression.csv'), final, delimiter=',', fmt="%s")
+
+clean_individuals_depression_or_not()
 #clean_individuals()
 
 def generate_samples(ptc, psd, out):
@@ -175,7 +213,7 @@ def load_attempt(path):
 
 
 
-separate_missing_samples(ptc_path, psd_path, out_path)
+#separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
