@@ -27,14 +27,13 @@ def run_train(lr, outfile):
                 'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
 
 
-    batch = 20
+    batch = 10
 
 
     #test = np.loadtxt(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'small_complete_samples_EC_depression.npy'), delimiter=",", dtype=float)
 
     main_dataset = SplitDataset('small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    print(main_dataset.__len__())
     res = data.random_split(main_dataset, [560, 140, 5])
 
     train_loader = data.DataLoader(res[0], batch_size=batch, shuffle=True)
@@ -65,7 +64,7 @@ def run_train(lr, outfile):
 
             h = h_entry.transpose(0,1)
             #print(label.size())
-            label = np.reshape(label, (20,1,1))
+            label = np.reshape(label, (batch,1,1))
 
             for p in p_entry:
                 output, h_res = my_mental.forward(p, n_entry, h)
@@ -78,7 +77,7 @@ def run_train(lr, outfile):
             res.backward()
             optimizer.step()
         
-        if((epoch!=0) and epoch%10==0):
+        if((epoch!=0)):
             correct = 0
             for (h_entry, n_entry, p_entry, label) in test_loader:
 
@@ -96,16 +95,16 @@ def run_train(lr, outfile):
                 #h = (h0,h1)
                 h = h_entry.transpose(0,1)
 
-                label = np.reshape(label, (20,1,1))
+                label = np.reshape(label, (batch,1,1))
 
                 for p in p_entry:
                     output, h_res = my_mental.forward(p, n_entry, h)
                     h = h_res
 
                 out = output.squeeze_(1)
-                print(out)
+                #print(out)
                 preds = []
-                for i in range(0, 20):
+                for i in range(0, batch):
                     for j in range(0, len(out[i])):
                         if(out[i][j] >= 0.5):
                             preds.append(1)
@@ -113,9 +112,9 @@ def run_train(lr, outfile):
                             preds.append(0)
 
                 label = label.squeeze_(1)
-                print(label)
+                #print(label)
                 conds = []
-                for i in range(0, 20):
+                for i in range(0, batch):
                     for j in range(0, len(label[i])):
                         conds.append(label[i][j])
 
@@ -158,7 +157,7 @@ def run_train(lr, outfile):
 
         h = h_entry.transpose(0,1)
 
-        label = np.reshape(label, (20,1,1))
+        label = np.reshape(label, (batch,1,1))
 
         for p in p_entry:
             output, h_res = my_mental.forward(p, n_entry, h)
@@ -166,7 +165,7 @@ def run_train(lr, outfile):
 
         out = output.squeeze_(1)
         preds = []
-        for i in range(0, 20):
+        for i in range(0, batch):
             for j in range(0, len(out[i])):
                 if(out[i][j] >= 0.5):
                     preds.append(1)
@@ -175,7 +174,7 @@ def run_train(lr, outfile):
 
         label = label.squeeze_(1)
         conds = []
-        for i in range(0, 20):
+        for i in range(0, batch):
             for j in range(0, len(label[i])):
                 conds.append(label[i][j])
 
