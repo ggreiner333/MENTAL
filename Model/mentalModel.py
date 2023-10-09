@@ -36,7 +36,7 @@ class MENTAL(nn.Module):
         # Run attention layer
         out, res = self.attention(neo, k, v)
 
-        rnn_out = self.rrn(out, h)
+        rnn_out = self.rnn(out, h)
 
         print(rnn_out)
 
