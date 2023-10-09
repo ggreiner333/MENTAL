@@ -75,6 +75,7 @@ def clean_individuals_depression_or_not(path="/data/zhanglab/ggreiner/MENTAL/TDB
         disorders = (i[2].upper()).split("/")
     
         found = False
+        missing = False
         for d in disorders:
             if(diagnoses.index(d.strip()) == 2):
                 res = []
@@ -83,7 +84,9 @@ def clean_individuals_depression_or_not(path="/data/zhanglab/ggreiner/MENTAL/TDB
                 res[2] = diagnoses.index(d.strip())
                 samples.append(res)
                 found = True
-        if(not found):
+            if(diagnoses.index(d.strip()) == 0):
+                missing = True
+        if((not found) and (not missing)):
             res = []
             for info in i:
                 res.append(info)
@@ -94,7 +97,7 @@ def clean_individuals_depression_or_not(path="/data/zhanglab/ggreiner/MENTAL/TDB
     print(final)
     np.savetxt(os.path.join(path,'cleaned_participants_depression.csv'), final, delimiter=',', fmt="%s")
 
-#clean_individuals_depression_or_not()
+clean_individuals_depression_or_not()
 #clean_individuals()
 
 def generate_samples(ptc, psd, out):
