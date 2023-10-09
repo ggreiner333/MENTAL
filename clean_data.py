@@ -22,7 +22,7 @@ diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA
 # Paths for data
 
 #psd_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD'
-psd_path = 'TDBRAIN/PSD_all'
+psd_path = 'TDBRAIN/PSD'
 #ptc_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/'
 ptc_path = 'TDBRAIN'
 #out_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/samples'
@@ -187,7 +187,7 @@ def separate_missing_samples(ptc, psd, out):
                         complete_samples.append(combined)
 
             if(not found):
-                combo = np.concatenate((ind[1:], np.zeros(300)))
+                combo = np.concatenate((ind[1:], np.zeros(7800)))
                 combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
                 combo = np.asarray(combo, dtype="float32")
                 missing_samples.append(combo)
