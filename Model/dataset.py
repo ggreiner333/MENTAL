@@ -44,7 +44,7 @@ class SplitDataset(data.Dataset):
         output = 0
         if(int(indication) == 2):
             output = 1
-
+        output = float(output)
         dem_val = individual[2:5]
         #dem_out = np.zeros(30, dtype="float32")
         #dem_out[0] = dem_val[0]
