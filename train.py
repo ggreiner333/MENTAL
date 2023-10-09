@@ -51,28 +51,24 @@ def run_train(lr, outfile):
 
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
-            print(h_entry.size())
-            print(n_entry.size())
-            print(p_entry.size())
-            print(label.size())
+            #h=(h_entry[0],h_entry[1])
 
-            h=(h_entry[0],h_entry[1])
+            #h[0].unsqueeze_(-1)
+            #h0 = h[0].transpose(1,2)
+            #h0 = h0.transpose(0,1)
 
-            h[0].unsqueeze_(-1)
-            h0 = h[0].transpose(1,2)
-            h0 = h0.transpose(0,1)
+            #h[1].unsqueeze_(-1)
+            #h1 = h[1].transpose(1,2)
+            #h1 = h1.transpose(0,1)
+            #h1 = h1.squeeze(-1)
 
-            h[1].unsqueeze_(-1)
-            h1 = h[1].transpose(1,2)
-            h1 = h1.transpose(0,1)
-            h1 = h1.squeeze(-1)
-
-            h = (h0,h1)
+            h = h_entry
             #print(label.size())
             label = np.reshape(label, (20,1,1))
 
             for p in p_entry:
-                output, h = my_mental.forward(p, n_entry, h)
+                output, h_res = my_mental.forward(p, n_entry, h)
+                h = h_res
             
             loss = torch.nn.BCELoss()
             res = loss(output, label)
@@ -85,23 +81,25 @@ def run_train(lr, outfile):
             correct = 0
             for (h_entry, n_entry, p_entry, label) in test_loader:
 
-                h=(h_entry[0],h_entry[1])
+                #h=(h_entry[0],h_entry[1])
 
-                h[0].unsqueeze_(-1)
-                h0 = h[0].transpose(1,2)
-                h0 = h0.transpose(0,1)
+                #h[0].unsqueeze_(-1)
+                #h0 = h[0].transpose(1,2)
+                #h0 = h0.transpose(0,1)
 
-                h[1].unsqueeze_(-1)
-                h1 = h[1].transpose(1,2)
-                h1 = h1.transpose(0,1)
-                h1 = h1.squeeze(-1)
+                #h[1].unsqueeze_(-1)
+                #h1 = h[1].transpose(1,2)
+                #h1 = h1.transpose(0,1)
+                #h1 = h1.squeeze(-1)
 
-                h = (h0,h1)
+                #h = (h0,h1)
+                h = h_entry
 
                 label = np.reshape(label, (20,1,1))
 
                 for p in p_entry:
-                    output, h = my_mental.forward(p, n_entry, h)
+                    output, h_res = my_mental.forward(p, n_entry, h)
+                    h = h_res
 
                 out = output.squeeze_(1)
                 print(out)
@@ -143,23 +141,26 @@ def run_train(lr, outfile):
     correct = 0
     for (h_entry, n_entry, p_entry, label) in test_loader:
     
-        h=(h_entry[0],h_entry[1])
+        #h=(h_entry[0],h_entry[1])
         
-        h[0].unsqueeze_(-1)
-        h0 = h[0].transpose(1,2)
-        h0 = h0.transpose(0,1)
+        #h[0].unsqueeze_(-1)
+        #h0 = h[0].transpose(1,2)
+        #h0 = h0.transpose(0,1)
 
-        h[1].unsqueeze_(-1)
-        h1 = h[1].transpose(1,2)
-        h1 = h1.transpose(0,1)
-        h1 = h1.squeeze(-1)
+        #h[1].unsqueeze_(-1)
+        #h1 = h[1].transpose(1,2)
+        #h1 = h1.transpose(0,1)
+        #h1 = h1.squeeze(-1)
 
-        h = (h0,h1)
+        #h = (h0,h1)
+
+        h = h_entry
 
         label = np.reshape(label, (20,1,1))
 
         for p in p_entry:
-            output, h = my_mental.forward(p, n_entry, h)
+            output, h_res = my_mental.forward(p, n_entry, h)
+            h = h_res
 
         out = output.squeeze_(1)
         preds = []
