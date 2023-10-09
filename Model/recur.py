@@ -42,7 +42,7 @@ class EegRNN(nn.Module):
 
         out = self.output(res2)
         real = out.squeeze(-1)
-        print(real)
+        #print(real)
 
         return real, (h_1, h_2)
         

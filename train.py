@@ -51,6 +51,8 @@ def run_train(lr, outfile):
 
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
+            print(p_entry.size())
+
             h=(h_entry[0],h_entry[1])
 
             h[0].unsqueeze_(-1)
