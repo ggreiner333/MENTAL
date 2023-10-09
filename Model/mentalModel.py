@@ -38,6 +38,6 @@ class MENTAL(nn.Module):
 
         rnn_out = self.rnn(out, h)
 
-        print(rnn_out)
+        #print(rnn_out)
 
         return rnn_out

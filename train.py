@@ -63,7 +63,7 @@ def run_train(lr, outfile):
             h1 = h1.squeeze(-1)
 
             h = (h0,h1)
-            print(label.size())
+            #print(label.size())
             #label = np.reshape(label, (20,1,1))
 
             for p in p_entry:
