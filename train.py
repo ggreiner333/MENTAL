@@ -66,13 +66,11 @@ def run_train(lr, outfile):
 
             h = (h0,h1)
             #print(label.size())
-            #label = np.reshape(label, (20,1,1))
-            count = 0
+            label = np.reshape(label, (20,1,1))
+
             for p in p_entry:
-                count +=1
-                print(p.size())
+                print(h)
                 output, h = my_mental.forward(p, n_entry, h)
-            print(count)
             
             loss = torch.nn.BCELoss()
             res = loss(output, label)
@@ -98,7 +96,7 @@ def run_train(lr, outfile):
 
                 h = (h0,h1)
 
-                #label = np.reshape(label, (20,1,1))
+                label = np.reshape(label, (20,1,1))
 
                 for p in p_entry:
                     output, h = my_mental.forward(p, n_entry, h)
@@ -154,7 +152,7 @@ def run_train(lr, outfile):
 
         h = (h0,h1)
 
-        #label = np.reshape(label, (20,1,1))
+        label = np.reshape(label, (20,1,1))
 
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)

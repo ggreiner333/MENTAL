@@ -41,8 +41,8 @@ class EegRNN(nn.Module):
         #print(res.shape)
 
         out = self.output(res2)
-        real = out.squeeze(-1)
+        #real = out.squeeze(-1)
         #print(real)
 
-        return real, (h_1, h_2)
+        return out, (h_1, h_2)
         
