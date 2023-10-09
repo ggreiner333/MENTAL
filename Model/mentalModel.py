@@ -23,14 +23,17 @@ class MENTAL(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, batch):
         super().__init__()
 
-        self.attention = AttentionLayer(15, 20, batch)
+        self.attention = AttentionLayer(60, 60, batch)
 
         self.rnn = EegRNN(input_size, hidden_size, output_size)
 
 
     def forward(self, eeg, neo, h):
+
+        k = eeg.copy()
+        v = eeg.copy()
         
         # Run attention layer
-        out, res = self.attention(neo, eeg, eeg)
+        out, res = self.attention(neo, k, v)
 
         return self.rnn(out, h)
