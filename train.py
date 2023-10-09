@@ -205,7 +205,7 @@ def run_train(lr, outfile):
 #run_train(lr=1e-7, outfile='1e-7.txt')
 #run_train(lr=1e-6, outfile='1e-6.txt')
 #run_train(lr=1e-5, outfile='1e-5.txt')
-run_train(lr=1e-2, outfile='1e-4.txt')
+run_train(lr=1e-5, outfile='1e-4.txt')
 #run_train(lr=1e-3, outfile='1e-3.txt')
 #run_train(lr=1e-2, outfile='1e-2.txt')
 
