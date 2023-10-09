@@ -51,7 +51,7 @@ def run_train(lr, outfile):
 
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
-            print(p_entry)
+            #print(p_entry)
 
             h=(h_entry[0],h_entry[1])
 
@@ -69,6 +69,7 @@ def run_train(lr, outfile):
             #label = np.reshape(label, (20,1,1))
 
             for p in p_entry:
+                print(p)
                 output, h = my_mental.forward(p, n_entry, h)
             
             loss = torch.nn.BCELoss()
