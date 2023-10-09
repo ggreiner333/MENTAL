@@ -28,8 +28,7 @@ class EegRNN(nn.Module):
         self.layer_2 = nn.GRU(hidden_size, 15, batch_first=True)
         self.output = nn.Sequential(
             nn.ReLU(),
-            nn.Linear(15, output_size),
-            nn.Sigmoid()
+            nn.Linear(15, output_size)
         )
 
     def forward(self, x, h):
