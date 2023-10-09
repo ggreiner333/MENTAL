@@ -62,7 +62,7 @@ def run_train(lr, outfile):
             #h1 = h1.transpose(0,1)
             #h1 = h1.squeeze(-1)
 
-            h = h_entry
+            h = h_entry.transpose(0,1)
             #print(label.size())
             label = np.reshape(label, (20,1,1))
 
@@ -93,7 +93,7 @@ def run_train(lr, outfile):
                 #h1 = h1.squeeze(-1)
 
                 #h = (h0,h1)
-                h = h_entry
+                h = h_entry.transpose(0,1)
 
                 label = np.reshape(label, (20,1,1))
 
