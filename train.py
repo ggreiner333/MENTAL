@@ -135,12 +135,6 @@ def run_train(lr, outfile):
             strs.append(s2)
             strs.append(s3)
             strs.append(s4)
-            print(s4)
-            print(s5)
-            print(s1)
-            print(s2)
-            print(s3)
-            print(s4)
             
 
     correct = 0
@@ -203,6 +197,13 @@ def run_train(lr, outfile):
             f.write('\n')
 
 
+run_train(lr=1e-7, outfile='1e-7.txt')
+run_train(lr=1e-6, outfile='1e-6.txt')
+run_train(lr=1e-5, outfile='1e-5.txt')
+run_train(lr=1e-4, outfile='1e-4.txt')
+run_train(lr=1e-3, outfile='1e-3.txt')
+run_train(lr=1e-2, outfile='1e-2.txt')
+
 #run_train(lr=1e-2, outfile='1e-2.txt')
 #run_train(lr=2e-2, outfile='2e-2.txt')
 #run_train(lr=3e-2, outfile='3e-2.txt')
@@ -221,8 +222,8 @@ def run_train(lr, outfile):
 #run_train(lr=4e-4, outfile='4e-4.txt')
 #run_train(lr=5e-4, outfile='5e-4.txt')
 
-run_train(lr=1e-5, outfile='1e-5.txt')
-run_train(lr=2e-5, outfile='2e-5.txt')
-run_train(lr=3e-5, outfile='3e-5.txt')
-run_train(lr=4e-5, outfile='4e-5.txt')
-run_train(lr=5e-5, outfile='5e-5.txt')
+#run_train(lr=1e-5, outfile='1e-5.txt')
+#run_train(lr=2e-5, outfile='2e-5.txt')
+#run_train(lr=3e-5, outfile='3e-5.txt')
+#run_train(lr=4e-5, outfile='4e-5.txt')
+#run_train(lr=5e-5, outfile='5e-5.txt')
