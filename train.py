@@ -63,8 +63,8 @@ def run_train(lr, outfile):
             h1 = h1.squeeze(-1)
 
             h = (h0,h1)
-
-            label = np.reshape(label, (20,1,1))
+            print(label.size())
+            #label = np.reshape(label, (20,1,1))
 
             for p in p_entry:
                 output, h = my_mental.forward(p, n_entry, h)
@@ -93,7 +93,7 @@ def run_train(lr, outfile):
 
                 h = (h0,h1)
 
-                label = np.reshape(label, (20,1,1))
+                #label = np.reshape(label, (20,1,1))
 
                 for p in p_entry:
                     output, h = my_mental.forward(p, n_entry, h)
@@ -149,7 +149,7 @@ def run_train(lr, outfile):
 
         h = (h0,h1)
 
-        label = np.reshape(label, (20,1,1))
+        #label = np.reshape(label, (20,1,1))
 
         for p in p_entry:
             output, h = my_mental.forward(p, n_entry, h)
