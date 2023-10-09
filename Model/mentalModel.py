@@ -30,11 +30,11 @@ class MENTAL(nn.Module):
 
     def forward(self, eeg, neo, h):
 
-        k = eeg.clone().detach()
-        v = eeg.clone().detach()
+        #k = eeg.clone().detach()
+        #v = eeg.clone().detach()
         
         # Run attention layer
-        out, res = self.attention(neo, k, v)
+        out, res = self.attention(neo, eeg, eeg)
 
         rnn_out = self.rnn(out, h)
 
