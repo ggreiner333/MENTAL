@@ -41,7 +41,7 @@ class SplitDataset(data.Dataset):
         individual = self.individuals[idx]
 
         indication = individual[1]
-        output = torch.zeros(1, dtype="float32")
+        output = torch.zeros(1, dtype=float)
         if(int(indication) == 2):
             output[0] = 1.0
 
