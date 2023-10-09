@@ -63,6 +63,7 @@ class SplitDataset(data.Dataset):
         h_out = (h_1t, h_2t)
 
         neo_val = individual[5:65]
+        print(neo_val)
         print("4: " + str(individual[4]))
 
         print("64: " + str(individual[64]))
