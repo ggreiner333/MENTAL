@@ -32,7 +32,8 @@ class SplitDataset(data.Dataset):
 
     def __init__(self, individuals_file, directory):
         self.directory = directory
-        self.individuals = np.loadtxt(os.path.join(directory, individuals_file), delimiter=",", dtype="float32")
+        self.individuals = np.load(os.path.join(directory, individuals_file), dtype="float32")
+        print(self.individuals)
         
     def __len__(self):
         return np.size(self.individuals, axis=0)
