@@ -154,7 +154,7 @@ def run_train(lr, outfile):
 
         #h = (h0,h1)
 
-        h = h_entry
+        h = h_entry.transpose(0,1)
 
         label = np.reshape(label, (20,1,1))
 
