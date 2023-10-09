@@ -25,10 +25,10 @@ class EegRNN(nn.Module):
         self.output_size = output_size
 
         self.layer_1 = nn.GRU(input_size, hidden_size, batch_first=True)
-        self.layer_2 = nn.GRU(hidden_size, 15, batch_first=True)
+        self.layer_2 = nn.GRU(hidden_size, hidden_size, batch_first=True)
         self.output = nn.Sequential(
             nn.ReLU(),
-            nn.Linear(15, output_size),
+            nn.Linear(hidden_size, output_size),
             nn.ReLU()
         )
 
