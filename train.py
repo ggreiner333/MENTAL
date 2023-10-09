@@ -77,7 +77,7 @@ def run_train(lr, outfile):
             res.backward()
             optimizer.step()
         
-        if((epoch!=0)):
+        if((epoch!=0) and epoch%30==0):
             correct = 0
             for (h_entry, n_entry, p_entry, label) in test_loader:
 
