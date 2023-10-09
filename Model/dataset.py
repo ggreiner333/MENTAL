@@ -64,6 +64,8 @@ class SplitDataset(data.Dataset):
 
         neo_val = individual[5:65]
 
+        print(individual[65])
+        print(individual[66])
         psd_val = []
         for i in range(0,7800, 130):
             psd_val.append(individual[i:(i+130)]) 
