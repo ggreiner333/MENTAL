@@ -114,7 +114,7 @@ def generate_samples(ptc, psd, out):
         # Only consider individuals that we have survey data for
         # This means excluding the individuals marked for replication
         id = ind[0]
-        print(id)
+        #print(id)
         if(not id[0] == '1'):
 
             # Navigate to the directory with the psd information
@@ -141,16 +141,17 @@ def generate_samples(ptc, psd, out):
     # Save the combined samples into csv files
 
     all_combined_EC = np.array(samples_EC, dtype=object)
+    #print(all_combined_EC)
     #np.save(os.path.join(out,'combined_samples_EC'), all_combined_EC, allow_pickle=True)
 
     all_combined_EO = np.array(samples_EO, dtype=object)
     #np.save(os.path.join(out,'combined_samples_EO'), all_combined_EO, allow_pickle=True)
 
-generate_samples(ptc_path, psd_path, out_path)
+#generate_samples(ptc_path, psd_path, out_path)
 
 
 def separate_missing_samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_depression.csv"), delimiter=",", dtype=str)
     
     missing_samples = []
     complete_samples = []
@@ -178,7 +179,7 @@ def separate_missing_samples(ptc, psd, out):
                     psds = psds.flatten()
 
                     # Combine survey and PSD data
-                    combined = np.asarray(np.concatenate((ind[1:],psds)), dtype=float)
+                    combined = np.asarray(np.concatenate((ind[1:],psds)), dtype="float32")
                     combined[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
                     if(combined.__contains__(-1)):
                         missing_samples.append(combined)
@@ -188,15 +189,15 @@ def separate_missing_samples(ptc, psd, out):
             if(not found):
                 combo = np.concatenate((ind[1:], np.zeros(300)))
                 combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
-                combo = np.asarray(combo, dtype=float)
+                combo = np.asarray(combo, dtype="float32")
                 missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples)
-    np.savetxt(os.path.join(out,'small_complete_samples_EC.csv'), all_complete_samples, delimiter=',', fmt="%s")
+    np.savetxt(os.path.join(out,'small_complete_samples_EC_depression.csv'), all_complete_samples, delimiter=',', fmt="float32")
 
     print(missing_samples)
     all_missing_samples = np.array(missing_samples)
-    np.savetxt(os.path.join(out,'small_missing_samples_EC.csv'), all_missing_samples, delimiter=',', fmt="%s")
+    np.savetxt(os.path.join(out,'small_missing_samples_EC_depression.csv'), all_missing_samples, delimiter=',', fmt="float32")
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
@@ -215,7 +216,7 @@ def load_attempt(path):
 
 
 
-#separate_missing_samples(ptc_path, psd_path, out_path)
+separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
