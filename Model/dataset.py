@@ -41,7 +41,7 @@ class SplitDataset(data.Dataset):
         individual = self.individuals[idx]
 
         indication = individual[1]
-        output = torch.zeros([1])
+        output = torch.zeros([1], dtype=torch.float32)
         if(int(indication) == 2):
             output[0] = 1
         else:
@@ -54,7 +54,7 @@ class SplitDataset(data.Dataset):
         #dem_out[2] = dem_val[2]
         #dem_out = torch.from_numpy(dem_out)
 
-        h_1 = torch.zeros([2,30], dtype=float)
+        h_1 = torch.zeros([2,30], dtype=torch.float32)
         #h_2 = np.zeros(15, dtype="float32")
 
         #h_1t = torch.from_numpy(h_1)
@@ -62,11 +62,14 @@ class SplitDataset(data.Dataset):
 
         #h_out = (h_1t, h_2t)
 
-        neo_val = individual[5:65]
+        neo = individual[5:65]
+        neo_val = torch.tensor(neo, dtype=torch.float32)
 
-        psd_val = []
+        psd = []
         for i in range(65,7865, 130):
-            psd_val.append(individual[i:(i+130)])
+            psd.append(individual[i:(i+130)])
+        
+        psd_val = torch.tensor(psd, dtype=torch.float32)
 
         return h_1, neo_val, psd_val, output
     
