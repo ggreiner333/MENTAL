@@ -101,6 +101,7 @@ def run_train(lr, outfile):
                     output, h = my_mental.forward(p, n_entry, h)
 
                 out = output.squeeze_(1)
+                print(out)
                 preds = []
                 for i in range(0, 20):
                     for j in range(0, len(out[i])):
@@ -110,6 +111,7 @@ def run_train(lr, outfile):
                             preds.append(0)
 
                 label = label.squeeze_(1)
+                print(label)
                 conds = []
                 for i in range(0, 20):
                     for j in range(0, len(label[i])):
