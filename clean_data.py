@@ -91,7 +91,7 @@ def clean_individuals_depression_or_not(path="/data/zhanglab/ggreiner/MENTAL/TDB
             samples.append(res)
         
     final = np.asarray(samples)
-    print(final.shape())
+    print(final.size())
     np.savetxt(os.path.join(path,'cleaned_participants_depression.csv'), final, delimiter=',', fmt="%s")
 
 clean_individuals_depression_or_not()
