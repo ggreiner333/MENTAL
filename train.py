@@ -19,7 +19,7 @@ from Model.mentalModel import MENTAL
 ##################################################################################################
 ##################################################################################################
 
-def run_train(lr, outfile):
+def run_train(lr, wd, outfile):
     diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
                 'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
                 'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
@@ -41,7 +41,7 @@ def run_train(lr, outfile):
 
     my_mental = MENTAL(130, 30, 1, batch)
 
-    optimizer = torch.optim.Adam(my_mental.parameters(), lr)
+    optimizer = torch.optim.Adam(my_mental.parameters(), lr, wd)
 
     strs = []
 
@@ -202,35 +202,14 @@ def run_train(lr, outfile):
             f.write('\n')
 
 
-#run_train(lr=1e-7, outfile='1e-7.txt')
-#run_train(lr=1e-6, outfile='1e-6.txt')
-#run_train(lr=1e-5, outfile='1e-5.txt')
-run_train(lr=1e-4, outfile='1e-4_ReLU_small_.txt')
-run_train(lr=1e-5, outfile='1e-5_ReLU_small.txt')
-run_train(lr=1e-6, outfile='1e-6_ReLU_small.txt')
-#run_train(lr=1e-3, outfile='1e-3.txt')
-#run_train(lr=1e-2, outfile='1e-2.txt')
+run_train(lr=1e-4, wd=1e-6, outfile='we-6_le-4_small.txt')
+run_train(lr=1e-4, wd=1e-7, outfile='we-7_le-4_small.txt')
+run_train(lr=1e-4, wd=1e-8, outfile='we-8_le-4_small.txt')
 
-#run_train(lr=1e-2, outfile='1e-2.txt')
-#run_train(lr=2e-2, outfile='2e-2.txt')
-#run_train(lr=3e-2, outfile='3e-2.txt')
-#run_train(lr=4e-2, outfile='4e-2.txt')
-#run_train(lr=5e-2, outfile='5e-2.txt')
+run_train(lr=1e-5, wd=1e-6, outfile='we-6_le-5_small.txt')
+run_train(lr=1e-5, wd=1e-7, outfile='we-7_le-5_small.txt')
+run_train(lr=1e-5, wd=1e-8, outfile='we-8_le-5_small.txt')
 
-#run_train(lr=1e-3, outfile='1e-3.txt')
-#run_train(lr=2e-3, outfile='2e-3.txt')
-#run_train(lr=3e-3, outfile='3e-3.txt')
-#run_train(lr=4e-3, outfile='4e-3.txt')
-#run_train(lr=5e-3, outfile='5e-3.txt')
-
-#run_train(lr=1e-4, outfile='1e-4.txt')
-#run_train(lr=2e-4, outfile='2e-4.txt')
-#run_train(lr=3e-4, outfile='3e-4.txt')
-#run_train(lr=4e-4, outfile='4e-4.txt')
-#run_train(lr=5e-4, outfile='5e-4.txt')
-
-#run_train(lr=1e-5, outfile='1e-5.txt')
-#run_train(lr=2e-5, outfile='2e-5.txt')
-#run_train(lr=3e-5, outfile='3e-5.txt')
-#run_train(lr=4e-5, outfile='4e-5.txt')
-#run_train(lr=5e-5, outfile='5e-5.txt')
+run_train(lr=1e-6, wd=1e-6, outfile='we-6_le-6_small.txt')
+run_train(lr=1e-6, wd=1e-7, outfile='we-7_le-6_small.txt')
+run_train(lr=1e-6, wd=1e-8, outfile='we-8_le-6_small.txt')

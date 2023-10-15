@@ -114,7 +114,7 @@ def plot_missing(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAI
 
 
 #count_missing()
-plot_missing()
+#plot_missing()
 
 def count_gender_disorder(gen, path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAIN"):
 
@@ -179,17 +179,11 @@ def plot_male_disorder(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\
 
     Mcol_heads = list(male.columns)[:-1]
 
-    index = pd.Index(['Missing', 'Healthy', 'MDD', 'ADHD', 'SMC', 'OCD', 'Tinnitus', 'Insomnia', 'Parkinsons', 'Dyslexia',
+    index = pd.Index(['MDD', 'ADHD', 'SMC', 'OCD', 'Tinnitus', 'Insomnia', 'Parkinsons', 'Dyslexia',
              'Anxiety', 'Pain', 'Chronic Pain', 'PDD NOS', 'Burnout', 'Bipolar', 'Asperger', 
              'Depersonalization', 'ASD', 'Whiplash', 'Migraine', 'Epilepsy', 'GTS', 'Panic', 
              'Stroke', 'TBI', 'Anorexia', 'Conversion DX', 'DPS', 'Dyspraxia', 'LYME', 'MSA-C', 
-             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia','Total'])
-    
-    ylabels = ['Missing', 'Healthy', 'MDD', 'ADHD', 'SMC', 'OCD', 'Tinnitus', 'Insomnia', 'Parkinsons', 'Dyslexia',
-             'Anxiety', 'Pain', 'Chronic Pain', 'PDD NOS', 'Burnout', 'Bipolar', 'Asperger', 
-             'Depersonalization', 'ASD', 'Whiplash', 'Migraine', 'Epilepsy', 'GTS', 'Panic', 
-             'Stroke', 'TBI', 'Anorexia', 'Conversion DX', 'DPS', 'Dyspraxia', 'LYME', 'MSA-C', 
-             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia']
+             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia', 'Missing', 'Healthy', 'Total'])
     
     male_idx = male.set_index(index)
     print(male_idx)
@@ -232,17 +226,11 @@ def plot_female_disorder(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL
 
     Fcol_heads = list(female.columns)[:-1]
 
-    index = pd.Index(['Missing', 'Healthy', 'MDD', 'ADHD', 'SMC', 'OCD', 'Tinnitus', 'Insomnia', 'Parkinsons', 'Dyslexia',
+    index = pd.Index(['MDD', 'ADHD', 'SMC', 'OCD', 'Tinnitus', 'Insomnia', 'Parkinsons', 'Dyslexia',
              'Anxiety', 'Pain', 'Chronic Pain', 'PDD NOS', 'Burnout', 'Bipolar', 'Asperger', 
              'Depersonalization', 'ASD', 'Whiplash', 'Migraine', 'Epilepsy', 'GTS', 'Panic', 
              'Stroke', 'TBI', 'Anorexia', 'Conversion DX', 'DPS', 'Dyspraxia', 'LYME', 'MSA-C', 
-             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia','Total'])
-    
-    ylabels = ['Missing', 'Healthy', 'MDD', 'ADHD', 'SMC', 'OCD', 'Tinnitus', 'Insomnia', 'Parkinsons', 'Dyslexia',
-             'Anxiety', 'Pain', 'Chronic Pain', 'PDD NOS', 'Burnout', 'Bipolar', 'Asperger', 
-             'Depersonalization', 'ASD', 'Whiplash', 'Migraine', 'Epilepsy', 'GTS', 'Panic', 
-             'Stroke', 'TBI', 'Anorexia', 'Conversion DX', 'DPS', 'Dyspraxia', 'LYME', 'MSA-C', 
-             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia']
+             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia', 'Missing', 'Healthy', 'Total'])
 
     female_idx = female.set_index(index)
     print(female_idx)
@@ -258,8 +246,8 @@ def plot_female_disorder(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL
     f, ax = plt.subplots(2, 1, figsize=(11, 22), gridspec_kw={'height_ratios': [1, 1.0/37]})
 
 
-    sns.heatmap(female_idx[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=ylabels, xticklabels=False, ax=ax[0], cmap="Oranges", cbar=False, vmin=0, vmax=57)
-    g = sns.heatmap(female_idx[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=['Total'], xticklabels=x_tick_labels, ax=ax[1], cmap="Purples", cbar=False, vmin=0, vmax=118)
+    sns.heatmap(female_idx[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=False, ax=ax[0], cmap="Oranges", cbar=False, vmin=0, vmax=57)
+    g = sns.heatmap(female_idx[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=x_tick_labels, ax=ax[1], cmap="Purples", cbar=False, vmin=0, vmax=118)
     g.set_yticklabels(g.get_yticklabels(), rotation=0)
 
     ax[1].set_xlabel('Age Range (years)', fontsize = 12)
@@ -270,5 +258,5 @@ def plot_female_disorder(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL
     plt.subplots_adjust(hspace=0)
     plt.show()
 
-#plot_male_disorder()
-#plot_female_disorder()
+plot_male_disorder()
+plot_female_disorder()

@@ -1,6 +1,6 @@
-﻿Missing,Healthy,MDD,ADHD,SMC,OCD,Tinnitus,Insomnia,Parkinsons,Dyslexia,Anxiety,Chronic Pain,PDD NOS,Burnout,Bipolar,Asperger,Depersonalization,ASD,Whiplash,Migraine,Pain,Epilepsy,GTS,Panic,Stroke,TBI,Anorexia,Conversion DX,DPS,Dyspraxia,LYME,MSA-C,PTSD,Trauma,Tumor,Dyscalculia,Total
-193,21,348,206,13,55,11,30,3,3,17,9,7,4,7,5,6,3,5,3,2,2,1,2,2,2,1,1,1,0,1,1,1,1,1,0,968
-257,37,360,232,115,57,33,30,27,23,18,14,14,9,7,6,6,5,5,3,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1280
-259,47,359,234,116,57,33,30,27,24,18,14,14,9,7,6,6,5,5,3,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1295
-259,47,360,234,119,57,33,30,27,25,18,14,14,10,7,6,6,5,5,3,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1301
-259,47,360,234,119,57,33,30,27,25,18,14,14,10,7,6,6,5,5,3,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1301
+﻿MDD,ADHD,SMC,OCD,Tinnitus,Insomnia,Parkinsons,Dyslexia,Anxiety,Chronic Pain,PDD NOS,Burnout,Bipolar,Asperger,Depersonalization,ASD,Whiplash,Migraine,Pain,Epilepsy,GTS,Panic,Stroke,TBI,Anorexia,Conversion DX,DPS,Dyspraxia,LYME,MSA-C,PTSD,Trauma,Tumor,Dyscalculia,Missing,Healthy,Total
+348,206,13,55,11,30,3,3,17,9,7,4,7,5,6,3,5,3,2,2,1,2,2,2,1,1,1,0,1,1,1,1,1,0,193,21,968
+360,232,115,57,33,30,27,23,18,14,14,9,7,6,6,5,5,3,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,257,37,1280
+359,234,116,57,33,30,27,24,18,14,14,9,7,6,6,5,5,3,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,259,47,1295
+360,234,119,57,33,30,27,25,18,14,14,10,7,6,6,5,5,3,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,259,47,1301
+360,234,119,57,33,30,27,25,18,14,14,10,7,6,6,5,5,3,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,259,47,1301
