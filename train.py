@@ -27,7 +27,7 @@ def run_train(learn_rate, wd, outfile):
                 'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
 
 
-    batch = 10
+    batch_sz = 10
 
 
     #test = np.loadtxt(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'small_complete_samples_EC_depression.npy'), delimiter=",", dtype=float)
@@ -36,10 +36,10 @@ def run_train(learn_rate, wd, outfile):
 
     res = data.random_split(main_dataset, [560, 140, 5])
 
-    train_loader = data.DataLoader(res[0], batch_size=batch, shuffle=True)
-    test_loader  = data.DataLoader(res[1], batch_size=batch, shuffle=True)
+    train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
+    test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
 
-    my_mental = MENTAL(60, 30, 1, batch)
+    my_mental = MENTAL(60, 30, 1, batch_sz)
 
 
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
@@ -66,7 +66,7 @@ def run_train(learn_rate, wd, outfile):
             h = h_entry.transpose(0,1)
             #print(label.size())
             print(label)
-            label_reshaped = np.reshape(label, (batch,1,1))
+            label_reshaped = np.reshape(label, (batch_sz,1,1))
             print(label_reshaped)
             
             #batches = np.array()
@@ -116,12 +116,32 @@ def run_train(learn_rate, wd, outfile):
                 #h1 = h1.transpose(0,1)
                 #h1 = h1.squeeze(-1)
 
-                #h = (h0,h1)
                 h = h_entry.transpose(0,1)
+                #print(label.size())
+                print(label)
+                label_reshaped = np.reshape(label, (batch_sz,1,1))
+                print(label_reshaped)
+                
+                #batches = np.array()
+                count = 0
 
-                label = np.reshape(label, (batch,1,1))
+                test = []
 
-                for p in p_entry:
+                for i in range(0, 60):
+                    batch = []
+                    for j in range(0,10):
+                        cur = p_entry[j][i]
+                        arr_cur = np.asarray(cur)
+                        batch.append(arr_cur)
+                    test.append(batch)
+
+                formatted = np.array(test)
+                
+                psd_tensor = torch.from_numpy(formatted)
+
+                print(psd_tensor.shape)
+
+                for p in psd_tensor:
                     output, h_res = my_mental.forward(p, n_entry, h)
                     h = h_res
 
@@ -167,7 +187,7 @@ def run_train(learn_rate, wd, outfile):
     for (h_entry, n_entry, p_entry, label) in test_loader:
     
         #h=(h_entry[0],h_entry[1])
-        
+
         #h[0].unsqueeze_(-1)
         #h0 = h[0].transpose(1,2)
         #h0 = h0.transpose(0,1)
@@ -177,13 +197,32 @@ def run_train(learn_rate, wd, outfile):
         #h1 = h1.transpose(0,1)
         #h1 = h1.squeeze(-1)
 
-        #h = (h0,h1)
-
         h = h_entry.transpose(0,1)
+        #print(label.size())
+        print(label)
+        label_reshaped = np.reshape(label, (batch_sz,1,1))
+        print(label_reshaped)
+        
+        #batches = np.array()
+        count = 0
 
-        label = np.reshape(label, (batch,1,1))
+        test = []
 
-        for p in p_entry:
+        for i in range(0, 60):
+            batch = []
+            for j in range(0,10):
+                cur = p_entry[j][i]
+                arr_cur = np.asarray(cur)
+                batch.append(arr_cur)
+            test.append(batch)
+
+        formatted = np.array(test)
+        
+        psd_tensor = torch.from_numpy(formatted)
+
+        print(psd_tensor.shape)
+
+        for p in psd_tensor:
             output, h_res = my_mental.forward(p, n_entry, h)
             h = h_res
 
