@@ -66,7 +66,12 @@ def run_train(learn_rate, wd, outfile):
 
             h = h_entry.transpose(0,1)
             #print(label.size())
-            label = np.reshape(label, (batch,1,1))
+            print(label)
+            label_reshaped = np.reshape(label, (batch,1,1))
+            print(label_reshaped)
+            
+
+            #for p in p_entry:
 
             print(p_entry.size())
             for p in p_entry:
