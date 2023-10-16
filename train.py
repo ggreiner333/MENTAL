@@ -19,7 +19,7 @@ from Model.mentalModel import MENTAL
 ##################################################################################################
 ##################################################################################################
 
-def run_train(lr, wd, outfile):
+def run_train(learn_rate, wd, outfile):
     diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
                 'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
                 'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
@@ -41,7 +41,7 @@ def run_train(lr, wd, outfile):
 
     my_mental = MENTAL(130, 30, 1, batch)
 
-    optimizer = torch.optim.Adam(my_mental.parameters(), lr, wd)
+    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
 
     strs = []
 
