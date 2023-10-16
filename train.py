@@ -148,7 +148,7 @@ def run_train(learn_rate, wd, outfile):
                 out = output.squeeze_(1)
                 #print(out)
                 preds = []
-                for i in range(0, batch):
+                for i in range(0, batch_sz):
                     for j in range(0, len(out[i])):
                         if(out[i][j] >= 0.5):
                             preds.append(1)
@@ -158,7 +158,7 @@ def run_train(learn_rate, wd, outfile):
                 label = label.squeeze_(1)
                 #print(label)
                 conds = []
-                for i in range(0, batch):
+                for i in range(0, batch_sz):
                     for j in range(0, len(label[i])):
                         conds.append(label[i][j])
 
@@ -168,7 +168,7 @@ def run_train(learn_rate, wd, outfile):
                     if(lb==pd): 
                         correct += 1
 
-            total = (test_loader.__len__())*batch
+            total = (test_loader.__len__())*batch_sz
             s1 = "Correct : " + str(correct)
             s2 = "Total   : " + str(total)
             s3 = "Accuracy: " + str(correct/total)
@@ -232,7 +232,7 @@ def run_train(learn_rate, wd, outfile):
 
         out = output.squeeze_(1)
         preds = []
-        for i in range(0, batch):
+        for i in range(0, batch_sz):
             for j in range(0, len(out[i])):
                 if(out[i][j] >= 0.5):
                     preds.append(1)
@@ -241,7 +241,7 @@ def run_train(learn_rate, wd, outfile):
 
         label = label.squeeze_(1)
         conds = []
-        for i in range(0, batch):
+        for i in range(0, batch_sz):
             for j in range(0, len(label[i])):
                 conds.append(label[i][j])
 
@@ -251,7 +251,7 @@ def run_train(learn_rate, wd, outfile):
             if(lb==pd): 
                 correct += 1
 
-    total = (test_loader.__len__())*batch
+    total = (test_loader.__len__())*batch_sz
 
     str4 = "________________________________"
     str1 = "Correct : " + str(correct)
