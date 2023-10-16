@@ -75,12 +75,16 @@ def run_train(learn_rate, wd, outfile):
             test = [60]
             print(test)
 
-            for i in range(0, 2):
+            for i in range(0, 1):
+                batch = [10]
                 for j in range(0,10):
                     cur = p_entry[j][i]
-                    print(cur)
                     arr_cur = np.asarray(cur)
-                    print(arr_cur)
+                    batch[j] = arr_cur
+                test[i] = (batch)
+
+            print(test)
+            
             #for p in p_entry:
                 #print(p[count])
                 #print(np.asarray(p[count].numpy()))
