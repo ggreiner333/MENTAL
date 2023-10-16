@@ -50,6 +50,7 @@ def run_train(learn_rate, wd, outfile):
 
     for epoch in range(epochs):
 
+        count = 0
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
             #h=(h_entry[0],h_entry[1])
@@ -68,8 +69,6 @@ def run_train(learn_rate, wd, outfile):
             label = np.reshape(label, (batch,1,1))
 
             for p in p_entry:
-                print(p)
-                print(n_entry)
                 output, h_res = my_mental.forward(p, n_entry, h)
                 h = h_res
             

@@ -35,20 +35,20 @@ class AttentionLayer(nn.Module):
         print("K size: " + str(k.size()))
         print("V size: " + str(v.size()))
 
-        q = self.W_q(q)
-        k = self.W_k(k)
-        v = self.W_v(v)
+        q_res = self.W_q(q)
+        k_res = self.W_k(k)
+        v_res = self.W_v(v)
 
-        #print("Q size: " + str(q.size()))
-        #print("K size: " + str(k.size()))
-        #print("V size: " + str(v.size()))
+        print("Q size: " + str(q_res.size()))
+        print("K size: " + str(k_res.size()))
+        print("V size: " + str(v_res.size()))
 
-        k = k.transpose(0,1)
+        k_T = k_res.transpose(0,1)
 
-        res = torch.matmul(q,k) / math.sqrt(self.dk)
-        res = self.softmax(res)
+        res = torch.matmul(q_res,k_T) / math.sqrt(self.dk)
+        attn_weights = self.softmax(res)
 
-        out = torch.matmul(res, v)
+        out = torch.matmul(attn_weights, v_res)
 
         #print(out.size())
 
