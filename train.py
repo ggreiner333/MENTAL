@@ -65,9 +65,9 @@ def run_train(learn_rate, wd, outfile):
 
             h = h_entry.transpose(0,1)
             #print(label.size())
-            print(label)
+            #print(label)
             label_reshaped = np.reshape(label, (batch_sz,1,1))
-            print(label_reshaped)
+            #print(label_reshaped)
             
             #batches = np.array()
             count = 0
@@ -86,13 +86,13 @@ def run_train(learn_rate, wd, outfile):
             
             psd_tensor = torch.from_numpy(formatted)
 
-            print(psd_tensor.shape)
+            #print(psd_tensor.shape)
 
             for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h)
                 h = h_res
             
-            print(output)
+            #print(output)
 
             loss = torch.nn.BCELoss()
             res = loss(output, label_reshaped)
@@ -118,9 +118,9 @@ def run_train(learn_rate, wd, outfile):
 
                 h = h_entry.transpose(0,1)
                 #print(label.size())
-                print(label)
+                #print(label)
                 label_reshaped = np.reshape(label, (batch_sz,1,1))
-                print(label_reshaped)
+                #print(label_reshaped)
                 
                 #batches = np.array()
                 count = 0
@@ -139,7 +139,7 @@ def run_train(learn_rate, wd, outfile):
                 
                 psd_tensor = torch.from_numpy(formatted)
 
-                print(psd_tensor.shape)
+                #print(psd_tensor.shape)
 
                 for p in psd_tensor:
                     output, h_res = my_mental.forward(p, n_entry, h)
@@ -199,9 +199,9 @@ def run_train(learn_rate, wd, outfile):
 
         h = h_entry.transpose(0,1)
         #print(label.size())
-        print(label)
+        #print(label)
         label_reshaped = np.reshape(label, (batch_sz,1,1))
-        print(label_reshaped)
+        #print(label_reshaped)
         
         #batches = np.array()
         count = 0
@@ -220,7 +220,7 @@ def run_train(learn_rate, wd, outfile):
         
         psd_tensor = torch.from_numpy(formatted)
 
-        print(psd_tensor.shape)
+        #print(psd_tensor.shape)
 
         for p in psd_tensor:
             output, h_res = my_mental.forward(p, n_entry, h)
