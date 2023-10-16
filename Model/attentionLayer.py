@@ -31,17 +31,17 @@ class AttentionLayer(nn.Module):
         self.softmax = nn.Softmax(dim=1)
 
     def forward(self, q, k, v):
-        print("Q size: " + str(q.size()))
-        print("K size: " + str(k.size()))
-        print("V size: " + str(v.size()))
+        #print("Q size: " + str(q.size()))
+        #print("K size: " + str(k.size()))
+        #print("V size: " + str(v.size()))
 
         q_res = self.W_q(q)
         k_res = self.W_k(k)
         v_res = self.W_v(v)
 
-        print("Q size: " + str(q_res.size()))
-        print("K size: " + str(k_res.size()))
-        print("V size: " + str(v_res.size()))
+        #print("Q size: " + str(q_res.size()))
+        #print("K size: " + str(k_res.size()))
+        #print("V size: " + str(v_res.size()))
 
         k_T = k_res.transpose(0,1)
 
@@ -50,7 +50,7 @@ class AttentionLayer(nn.Module):
 
         out = torch.matmul(attn_weights, v_res)
 
-        print(out.size())
+        #print(out.size())
 
         return out, res
 
