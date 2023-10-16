@@ -41,6 +41,7 @@ def run_train(learn_rate, wd, outfile):
 
     my_mental = MENTAL(130, 30, 1, batch)
 
+
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
 
     strs = []
