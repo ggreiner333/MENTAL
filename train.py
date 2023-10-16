@@ -93,7 +93,7 @@ def run_train(learn_rate, wd, outfile):
                 h = h_res
             
             loss = torch.nn.BCELoss()
-            res = loss(output, label)
+            res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
             res.backward()
