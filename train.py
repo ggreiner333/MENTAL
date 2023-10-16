@@ -50,7 +50,6 @@ def run_train(learn_rate, wd, outfile):
 
     for epoch in range(epochs):
 
-        count = 0
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
             #h=(h_entry[0],h_entry[1])
@@ -70,10 +69,16 @@ def run_train(learn_rate, wd, outfile):
             label_reshaped = np.reshape(label, (batch,1,1))
             print(label_reshaped)
             
+            batches = np.array()
+            count = 0
 
+            test = [batch]
+            print(test)
             for p in p_entry:
-                print(p[0])
-                print(np.asarray(p[0].numpy()))
+                print(p[count])
+                print(np.asarray(p[count].numpy()))
+                batch = np.append(batches, np.asarray(p[count].numpy()))
+                print(batches)
 
             print(p_entry.size())
             for p in p_entry:
