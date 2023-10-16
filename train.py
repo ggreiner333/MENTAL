@@ -83,12 +83,10 @@ def run_train(learn_rate, wd, outfile):
                 test.append(batch)
 
             formatted = np.array(test)
-
-            print(formatted)
             
             psd_tensor = torch.from_numpy(formatted)
 
-            print(psd_tensor)
+            print(psd_tensor.shape)
             #for p in p_entry:
                 #print(p[count])
                 #print(np.asarray(p[count].numpy()))
