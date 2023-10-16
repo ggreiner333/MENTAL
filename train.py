@@ -73,7 +73,7 @@ def run_train(learn_rate, wd, outfile):
 
             for p in p_entry:
                 print(p[0])
-                print(p[0].numpy().asarray())
+                print(p[0].numpy().array())
 
             print(p_entry.size())
             for p in p_entry:
