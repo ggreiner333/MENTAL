@@ -71,7 +71,8 @@ def run_train(learn_rate, wd, outfile):
             print(label_reshaped)
             
 
-            #for p in p_entry:
+            for p in p_entry:
+                print(p[0])
 
             print(p_entry.size())
             for p in p_entry:
