@@ -87,14 +87,8 @@ def run_train(learn_rate, wd, outfile):
             psd_tensor = torch.from_numpy(formatted)
 
             print(psd_tensor.shape)
-            #for p in p_entry:
-                #print(p[count])
-                #print(np.asarray(p[count].numpy()))
-                #batch = np.append(batches, np.asarray(p[count].numpy()))
-                #print(batches)
 
-            print(p_entry.size())
-            for p in p_entry:
+            for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h)
                 h = h_res
             
