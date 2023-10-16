@@ -92,6 +92,8 @@ def run_train(learn_rate, wd, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h)
                 h = h_res
             
+            print(output)
+
             loss = torch.nn.BCELoss()
             res = loss(output, label_reshaped)
 
