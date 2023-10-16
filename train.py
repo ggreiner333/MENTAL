@@ -84,7 +84,7 @@ def run_train(learn_rate, wd, outfile):
 
             formatted = np.array(test)
 
-            print(formatted.shape())
+            print(formatted.shape)
 
             #for p in p_entry:
                 #print(p[count])
