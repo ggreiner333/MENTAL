@@ -203,14 +203,14 @@ def run_train(learn_rate, wd, outfile):
             f.write('\n')
 
 
-run_train(lr=1e-4, wd=1e-6, outfile='we-6_le-4_small.txt')
-run_train(lr=1e-4, wd=1e-7, outfile='we-7_le-4_small.txt')
-run_train(lr=1e-4, wd=1e-8, outfile='we-8_le-4_small.txt')
+run_train(learn_rate=1e-4, wd=1e-6, outfile='we-6_le-4_small.txt')
+run_train(learn_rate=1e-4, wd=1e-7, outfile='we-7_le-4_small.txt')
+run_train(learn_rate=1e-4, wd=1e-8, outfile='we-8_le-4_small.txt')
 
-run_train(lr=1e-5, wd=1e-6, outfile='we-6_le-5_small.txt')
-run_train(lr=1e-5, wd=1e-7, outfile='we-7_le-5_small.txt')
-run_train(lr=1e-5, wd=1e-8, outfile='we-8_le-5_small.txt')
+run_train(learn_rate=1e-5, wd=1e-6, outfile='we-6_le-5_small.txt')
+run_train(learn_rate=1e-5, wd=1e-7, outfile='we-7_le-5_small.txt')
+run_train(learn_rate=1e-5, wd=1e-8, outfile='we-8_le-5_small.txt')
 
-run_train(lr=1e-6, wd=1e-6, outfile='we-6_le-6_small.txt')
-run_train(lr=1e-6, wd=1e-7, outfile='we-7_le-6_small.txt')
-run_train(lr=1e-6, wd=1e-8, outfile='we-8_le-6_small.txt')
+run_train(learn_rate=1e-6, wd=1e-6, outfile='we-6_le-6_small.txt')
+run_train(learn_rate=1e-6, wd=1e-7, outfile='we-7_le-6_small.txt')
+run_train(learn_rate=1e-6, wd=1e-8, outfile='we-8_le-6_small.txt')
