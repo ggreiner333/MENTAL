@@ -156,7 +156,7 @@ def run_train(learn_rate, wd, outfile):
                             preds.append(0)
 
                 label = label.squeeze_(1)
-                #print(label)
+                print(label)
                 conds = []
                 for i in range(0, batch_sz):
                     for j in range(0, len(label[i])):
@@ -242,7 +242,7 @@ def run_train(learn_rate, wd, outfile):
         label = label.squeeze_(1)
         conds = []
         for i in range(0, batch_sz):
-            for j in range(0, len(label[i])):
+            for j in range(0, len(label)):
                 conds.append(label[i][j])
 
         for i in range(0, len(conds)):
