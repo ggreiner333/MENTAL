@@ -68,6 +68,8 @@ def run_train(learn_rate, wd, outfile):
             label = np.reshape(label, (batch,1,1))
 
             for p in p_entry:
+                print(p)
+                print(n_entry)
                 output, h_res = my_mental.forward(p, n_entry, h)
                 h = h_res
             
