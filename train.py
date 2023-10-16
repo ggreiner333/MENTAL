@@ -73,9 +73,8 @@ def run_train(learn_rate, wd, outfile):
             count = 0
 
             test = []
-            print(test)
 
-            for i in range(0, 1):
+            for i in range(0, 60):
                 batch = []
                 for j in range(0,10):
                     cur = p_entry[j][i]
@@ -83,7 +82,9 @@ def run_train(learn_rate, wd, outfile):
                     batch.append(arr_cur)
                 test.append(batch)
 
-            print(test)
+            formatted = np.array(test)
+
+            print(formatted.shape())
 
             #for p in p_entry:
                 #print(p[count])
