@@ -159,7 +159,7 @@ def run_train(learn_rate, wd, outfile):
                 #print(label)
                 conds = []
                 for i in range(0, len(label)):
-                    conds.append(label[i][0])
+                    conds.append(label[i].item())
                 print(conds)
                 print(preds)
                 for i in range(0, len(conds)):
