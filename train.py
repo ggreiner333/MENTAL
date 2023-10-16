@@ -101,7 +101,7 @@ def run_train(learn_rate, wd, outfile):
             res.backward()
             optimizer.step()
         
-        if((epoch!=0) and epoch%1==0):
+        if((epoch!=0) and epoch%10==0):
             correct = 0
             for (h_entry, n_entry, p_entry, label) in test_loader:
 
@@ -160,8 +160,8 @@ def run_train(learn_rate, wd, outfile):
                 conds = []
                 for i in range(0, len(label)):
                     conds.append(label[i].item())
-                print(conds)
-                print(preds)
+                #print(conds)
+                #print(preds)
                 for i in range(0, len(conds)):
                     lb = conds[i]
                     pd = preds[i]
@@ -180,11 +180,11 @@ def run_train(learn_rate, wd, outfile):
             strs.append(s2)
             strs.append(s3)
             strs.append(s4)
-            print(s4)
-            print(s1)
-            print(s2)
-            print(s3)
-            print(s4)
+            #print(s4)
+            #print(s1)
+            #print(s2)
+            #print(s3)
+            #print(s4)
             
 
     correct = 0
@@ -240,10 +240,10 @@ def run_train(learn_rate, wd, outfile):
                     preds.append(0)
 
         label = label.squeeze_(1)
+        #print(label)
         conds = []
-        for i in range(0, batch_sz):
-            for j in range(0, len(label)):
-                conds.append(label[i][j])
+        for i in range(0, len(label)):
+            conds.append(label[i].item())
 
         for i in range(0, len(conds)):
             lb = conds[i]
@@ -272,11 +272,14 @@ def run_train(learn_rate, wd, outfile):
 run_train(learn_rate=1e-4, wd=1e-6, outfile='we-6_le-4_small.txt')
 run_train(learn_rate=1e-4, wd=1e-7, outfile='we-7_le-4_small.txt')
 run_train(learn_rate=1e-4, wd=1e-8, outfile='we-8_le-4_small.txt')
+run_train(learn_rate=1e-4, wd=1e-8, outfile='we-9_le-4_small.txt')
 
 run_train(learn_rate=1e-5, wd=1e-6, outfile='we-6_le-5_small.txt')
 run_train(learn_rate=1e-5, wd=1e-7, outfile='we-7_le-5_small.txt')
 run_train(learn_rate=1e-5, wd=1e-8, outfile='we-8_le-5_small.txt')
+run_train(learn_rate=1e-5, wd=1e-9, outfile='we-9_le-5_small.txt')
 
 run_train(learn_rate=1e-6, wd=1e-6, outfile='we-6_le-6_small.txt')
 run_train(learn_rate=1e-6, wd=1e-7, outfile='we-7_le-6_small.txt')
 run_train(learn_rate=1e-6, wd=1e-8, outfile='we-8_le-6_small.txt')
+run_train(learn_rate=1e-6, wd=1e-9, outfile='we-9_le-6_small.txt')
