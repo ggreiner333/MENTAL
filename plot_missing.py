@@ -100,13 +100,15 @@ def plot_missing(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAI
 
     x_axis_labels = ['NEO-FFI', 'Age', 'Education', 'Gender', 'Samples']
 
-    sns.heatmap(counts_test[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=column_headers, xticklabels=False, ax=ax[0], cmap="Reds", cbar=False, vmin=0, vmax=400)
-    g = sns.heatmap(counts_test[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=['Total'], xticklabels=x_axis_labels, ax=ax[1], cmap="Greens", cbar=False, vmin=0, vmax=1301)
-    g.set_yticklabels(g.get_yticklabels(), rotation=0)
+    d = sns.heatmap(counts_test[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=column_headers, xticklabels=False, ax=ax[0], cmap="Reds", cbar=False, vmin=0, vmax=400)
+    d.set_yticklabels(d.get_yticklabels(), rotation=0, fontsize=13)
+    t = sns.heatmap(counts_test[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=['Total'], xticklabels=x_axis_labels, ax=ax[1], cmap="Greens", cbar=False, vmin=0, vmax=1301)
+    t.set_yticklabels(t.get_yticklabels(), rotation=0, fontsize=13)
+    t.set_xticklabels(t.get_xticklabels(), rotation=0, fontsize=13)
 
     #ax[1].set_xlabel('Data of Interest', fontsize = 12)
-    ax[0].set_title('Presence of Data among Disorders', fontsize = 12)
-    ax[0].set_ylabel('Disorder', fontsize=12)
+    ax[0].set_title('Presence of Recorded Data Among Disorders', fontsize = 16)
+    ax[0].set_ylabel('Disorder', fontsize=16)
 
     plt.tight_layout()
     plt.subplots_adjust(hspace=0)
@@ -114,7 +116,7 @@ def plot_missing(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAI
 
 
 #count_missing()
-#plot_missing()
+plot_missing()
 
 def count_gender_disorder(gen, path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAIN"):
 
@@ -183,29 +185,32 @@ def plot_male_disorder(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\
              'Anxiety', 'Pain', 'Chronic Pain', 'PDD NOS', 'Burnout', 'Bipolar', 'Asperger', 
              'Depersonalization', 'ASD', 'Whiplash', 'Migraine', 'Epilepsy', 'GTS', 'Panic', 
              'Stroke', 'TBI', 'Anorexia', 'Conversion DX', 'DPS', 'Dyspraxia', 'LYME', 'MSA-C', 
-             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia', 'Missing', 'Healthy', 'Total'])
+             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia', 'Healthy', 'Missing Label',  'Total'])
     
     male_idx = male.set_index(index)
-    print(male_idx)
+    #print(male_idx)
 
-    x_tick_labels = ["0-10","10-20","20-30","30-40","40-50","50-60","60-70","70-80","80-90", "Missing"]
+    x_tick_labels = ["0-10","10-20","20-30","30-40","40-50","50-60","60-70","70-80","80-90", "Missing Age"]
 
-    myMask = male_idx['Missing'] == 6
-    print(male_idx[myMask])
+    myMask = male_idx['Missing Age'] == 6
+    #print(male_idx[myMask])
 
-    myMask2 = male_idx['Missing'] != 6
-    print(male_idx[myMask2])
+    myMask2 = male_idx['Missing Age'] != 6
+    #print(male_idx[myMask2])
 
     f, ax = plt.subplots(2, 1, figsize=(11, 22), gridspec_kw={'height_ratios': [1, 1.0/37]})
 
 
-    sns.heatmap(male_idx[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=False, ax=ax[0], cmap="Reds", cbar=False, vmin=0, vmax=50)
-    g = sns.heatmap(male_idx[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=x_tick_labels, ax=ax[1], cmap="Greens", cbar=False, vmin=0, vmax=118)
-    g.set_yticklabels(g.get_yticklabels(), rotation=0)
+    d = sns.heatmap(male_idx[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=False, ax=ax[0], cmap="Reds", cbar=False, vmin=0, vmax=50)
+    d.set_yticklabels(d.get_yticklabels(), rotation=0, fontsize=13)
+    
+    t = sns.heatmap(male_idx[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=x_tick_labels, ax=ax[1], cmap="Greens", cbar=False, vmin=0, vmax=118)
+    t.set_yticklabels(t.get_yticklabels(), rotation=0, fontsize=13)
+    t.set_xticklabels(t.get_xticklabels(), rotation=0, fontsize=13)
 
-    ax[1].set_xlabel('Age Range (years)', fontsize = 12)
-    ax[0].set_title('Disorder Distribution among Male Samples', fontsize = 12)
-    #ax[0].set_ylabel('Disorder', fontsize=12)
+    ax[1].set_xlabel('Age Range (Years)', fontsize = 16)
+    ax[0].set_title('Disorder Distribution Among Male Samples', fontsize = 16)
+    ax[0].set_ylabel('Disorder', fontsize=16)
 
     #plt.tight_layout()
     plt.subplots_adjust(hspace=0)
@@ -218,7 +223,7 @@ def plot_female_disorder(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL
     sns.set_theme()
 
     ######################################
-    #        Male
+    #        Female
     ######################################
 
 
@@ -230,29 +235,41 @@ def plot_female_disorder(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL
              'Anxiety', 'Pain', 'Chronic Pain', 'PDD NOS', 'Burnout', 'Bipolar', 'Asperger', 
              'Depersonalization', 'ASD', 'Whiplash', 'Migraine', 'Epilepsy', 'GTS', 'Panic', 
              'Stroke', 'TBI', 'Anorexia', 'Conversion DX', 'DPS', 'Dyspraxia', 'LYME', 'MSA-C', 
-             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia', 'Missing', 'Healthy', 'Total'])
+             'PTSD', 'Trauma', 'Tumor', 'Dyscalculia', 'Healthy', 'Missing Label', 'Total'])
 
     female_idx = female.set_index(index)
-    print(female_idx)
+    #print(female_idx)
 
-    x_tick_labels = ["0-10","10-20","20-30","30-40","40-50","50-60","60-70","70-80","80-90", "Missing"]
+    x_tick_labels = ["0-10","10-20","20-30","30-40","40-50","50-60","60-70","70-80","80-90", "Missing Age"]
 
-    myMask = female_idx['Missing'] == 15
-    print(female_idx[myMask])
+    myMask = female_idx['Missing Age'] == 15
+    #print(female_idx[myMask])
 
-    myMask2 = female_idx['Missing'] != 15
-    print(female_idx[myMask2])
+    myMask2 = female_idx['Missing Age'] != 15
+    #print(female_idx[myMask2])
 
     f, ax = plt.subplots(2, 1, figsize=(11, 22), gridspec_kw={'height_ratios': [1, 1.0/37]})
 
 
-    sns.heatmap(female_idx[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=False, ax=ax[0], cmap="Oranges", cbar=False, vmin=0, vmax=57)
-    g = sns.heatmap(female_idx[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=x_tick_labels, ax=ax[1], cmap="Purples", cbar=False, vmin=0, vmax=118)
-    g.set_yticklabels(g.get_yticklabels(), rotation=0)
+    d = sns.heatmap(female_idx[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=False, ax=ax[0], cmap="Oranges", cbar=False, vmin=0, vmax=57)
+    d.set_yticklabels(d.get_yticklabels(), rotation=0, fontsize=13)
+    t = sns.heatmap(female_idx[myMask] ,  annot=True, fmt="d", linewidth=0.5, square=False, xticklabels=x_tick_labels, ax=ax[1], cmap="Purples", cbar=False, vmin=0, vmax=118)
+    t.set_yticklabels(t.get_yticklabels(), rotation=0, fontsize=13)
+    t.set_xticklabels(t.get_xticklabels(), rotation=0, fontsize=13)
 
-    ax[1].set_xlabel('Age Range (years)', fontsize = 12)
-    ax[0].set_title('Disorder Distribution among Female Samples', fontsize = 12)
-    ax[0].set_ylabel('Disorder', fontsize=12)
+    ax[1].set_xlabel('Age Range (Years)', fontsize = 16)
+    ax[0].set_title('Disorder Distribution Among Female Samples', fontsize = 16)
+    ax[0].set_ylabel('Disorder', fontsize=16)
+
+    '''
+    d.axvline(x =  0, color = 'k', linewidth = 3)
+    d.axvline(x = 10, color = 'k', linewidth = 3) 
+    d.axhline(y =  0, color = 'k', linewidth = 3)
+
+    t.axvline(x =  0, color = 'k', linewidth = 3)
+    t.axvline(x = 10, color = 'k', linewidth = 3) 
+    t.axhline(y =  1, color = 'k', linewidth = 3)
+    '''
 
     #plt.tight_layout()
     plt.subplots_adjust(hspace=0)

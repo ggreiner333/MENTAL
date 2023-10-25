@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 import mne
 import math
@@ -18,17 +19,17 @@ import math
 
 class AttentionLayer(nn.Module):
 
-    def __init__(self, dk, dv, batch):
+    def __init__(self, dk, dv, batch, attn_dropout=0.1):
         super().__init__()
 
         self.dk = dk
         self.dv = dv
 
-        self.W_q = nn.Linear(60, dk)
-        self.W_k = nn.Linear(130, dk)
-        self.W_v = nn.Linear(130, dv)
+        self.W_q = nn.Linear( 60, dk, bias = False)
+        self.W_k = nn.Linear(130, dk, bias = False)
+        self.W_v = nn.Linear(130, dv, bias = False)
 
-        self.softmax = nn.Softmax(dim=1)
+        self.dropout = nn.Dropout(attn_dropout)
 
     def forward(self, q, k, v):
         #print("Q size: " + str(q.size()))
@@ -45,8 +46,12 @@ class AttentionLayer(nn.Module):
 
         k_T = k_res.transpose(0,1)
 
-        res = torch.matmul(q_res,k_T) / math.sqrt(self.dk)
-        attn_weights = self.softmax(res)
+        print("Q size: " + str(q_res.size()))
+        print("K size: " + str(k_T.size()))
+        print("V size: " + str(v_res.size()))
+
+        res = torch.matmul(q_res / math.sqrt(self.dk) ,k_T)
+        attn_weights = self.dropout(F.softmax(res, dim=-1))
 
         out = torch.matmul(attn_weights, v_res)
 

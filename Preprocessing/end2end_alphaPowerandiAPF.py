@@ -50,7 +50,7 @@ def end2end_alphaPowerandiAPF(varargs):
     """{
     1rst: Preprocessing using defaults
     }"""
-
+    
     autopreprocess_standard(varargs)
 
     """{
@@ -67,7 +67,7 @@ def end2end_alphaPowerandiAPF(varargs):
         raise ValueError('participantspath not defined')
 
     tsvdat = pd.read_csv(varargs['participantspath']+'/participants.csv')
-
+    
     """ compute powerspectrum and make dictionary with results that will be saved in varrags['resultspath'] """
     def computeFFT(data, Fs=500):
         from scipy.signal import hann
@@ -119,7 +119,8 @@ def end2end_alphaPowerandiAPF(varargs):
     idcodes = np.array(output['IDcodes'][1:]); freqs= output['freqs']
 
     foi = [(np.where((freqs>=6.9) & (freqs<=13.1)))][0][0]
-
+    
+    
     """ compute mean log power for Eyes open and Eyes closed and perform statistics """
     #select data for EC and EO from the entire database
     p=0;meanEC=[];meanEO=[]
@@ -156,7 +157,8 @@ def end2end_alphaPowerandiAPF(varargs):
     colors = list(['lightseagreen','darkblue'])
     sns.lineplot(x='frequency (Hz)', y='logPower', data=concatenated, hue= 'condition',palette = colors, linewidth = 2, alpha=0.8)
     plt.show()
-
+    
+    
     """ plotting iAPF and model plus statistucs """
     #function for loggaussian model
     #only for Eyes closed
@@ -196,7 +198,7 @@ def end2end_alphaPowerandiAPF(varargs):
     plt.title('iAPF')
     plt.show()
     
-
+    
     """plot age distributions for males and females """
 
     maleages = np.unique(tsvdat['age'][tsvdat['gender']==1])
@@ -209,26 +211,28 @@ def end2end_alphaPowerandiAPF(varargs):
     g=0
     colors = np.array(['darkorange','darkred'])
     for ax in axis.ravel():
-        ax.hist(np.array(ages[g]),bins=[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90],color=colors[g], orientation='horizontal', alpha=0.7, edgecolor='white', linewidth=0.2)
+        ax.hist(np.array(ages[g]),bins=[5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90],color=colors[g], orientation='horizontal', alpha=0.7, edgecolor='white', linewidth=0.2)
         if g==0:
-            ax.set_xlabel('Female count')
+            ax.set_xlabel('Female count', fontsize=18)
+            ax.set_xticks([0,10,20,30,40,50,60,70,80], fontsize=14)
+            ax.set_xticklabels(labels=[0,10,20,30,40,50,60,70,80],fontsize=14)
             ax.invert_xaxis()
-            ax.set_yticks(np.arange(0,100,10))
+            ax.set_yticks(np.arange(5,95,5))
             ax.set_yticklabels([])
             ax.yaxis.set_ticks_position('right')
-
             ax.spines['left'].set_visible(False)
             ax.spines['top'].set_visible(False)
         else:
-            ax.set_xlabel('Male count')
-            ax.set_yticks(np.arange(0,100,10))
-            ax.set_yticklabels(list([0,10,20,30,40,50,60,70,80,90]),rotation=0)
+            ax.set_xlabel('Male count', fontsize=18)
+            ax.set_xticks([0,10,20,30,40,50,60,70,80], fontsize=14)
+            ax.set_xticklabels(labels=[0,10,20,30,40,50,60,70,80],fontsize=14)
+            ax.set_yticks(np.arange(5,95,5))
+            ax.set_yticklabels(list([5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90]),rotation=0, fontsize=14)
             ax.spines['right'].set_visible(False)
             ax.spines['top'].set_visible(False)
         g=g+1
 
-    plt.suptitle('Age Distribution')
-    plt.subplots_adjust(wspace=0.22)
+    plt.suptitle('Age Distribution of Participants in TDBRAIN Dataset', fontsize=18)
     plt.show()
 
 if __name__ == "__main__":
@@ -236,7 +240,7 @@ if __name__ == "__main__":
 
     main_dir = '/data/zhanglab/ggreiner/MENTAL/TDBRAIN/'
 
-    varargs[      'sourcepath'] =  main_dir + 'derivatives'
+    varargs[      'sourcepath'] =  main_dir + '/derivatives'
     print('Reading data from: '+ varargs['sourcepath'])
     varargs[     'preprocpath'] =  main_dir + 'preprocessed'
     varargs['participantspath'] =  main_dir
