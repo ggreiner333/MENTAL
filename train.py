@@ -94,7 +94,7 @@ def run_train(learn_rate, wd, outfile):
             
             #print(output)
 
-            loss = torch.nn.BCELoss()
+            loss = torch.nn.MSELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -269,19 +269,37 @@ def run_train(learn_rate, wd, outfile):
             f.write('\n')
 
 
-run_train(learn_rate=1e-4, wd=1e-6, outfile='we-6_le-4_small_new.txt')
-run_train(learn_rate=1e-4, wd=1e-7, outfile='we-7_le-4_small_new.txt')
-run_train(learn_rate=1e-4, wd=1e-8, outfile='we-8_le-4_small_new.txt')
-run_train(learn_rate=1e-4, wd=1e-8, outfile='we-9_le-4_small_new.txt')
+run_train(learn_rate=1e-2, wd=1e-6, outfile='MSE_w6_l2.txt')
+run_train(learn_rate=1e-2, wd=1e-7, outfile='MSE_w7_l2.txt')
+run_train(learn_rate=1e-2, wd=1e-8, outfile='MSE_w8_l2.txt')
+run_train(learn_rate=1e-2, wd=1e-9, outfile='MSE_w9_l2.txt')
 
+run_train(learn_rate=1e-3, wd=1e-6, outfile='MSE_w6_l3.txt')
+run_train(learn_rate=1e-3, wd=1e-7, outfile='MSE_w7_l3.txt')
+run_train(learn_rate=1e-3, wd=1e-8, outfile='MSE_w8_l3.txt')
+run_train(learn_rate=1e-3, wd=1e-9, outfile='MSE_w9_l3.txt')
 
-run_train(learn_rate=1e-5, wd=1e-6, outfile='we-6_le-5_small_new.txt')
-run_train(learn_rate=1e-5, wd=1e-7, outfile='we-7_le-5_small_new.txt')
-run_train(learn_rate=1e-5, wd=1e-8, outfile='we-8_le-5_small_new.txt')
-run_train(learn_rate=1e-5, wd=1e-9, outfile='we-9_le-5_small_new.txt')
+run_train(learn_rate=1e-4, wd=1e-6, outfile='MSE_w6_l4.txt')
+run_train(learn_rate=1e-4, wd=1e-7, outfile='MSE_w7_l4.txt')
+run_train(learn_rate=1e-4, wd=1e-8, outfile='MSE_w8_l4.txt')
+run_train(learn_rate=1e-4, wd=1e-9, outfile='MSE_w9_l4.txt')
 
-run_train(learn_rate=1e-6, wd=1e-6, outfile='we-6_le-6_small_new.txt')
-run_train(learn_rate=1e-6, wd=1e-7, outfile='we-7_le-6_small_new.txt')
-run_train(learn_rate=1e-6, wd=1e-8, outfile='we-8_le-6_small_new.txt')
-run_train(learn_rate=1e-6, wd=1e-9, outfile='we-9_le-6_small_new.txt')
+run_train(learn_rate=2e-4, wd=1e-6, outfile='MSE_w6_l_24.txt')
+run_train(learn_rate=2e-4, wd=1e-7, outfile='MSE_w7_l_24.txt')
+run_train(learn_rate=2e-4, wd=1e-8, outfile='MSE_w8_l_24.txt')
+run_train(learn_rate=2e-4, wd=1e-9, outfile='MSE_w9_l_24.txt')
 
+run_train(learn_rate=1e-5, wd=1e-6, outfile='MSE_w6_l5.txt')
+run_train(learn_rate=1e-5, wd=1e-7, outfile='MSE_w7_l5.txt')
+run_train(learn_rate=1e-5, wd=1e-8, outfile='MSE_w8_l5.txt')
+run_train(learn_rate=1e-5, wd=1e-9, outfile='MSE_w9_l5.txt')
+
+run_train(learn_rate=1e-6, wd=1e-6, outfile='MSE_w6_l6.txt')
+run_train(learn_rate=1e-6, wd=1e-7, outfile='MSE_w7_l6.txt')
+run_train(learn_rate=1e-6, wd=1e-8, outfile='MSE_w8_l6.txt')
+run_train(learn_rate=1e-6, wd=1e-9, outfile='MSE_w9_l6.txt')
+
+run_train(learn_rate=1e-7, wd=1e-6, outfile='MSE_w6_l7.txt')
+run_train(learn_rate=1e-7, wd=1e-7, outfile='MSE_w7_l7.txt')
+run_train(learn_rate=1e-7, wd=1e-8, outfile='MSE_w8_l7.txt')
+run_train(learn_rate=1e-7, wd=1e-9, outfile='MSE_w9_l7.txt')
