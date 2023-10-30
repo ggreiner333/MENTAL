@@ -44,7 +44,7 @@ class AttentionLayer(nn.Module):
         #print("K size: " + str(k_res.size()))
         #print("V size: " + str(v_res.size()))
 
-        k_T = k_res.transpose(0,1)
+        #k_T = k_res.transpose(0,1)
 
         print("Q size: " + str(q_res.size()))
         print("K size: " + str(k_T.size()))
