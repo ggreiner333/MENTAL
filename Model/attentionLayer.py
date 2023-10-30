@@ -46,9 +46,9 @@ class AttentionLayer(nn.Module):
 
         k_T = k_res.transpose(0,1)
 
-        #print("Q size: " + str(q_res.size()))
-        #print("K size: " + str(k_T.size()))
-        #print("V size: " + str(v_res.size()))
+        print("Q size: " + str(q_res.size()))
+        print("K size: " + str(k_T.size()))
+        print("V size: " + str(v_res.size()))
 
         res = torch.matmul(q_res / math.sqrt(self.dk), k_T)
         attn_weights = self.dropout(F.softmax(res, dim=-1))
