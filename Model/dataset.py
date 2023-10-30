@@ -73,7 +73,7 @@ class SplitDataset(data.Dataset):
         
         psd_val = torch.tensor(psd, dtype=torch.float32)
         psd = torch.reshape(psd_val, [60,130,1])
-        print(psd_val.shape)
+        print(psd.shape)
 
         return h_1, neo, psd, output
     
