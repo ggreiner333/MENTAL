@@ -64,6 +64,8 @@ class SplitDataset(data.Dataset):
 
         neo = individual[5:65]
         neo_val = torch.tensor(neo, dtype=torch.float32)
+        neo = torch.reshape(neo_val, [60, 1])
+        print(neo)
 
         psd = []
         for i in range(65,7865, 130):
