@@ -55,7 +55,7 @@ class AttentionLayer(nn.Module):
 
         out = torch.matmul(attn_weights, v_res)
 
-        #print(out.size())
+        print(out.size())
 
         return out, attn_weights
 
