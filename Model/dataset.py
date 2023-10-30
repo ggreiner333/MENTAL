@@ -72,9 +72,10 @@ class SplitDataset(data.Dataset):
             psd.append(individual[i:(i+130)])
         
         psd_val = torch.tensor(psd, dtype=torch.float32)
+        psd = torch.reshape(psd_val, [60,130,1])
         print(psd_val.shape)
 
-        return h_1, neo_val, psd_val, output
+        return h_1, neo, psd, output
     
     def __getIndividuals__(self):
         res = []
