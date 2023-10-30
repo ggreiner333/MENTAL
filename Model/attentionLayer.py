@@ -59,7 +59,8 @@ class AttentionLayer(nn.Module):
 
         result = self.fc(out)
 
-        print(result.size())
+        reshaped = torch.reshape(result, [10,60])
+        print(reshaped.size())
 
         return out, attn_weights
 
