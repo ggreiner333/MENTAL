@@ -41,11 +41,7 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
         z_scored = stats.zscore(test, axis=None)
         normalized[:, i] = z_scored
 
-    for i in range(0, 4):
-        print()
-        print()
-        for j in range(0, 100):
-            print(normalized[i][j])
+    print(normalized)
 
 
 normalize_data()
