@@ -46,5 +46,10 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     np.save(file=os.path.join(path, 'normalized_small_complete_samples_EC_depression.npy'), arr=normalized)
 
 
-normalize_data()
-    
+def test_load(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
+    inds = np.load(os.path.join(path, 'normalized_small_complete_samples_EC_depression.npy'))
+    print(inds)
+    print(inds.shape)
+
+#normalize_data()
+test_load()   
