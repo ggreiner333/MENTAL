@@ -31,7 +31,7 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     inds = np.load(os.path.join(path, 'small_complete_samples_EC_depression.npy'))
     print(inds[1].size)
     print(inds[0].size)
-    normalized = np.zeros_like(shape = [705, 7865])
+    normalized = np.zeros_like(inds)
     print(normalized.shape)
     print(inds.shape)
     #for i in range(0,5):
