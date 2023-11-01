@@ -33,6 +33,8 @@ class AttentionLayer(nn.Module):
 
         self.dropout = nn.Dropout(attn_dropout)
 
+        self.batch = batch
+
     def forward(self, q, k, v):
         #print("Q size: " + str(q.size()))
         #print("K size: " + str(k.size()))
@@ -59,7 +61,7 @@ class AttentionLayer(nn.Module):
 
         result = self.fc(out)
 
-        reshaped = torch.reshape(result, [10,60])
+        reshaped = torch.reshape(result, [self.batch,60])
         #print(reshaped.size())
 
         return reshaped, attn_weights
