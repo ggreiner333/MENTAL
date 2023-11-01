@@ -34,7 +34,7 @@ def run_train(learn_rate, wd, outfile):
 
     main_dataset = SplitDataset('small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    res = data.random_split(main_dataset, [545, 150])
+    res = data.random_split(main_dataset, [555, 150])
 
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
