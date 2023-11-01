@@ -43,6 +43,8 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     print(normalized.shape)
 
+    np.save(file=os.path.join(path, 'normalized_small_complete_samples_EC_depression.npy'), arr=normalized)
+
 
 normalize_data()
     
