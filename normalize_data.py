@@ -31,8 +31,8 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     inds = np.load(os.path.join(path, 'small_complete_samples_EC_depression.npy'))
     print(inds[1].size)
     print(inds[0].size)
-    #for i in range(0, inds[0].size):
-        #print(inds[0][i])
+    for i in range(0, 15):
+        print(inds[0][i])
     
     #z_scored = stats.zscore(a, axis=None)
 
