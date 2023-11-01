@@ -1,7 +1,6 @@
 import os
 from os.path import dirname
 from pathlib import Path
-import winsound
 
 import numpy as np
 import torch
