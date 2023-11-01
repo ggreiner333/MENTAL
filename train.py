@@ -180,11 +180,11 @@ def run_train(learn_rate, wd, outfile):
             strs.append(s2)
             strs.append(s3)
             strs.append(s4)
-            #print(s4)
-            #print(s1)
-            #print(s2)
-            #print(s3)
-            #print(s4)
+            print(s4)
+            print(s1)
+            print(s2)
+            print(s3)
+            print(s4)
             
 
     correct = 0
