@@ -51,5 +51,5 @@ def test_load(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     print(inds)
     print(inds.shape)
 
-#normalize_data()
+normalize_data()
 test_load()   
