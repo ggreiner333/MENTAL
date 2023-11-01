@@ -28,10 +28,10 @@ out_path = 'TDBRAIN'
 def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     # Load Data
-    inds = np.load('small_complete_samples_EC_depression.npy')
+    inds = np.load(os.path.join(path, 'small_complete_samples_EC_depression.npy'))
     print(inds[1])
     
-    #stats.zscore(a, axis=None)
+    #z_scored = stats.zscore(a, axis=None)
 
 normalize_data()
     
