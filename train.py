@@ -1,6 +1,7 @@
 import os
 from os.path import dirname
 from pathlib import Path
+import winsound
 
 import numpy as np
 import torch
@@ -269,44 +270,13 @@ def run_train(learn_rate, wd, outfile):
             f.write('\n')
 
 
-#run_train(learn_rate=1e-2, wd=1e-6, outfile='MSE_w6_l2.txt')
-#run_train(learn_rate=1e-2, wd=1e-7, outfile='MSE_w7_l2.txt')
-#run_train(learn_rate=1e-2, wd=1e-8, outfile='MSE_w8_l2.txt')
-#run_train(learn_rate=1e-2, wd=1e-9, outfile='MSE_w9_l2.txt')
 
-#run_train(learn_rate=1e-3, wd=1e-6, outfile='MSE_w6_l3.txt')
-#run_train(learn_rate=1e-3, wd=1e-7, outfile='MSE_w7_l3.txt')
-#run_train(learn_rate=1e-3, wd=1e-8, outfile='MSE_w8_l3.txt')
-#run_train(learn_rate=1e-3, wd=1e-9, outfile='MSE_w9_l3.txt')
+weights = [1e-3, 1e-4, 1e-5, 1e-6]
+learns = [1e-4, 2e-4, 3e-4, 4e-4, 5e-4, 6e-4]
 
-run_train(learn_rate=1e-4, wd=1e-6, outfile='MSE_w6_l4.txt')
-run_train(learn_rate=1e-4, wd=1e-7, outfile='MSE_w7_l4.txt')
-run_train(learn_rate=1e-4, wd=1e-8, outfile='MSE_w8_l4.txt')
+weight_lbls = ["3", "4", "5", "6"]
+learn_lbls = ["14", "24", "34", "44", "54", "64"]
 
-run_train(learn_rate=1e-4, wd=1e-9, outfile='MSE_w9_l4.txt' )
-run_train(learn_rate=2e-4, wd=1e-9, outfile='MSE_w9_l24.txt')
-run_train(learn_rate=3e-4, wd=1e-9, outfile='MSE_w9_l34.txt')
-run_train(learn_rate=4e-4, wd=1e-9, outfile='MSE_w9_l44.txt')
-run_train(learn_rate=5e-4, wd=1e-9, outfile='MSE_w9_l54.txt')
-
-run_train(learn_rate=1e-5, wd=1e-9, outfile='MSE_w9_l5.txt' )
-run_train(learn_rate=2e-5, wd=1e-9, outfile='MSE_w9_l25.txt')
-run_train(learn_rate=3e-5, wd=1e-9, outfile='MSE_w9_l35.txt')
-run_train(learn_rate=4e-5, wd=1e-9, outfile='MSE_w9_l45.txt')
-run_train(learn_rate=5e-5, wd=1e-9, outfile='MSE_w9_l55.txt')
-
-
-#run_train(learn_rate=1e-5, wd=1e-6, outfile='MSE_w6_l5.txt')
-#run_train(learn_rate=1e-5, wd=1e-7, outfile='MSE_w7_l5.txt')
-#run_train(learn_rate=1e-5, wd=1e-8, outfile='MSE_w8_l5.txt')
-#run_train(learn_rate=1e-5, wd=1e-9, outfile='MSE_w9_l5.txt')
-
-#run_train(learn_rate=1e-6, wd=1e-6, outfile='MSE_w6_l6.txt')
-#run_train(learn_rate=1e-6, wd=1e-7, outfile='MSE_w7_l6.txt')
-#run_train(learn_rate=1e-6, wd=1e-8, outfile='MSE_w8_l6.txt')
-run_train(learn_rate=1e-6, wd=1e-9, outfile='MSE_w9_l6.txt')
-
-#run_train(learn_rate=1e-7, wd=1e-6, outfile='MSE_w6_l7.txt')
-#run_train(learn_rate=1e-7, wd=1e-7, outfile='MSE_w7_l7.txt')
-#run_train(learn_rate=1e-7, wd=1e-8, outfile='MSE_w8_l7.txt')
-run_train(learn_rate=1e-7, wd=1e-9, outfile='MSE_w9_l7.txt')
+for i in range(0, len(weights)):
+    for j in range(0, len(learns)):
+        run_train(learn_rate=learns[j], wd=weights[i], outfile="MSE_w"+weight_lbls[i]+"_l"+learn_lbls[j]+".txt")

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 from matplotlib import pyplot as plt
-
+import pandas as pd
 import mne
 
 
@@ -97,7 +97,7 @@ def clean_individuals_depression_or_not(path="/data/zhanglab/ggreiner/MENTAL/TDB
     #print(final)
     np.savetxt(os.path.join(path,'cleaned_participants_depression.csv'), final, delimiter=',', fmt="%s")
 
-clean_individuals_depression_or_not()
+#clean_individuals_depression_or_not()
 #clean_individuals()
 
 def generate_samples(ptc, psd, out):
@@ -218,9 +218,27 @@ def load_attempt(path):
     print(loaded)
 
 
+def find_min_max_gender():
+    tsvdat = pd.read_csv("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAIN\\participants.csv")
 
-separate_missing_samples(ptc_path, psd_path, out_path)
+    maleages = np.unique(tsvdat['age'][tsvdat['gender']==1])
+    femaleages = np.unique(tsvdat['age'][tsvdat['gender']==0])
+
+    minM = np.where(maleages > 0, maleages, np.inf).min()
+    minF = np.where(femaleages > 0, femaleages, np.inf).min()
+    min_Male = maleages.min()
+    max_Male = maleages.max()
+
+    min_Female = femaleages.min()
+    max_Female = femaleages.max()
+
+    print("Min Male: " + str(minM) + ", Max Male: " + str(max_Male))
+    print("Min Female: " + str(minF) + ", Max Female: " + str(max_Female))
+
+#separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
 #load_attempt('TDBRAIN/small_complete_samples_EC.csv')
+
+find_min_max_gender()
