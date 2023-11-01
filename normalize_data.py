@@ -34,8 +34,8 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     normalized = np.zeros_like(inds.shape)
     print(normalized.shape)
     print(inds.shape)
-    for i in range(0,5):
-        z_scored = stats.zscore(a, axis=None)
+    #for i in range(0,5):
+        #z_scored = stats.zscore(a, axis=None)
 
 normalize_data()
     
