@@ -103,7 +103,7 @@ def run_train(learn_rate, wd, outfile):
             res.backward()
             optimizer.step()
         
-        if((epoch!=0)):
+        if((epoch!=0) and (epoch % 10 ==0)):
             correct = 0
             for (h_entry, n_entry, p_entry, label) in test_loader:
 
@@ -182,11 +182,11 @@ def run_train(learn_rate, wd, outfile):
             strs.append(s2)
             strs.append(s3)
             strs.append(s4)
-            print(s4)
-            print(s1)
-            print(s2)
-            print(s3)
-            print(s4)
+            #print(s4)
+            #print(s1)
+            #print(s2)
+            #print(s3)
+            #print(s4)
             
 
     correct = 0
@@ -273,10 +273,10 @@ def run_train(learn_rate, wd, outfile):
 
 
 weights = [1e-3, 1e-4, 1e-5, 1e-6]
-learns = [1e-4, 2e-4, 3e-4, 4e-4, 5e-4, 6e-4]
+learns = [1e-2, 1e-3, 1e-4]
 
 weight_lbls = ["3", "4", "5", "6"]
-learn_lbls = ["14", "24", "34", "44", "54", "64"]
+learn_lbls = ["12", "13", "14"]
 
 for i in range(0, len(weights)):
     for j in range(0, len(learns)):
