@@ -76,7 +76,7 @@ def run_train(learn_rate, wd, outfile):
 
             for i in range(0, 60):
                 batch = []
-                for j in range(0,10):
+                for j in range(0,batch_sz):
                     cur = p_entry[j][i]
                     arr_cur = np.asarray(cur)
                     batch.append(arr_cur)
@@ -129,7 +129,7 @@ def run_train(learn_rate, wd, outfile):
 
                 for i in range(0, 60):
                     batch = []
-                    for j in range(0,10):
+                    for j in range(0,batch_sz):
                         cur = p_entry[j][i]
                         arr_cur = np.asarray(cur)
                         batch.append(arr_cur)
@@ -214,7 +214,7 @@ def run_train(learn_rate, wd, outfile):
 
         for i in range(0, 60):
             batch = []
-            for j in range(0,10):
+            for j in range(0, batch_sz):
                 cur = p_entry[j][i]
                 arr_cur = np.asarray(cur)
                 batch.append(arr_cur)
