@@ -29,7 +29,7 @@ class AttentionLayer(nn.Module):
         self.W_k = nn.Linear(1, dk, bias = False)
         self.W_v = nn.Linear(1, dv, bias = False)
 
-        self.fc = nn.Linear(60, 1, bias = False)
+        self.fc = nn.Linear(dv, 1, bias = False)
 
         self.dropout = nn.Dropout(attn_dropout)
 
