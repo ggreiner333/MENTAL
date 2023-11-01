@@ -32,7 +32,9 @@ def run_train(learn_rate, wd, outfile):
 
     #test = np.loadtxt(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'small_complete_samples_EC_depression.npy'), delimiter=",", dtype=float)
 
-    main_dataset = SplitDataset('small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    #main_dataset = SplitDataset('small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+
+    main_dataset = SplitDataset('normalized_small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     res = data.random_split(main_dataset, [555, 150])
 
