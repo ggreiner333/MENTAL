@@ -278,4 +278,4 @@ learn_lbls = ["14", "24", "34", "44", "54", "64"]
 
 for i in range(0, len(weights)):
     for j in range(0, len(learns)):
-        run_train(learn_rate=learns[j], wd=weights[i], outfile="MSE_w"+weight_lbls[i]+"_l"+learn_lbls[j]+".txt")
+        run_train(learn_rate=learns[j], wd=weights[i], outfile="Batch5_MSE_w"+weight_lbls[i]+"_l"+learn_lbls[j]+".txt")
