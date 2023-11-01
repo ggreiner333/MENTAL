@@ -32,7 +32,7 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     normalized = np.zeros_like(inds)
 
-    for i in range(0, inds[0].size):
+    for i in range(0, inds.size):
         for j in range(0, 5):
             normalized[i][j] = inds[i][j]
 
