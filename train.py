@@ -27,14 +27,14 @@ def run_train(learn_rate, wd, outfile):
                 'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
 
 
-    batch_sz = 10
+    batch_sz = 5
 
 
     #test = np.loadtxt(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'small_complete_samples_EC_depression.npy'), delimiter=",", dtype=float)
 
     main_dataset = SplitDataset('small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    res = data.random_split(main_dataset, [560, 140, 5])
+    res = data.random_split(main_dataset, [545, 150])
 
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
