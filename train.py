@@ -272,11 +272,11 @@ def run_train(learn_rate, wd, outfile):
 
 
 
-weights = [1e-3, 1e-4, 1e-5, 1e-6]
-learns = [1e-2, 1e-3, 1e-4]
+weights = [1e-7, 1e-8, 1e-9]
+learns = [1e-3, 1e-4, 1e-5]
 
-weight_lbls = ["3", "4", "5", "6"]
-learn_lbls = ["12", "13", "14"]
+weight_lbls = ["7", "8", "9"]
+learn_lbls = ["13", "14", "l5"]
 
 for i in range(0, len(weights)):
     for j in range(0, len(learns)):
