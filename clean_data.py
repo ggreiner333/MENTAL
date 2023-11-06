@@ -243,7 +243,7 @@ def test_same_PSDS():
     ind_EC = "sub-88016509/ses-1_EC.npy"
     ind_EO = "sub-88016509/ses-1_EO.npy"
 
-    files = os.listdir('data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD/sub-88016509')
+    files = os.listdir('data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD')
 
     ec_psds = np.load(os.path.join(psds_path, ind_EC))
     ec_all_psds = np.load(os.path.join(psds_all_path, ind_EC))
