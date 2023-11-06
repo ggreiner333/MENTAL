@@ -138,14 +138,17 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     plt.xlabel("Epoch")
 
     plt.savefig(outfile)
+    plt.clf()
 
 
 
 # running code
 
-epoch = range(10, 2001, 100)
+epoch = range(100, 2001, 100)
 batches = [1, 5, 10, 15, 20]
-print(epoch)
+
+for i in epoch:
+    print(i)
 
 learn = 1e-3
 weight_decay = 1e-6
@@ -155,9 +158,3 @@ for i in range(0, len(epoch)):
         run_train(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3")
         
-
-
-res = np.load("epoch100b20_w6_l3.npy")
-
-print(res)
-print(res.shape)
