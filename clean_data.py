@@ -235,10 +235,37 @@ def find_min_max_gender():
     print("Min Male: " + str(minM) + ", Max Male: " + str(max_Male))
     print("Min Female: " + str(minF) + ", Max Female: " + str(max_Female))
 
+
+def test_same_PSDS():
+    psds_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD'
+    psds_all_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD_all'
+
+    ind_EC = "sub-88016509/ses-1_EC.npy"
+    ind_EO = "sub-88016509/ses-1_EO.npy"
+
+    ec_psds = np.load(os.path.join(psds_path, ind_EC))
+    ec_all_psds = np.load(os.path.join(psds_all_path, ind_EC))
+
+    print("EC: PSD")
+    print(ec_psds)
+    print("EC: PSD_all")
+    print(ec_all_psds)
+
+    eo_psds = np.load(os.path.join(psds_path, ind_EO))
+    eo_all_psds = np.load(os.path.join(psds_all_path, ind_EO))
+
+    print("EO: PSD")
+    print(eo_psds)
+    print("EO: PSD_all")
+    print(ec_all_psds)
+
+
+test_same_PSDS()
+
 #separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
 #load_attempt('TDBRAIN/small_complete_samples_EC.csv')
 
-find_min_max_gender()
+#find_min_max_gender()
