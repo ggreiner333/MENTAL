@@ -236,34 +236,6 @@ def find_min_max_gender():
     print("Min Female: " + str(minF) + ", Max Female: " + str(max_Female))
 
 
-def test_same_PSDS():
-    psds_path = 'TDBRAIN/PSD'
-    psds_all_path = 'TDBRAIN/PSD_all'
-
-    ind_EC = "sub-88016509/ses-1_EC.npy"
-    ind_EO = "sub-88016509/ses-1_EO.npy"
-
-    ec_psds = np.load(os.path.join(psds_path, ind_EC))
-    ec_all_psds = np.load(os.path.join(psds_all_path, ind_EC))
-
-    print("EC: PSD")
-    print(ec_psds)
-    print(ec_psds.shape)
-    print("EC: PSD_all")
-    print(ec_all_psds)
-    print(ec_all_psds.shape)
-
-    eo_psds = np.load(os.path.join(psds_path, ind_EO))
-    eo_all_psds = np.load(os.path.join(psds_all_path, ind_EO))
-
-    print("EO: PSD")
-    print(eo_psds)
-    print("EO: PSD_all")
-    print(ec_all_psds)
-
-
-test_same_PSDS()
-
 #separate_missing_samples(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
