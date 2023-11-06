@@ -237,8 +237,8 @@ def find_min_max_gender():
 
 
 def test_same_PSDS():
-    psds_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD'
-    psds_all_path = 'data/zhanglab/ggreiner/MENTAL/TDBRAIN/PSD_all'
+    psds_path = 'TDBRAIN/PSD'
+    psds_all_path = 'TDBRAIN/PSD_all'
 
     ind_EC = "sub-88016509/ses-1_EC.npy"
     ind_EO = "sub-88016509/ses-1_EO.npy"
