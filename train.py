@@ -144,7 +144,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 # running code
 
 epoch = range(10, 2001, 100)
-batches = [20]
+batches = [1, 5, 10, 15, 20]
 print(epoch)
 
 learn = 1e-3
