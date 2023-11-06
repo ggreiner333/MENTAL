@@ -49,7 +49,6 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     accs = []
 
     for epoch in range(epochs):
-        print(epoch)
 
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
@@ -146,9 +145,6 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 
 epoch = range(100, 2001, 100)
 batches = [1, 5, 10, 15, 20]
-
-for i in epoch:
-    print(i)
 
 learn = 1e-3
 weight_decay = 1e-6
