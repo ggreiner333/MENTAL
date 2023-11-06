@@ -29,7 +29,7 @@ class AttentionLayer(nn.Module):
         self.W_k = nn.Linear(1, dk, bias = False)
         self.W_v = nn.Linear(1, dv, bias = False)
 
-        self.fc = nn.Linear(dv, 1, bias = False)
+        self.fc = nn.Linear(dv, 1)
 
         self.dropout = nn.Dropout(attn_dropout)
 
@@ -55,7 +55,7 @@ class AttentionLayer(nn.Module):
         #print("V size: " + str(v_res.size()))
 
         res = torch.matmul(q_res / math.sqrt(self.dk), k_T)
-        attn_weights = self.dropout(F.softmax(res, dim=-1))
+        attn_weights = F.softmax(res, dim=-1)
 
         out = torch.matmul(attn_weights, v_res)
 
