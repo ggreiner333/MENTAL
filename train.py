@@ -123,9 +123,9 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
                 if(lb==pd): 
                     correct += 1
 
-            total = (test_loader.__len__())*batch_sz
-            acc = correct/total
-            accs.append(acc)
+        total = (test_loader.__len__())*batch_sz
+        acc = correct/total
+        accs.append(acc)
             
     accs = np.array(accs)
     np.save(outfile, accs)
@@ -142,8 +142,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 
 
 # running code
-"""
-epoch = range(100, 2001, 100)
+
+epoch = range(10, 2001, 100)
 batches = [20]
 print(epoch)
 
@@ -155,7 +155,7 @@ for i in range(0, len(epoch)):
         run_train(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3")
         
-"""
+
 
 res = np.load("epoch100b20_w6_l3.npy")
 
