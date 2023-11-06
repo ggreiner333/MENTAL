@@ -243,15 +243,15 @@ def test_same_PSDS():
     ind_EC = "sub-88016509/ses-1_EC.npy"
     ind_EO = "sub-88016509/ses-1_EO.npy"
 
-    files = os.listdir('TDBRAIN/PSD/sub-88016509')
-
     ec_psds = np.load(os.path.join(psds_path, ind_EC))
     ec_all_psds = np.load(os.path.join(psds_all_path, ind_EC))
 
     print("EC: PSD")
     print(ec_psds)
+    print(ec_psds.shape)
     print("EC: PSD_all")
     print(ec_all_psds)
+    print(ec_all_psds.shape)
 
     eo_psds = np.load(os.path.join(psds_path, ind_EO))
     eo_all_psds = np.load(os.path.join(psds_all_path, ind_EO))
