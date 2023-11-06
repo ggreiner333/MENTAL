@@ -9,6 +9,7 @@ from torch.utils import data
 import mne
 import math
 
+import matplotlib.pyplot as plt
 
 from Model.dataset import MultiModalDataset
 from Model.dataset import SplitDataset
@@ -19,7 +20,7 @@ from Model.mentalModel import MENTAL
 ##################################################################################################
 ##################################################################################################
 
-def run_train(learn_rate, wd, outfile):
+def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
                 'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
                 'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
@@ -27,16 +28,15 @@ def run_train(learn_rate, wd, outfile):
                 'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
 
 
-    batch_sz = 5
-
-
-    #test = np.loadtxt(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN', 'small_complete_samples_EC_depression.npy'), delimiter=",", dtype=float)
-
-    #main_dataset = SplitDataset('small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
-
     main_dataset = SplitDataset('normalized_small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    res = data.random_split(main_dataset, [555, 150])
+    splits = []
+    if(batch_sz != 15):
+        splits = [560, 140, 5]
+    else:
+        splits = [555, 150]
+
+    res = data.random_split(main_dataset, splits)
 
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
@@ -46,36 +46,16 @@ def run_train(learn_rate, wd, outfile):
 
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
 
-    strs = []
-
-    epochs = 1000
+    accs = []
 
     for epoch in range(epochs):
 
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
-            #h=(h_entry[0],h_entry[1])
-
-            #h[0].unsqueeze_(-1)
-            #h0 = h[0].transpose(1,2)
-            #h0 = h0.transpose(0,1)
-
-            #h[1].unsqueeze_(-1)
-            #h1 = h[1].transpose(1,2)
-            #h1 = h1.transpose(0,1)
-            #h1 = h1.squeeze(-1)
-
             h = h_entry.transpose(0,1)
-            #print(label.size())
-            #print(label)
             label_reshaped = np.reshape(label, (batch_sz,1,1))
-            #print(label_reshaped)
-            
-            #batches = np.array()
-            count = 0
 
             test = []
-
             for i in range(0, 60):
                 batch = []
                 for j in range(0,batch_sz):
@@ -85,16 +65,11 @@ def run_train(learn_rate, wd, outfile):
                 test.append(batch)
 
             formatted = np.array(test)
-            
             psd_tensor = torch.from_numpy(formatted)
-
-            #print(psd_tensor.shape)
 
             for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h)
                 h = h_res
-            
-            #print(output)
 
             loss = torch.nn.MSELoss()
             res = loss(output, label_reshaped)
@@ -103,181 +78,77 @@ def run_train(learn_rate, wd, outfile):
             res.backward()
             optimizer.step()
         
-        if((epoch!=0) and (epoch % 10 ==0)):
-            correct = 0
-            for (h_entry, n_entry, p_entry, label) in test_loader:
+        
+        correct = 0
+        for (h_entry, n_entry, p_entry, label) in test_loader:
 
-                #h=(h_entry[0],h_entry[1])
+            h = h_entry.transpose(0,1)
+            label_reshaped = np.reshape(label, (batch_sz,1,1))
 
-                #h[0].unsqueeze_(-1)
-                #h0 = h[0].transpose(1,2)
-                #h0 = h0.transpose(0,1)
+            test = []
+            for i in range(0, 60):
+                batch = []
+                for j in range(0,batch_sz):
+                    cur = p_entry[j][i]
+                    arr_cur = np.asarray(cur)
+                    batch.append(arr_cur)
+                test.append(batch)
 
-                #h[1].unsqueeze_(-1)
-                #h1 = h[1].transpose(1,2)
-                #h1 = h1.transpose(0,1)
-                #h1 = h1.squeeze(-1)
+            formatted = np.array(test)
+            psd_tensor = torch.from_numpy(formatted)
 
-                h = h_entry.transpose(0,1)
-                #print(label.size())
-                #print(label)
-                label_reshaped = np.reshape(label, (batch_sz,1,1))
-                #print(label_reshaped)
-                
-                #batches = np.array()
-                count = 0
+            for p in psd_tensor:
+                output, h_res = my_mental.forward(p, n_entry, h)
+                h = h_res
 
-                test = []
+            out = output.squeeze_(1)
+            preds = []
+            for i in range(0, batch_sz):
+                for j in range(0, len(out[i])):
+                    if(out[i][j] >= 0.5):
+                        preds.append(1)
+                    else:
+                        preds.append(0)
 
-                for i in range(0, 60):
-                    batch = []
-                    for j in range(0,batch_sz):
-                        cur = p_entry[j][i]
-                        arr_cur = np.asarray(cur)
-                        batch.append(arr_cur)
-                    test.append(batch)
+            label = label.squeeze_(1)
+            conds = []
 
-                formatted = np.array(test)
-                
-                psd_tensor = torch.from_numpy(formatted)
+            for i in range(0, len(label)):
+                conds.append(label[i].item())
 
-                #print(psd_tensor.shape)
-
-                for p in psd_tensor:
-                    output, h_res = my_mental.forward(p, n_entry, h)
-                    h = h_res
-
-                out = output.squeeze_(1)
-                #print(out)
-                preds = []
-                for i in range(0, batch_sz):
-                    for j in range(0, len(out[i])):
-                        if(out[i][j] >= 0.5):
-                            preds.append(1)
-                        else:
-                            preds.append(0)
-
-                label = label.squeeze_(1)
-                #print(label)
-                conds = []
-                for i in range(0, len(label)):
-                    conds.append(label[i].item())
-                #print(conds)
-                #print(preds)
-                for i in range(0, len(conds)):
-                    lb = conds[i]
-                    pd = preds[i]
-                    if(lb==pd): 
-                        correct += 1
+            for i in range(0, len(conds)):
+                lb = conds[i]
+                pd = preds[i]
+                if(lb==pd): 
+                    correct += 1
 
             total = (test_loader.__len__())*batch_sz
-            s1 = "Correct : " + str(correct)
-            s2 = "Total   : " + str(total)
-            s3 = "Accuracy: " + str(correct/total)
-            s4 = "-------------------------------------"
-            s5 = "Epoch" + str(epoch)
-            strs.append(s4)
-            strs.append(s5)
-            strs.append(s1)
-            strs.append(s2)
-            strs.append(s3)
-            strs.append(s4)
-            #print(s4)
-            #print(s1)
-            #print(s2)
-            #print(s3)
-            #print(s4)
+            acc = correct/total
+            accs.append(acc)
             
+    accs = np.array(accs)
+    np.save(outfile, accs)
 
-    correct = 0
-    for (h_entry, n_entry, p_entry, label) in test_loader:
-    
-        #h=(h_entry[0],h_entry[1])
+    labels = np.arange(0, epochs, 1)
 
-        #h[0].unsqueeze_(-1)
-        #h0 = h[0].transpose(1,2)
-        #h0 = h0.transpose(0,1)
+    plt.plot(labels, accs)
+    plt.title("Accuracy of Model for " + str(epoch) + "epochs, batch size " + str(batch_sz))
+    plt.ylabel("Accuracy")
+    plt.xlabel("Epoch")
 
-        #h[1].unsqueeze_(-1)
-        #h1 = h[1].transpose(1,2)
-        #h1 = h1.transpose(0,1)
-        #h1 = h1.squeeze(-1)
-
-        h = h_entry.transpose(0,1)
-        #print(label.size())
-        #print(label)
-        label_reshaped = np.reshape(label, (batch_sz,1,1))
-        #print(label_reshaped)
-        
-        #batches = np.array()
-        count = 0
-
-        test = []
-
-        for i in range(0, 60):
-            batch = []
-            for j in range(0, batch_sz):
-                cur = p_entry[j][i]
-                arr_cur = np.asarray(cur)
-                batch.append(arr_cur)
-            test.append(batch)
-
-        formatted = np.array(test)
-        
-        psd_tensor = torch.from_numpy(formatted)
-
-        #print(psd_tensor.shape)
-
-        for p in psd_tensor:
-            output, h_res = my_mental.forward(p, n_entry, h)
-            h = h_res
-
-        out = output.squeeze_(1)
-        preds = []
-        for i in range(0, batch_sz):
-            for j in range(0, len(out[i])):
-                if(out[i][j] >= 0.5):
-                    preds.append(1)
-                else:
-                    preds.append(0)
-
-        label = label.squeeze_(1)
-        #print(label)
-        conds = []
-        for i in range(0, len(label)):
-            conds.append(label[i].item())
-
-        for i in range(0, len(conds)):
-            lb = conds[i]
-            pd = preds[i]
-            if(lb==pd): 
-                correct += 1
-
-    total = (test_loader.__len__())*batch_sz
-
-    str4 = "________________________________"
-    str1 = "Correct : " + str(correct)
-    str2 = "Total   : " + str(total)
-    str3 = "Accuracy: " + str(correct/total)
-
-    strs.append(str4)
-    strs.append(str1)
-    strs.append(str2)
-    strs.append(str3)
-
-    with open(outfile, 'w') as f:
-        for line in strs:
-            f.write(line)
-            f.write('\n')
+    plt.savefig(outfile)
 
 
 
-weights = [1e-7, 1e-8, 1e-9]
-learns = [1e-3, 1e-4, 1e-5]
+# running code
 
-weight_lbls = ["7", "8", "9"]
-learn_lbls = ["13", "14", "l5"]
+epoch = range(100, 2001, 100)
+batches = [20]
 
-for i in range(0, len(weights)):
-    for j in range(0, len(learns)):
-        run_train(learn_rate=learns[j], wd=weights[i], outfile="Batch5_MSE_w"+weight_lbls[i]+"_l"+learn_lbls[j]+".txt")
+learn = 1e-3
+weight_decay = 1e-6
+
+for i in range(0, len(epoch)):
+    for j in range(0, len(batches)):
+        run_train(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+                  outfile="epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3")
