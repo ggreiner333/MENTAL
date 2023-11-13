@@ -143,8 +143,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = range(100, 2001, 100)
-batches = [1, 5, 10, 15, 20]
+epoch = [3000]
+batches = [15]
 
 learn = 1e-3
 weight_decay = 1e-6
