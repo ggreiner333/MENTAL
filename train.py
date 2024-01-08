@@ -47,6 +47,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
 
     accs = []
+    sens = []
+    spec = []
 
     for epoch in range(epochs):
 
@@ -116,18 +118,39 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
             for i in range(0, len(label)):
                 conds.append(label[i].item())
 
+            # Variables for calculating specificity and sensitivity
+            N = 0
+            P = 0
+            TP = 0
+            TN = 0
             for i in range(0, len(conds)):
                 lb = conds[i]
                 pd = preds[i]
-                if(lb==pd): 
-                    correct += 1
+                if(lb == 1):
+                    P+=1
+                    if(lb==pd): 
+                        correct += 1
+                        TP+=1
+                if(lb == 0):
+                    N+=1
+                    if(lb==pd):
+                        correct += 1
+                        TN+=1
 
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
+
+        sensitivity = TP/P
+        sens.append(sensitivity)
+
+        specificity = TN/N
+        spec.append(specificity)
+
             
     accs = np.array(accs)
-    np.save(outfile, accs)
+    sens = np.array(sens)
+    spec = np.array(spec)
 
     labels = np.arange(0, epochs, 1)
 
@@ -136,14 +159,30 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
 
-    plt.savefig(outfile)
+    plt.savefig("epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3_accuracy")
+    plt.clf()
+
+    plt.plot(labels, sens)
+    plt.title("Sensitivity of Model for " + str(epoch) + "epochs, batch size " + str(batch_sz))
+    plt.ylabel("Sensitivity")
+    plt.xlabel("Epoch")
+
+    plt.savefig("epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3_sensitivity")
+    plt.clf()
+
+    plt.plot(labels, spec)
+    plt.title("Specificity of Model for " + str(epoch) + "epochs, batch size " + str(batch_sz))
+    plt.ylabel("Specificity")
+    plt.xlabel("Epoch")
+
+    plt.savefig("epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3_specificity")
     plt.clf()
 
 
 
 # running code
 
-epoch = [3000]
+epoch = [10]
 batches = [15]
 
 learn = 1e-3
