@@ -159,7 +159,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
 
-    plt.savefig("epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3_accuracy")
+    plt.savefig("epoch10_b15_w6_l3_accuracy")
     plt.clf()
 
     plt.plot(labels, sens)
@@ -167,7 +167,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     plt.ylabel("Sensitivity")
     plt.xlabel("Epoch")
 
-    plt.savefig("epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3_sensitivity")
+    plt.savefig("epoch10_b15_w6_l3_sensitivity")
     plt.clf()
 
     plt.plot(labels, spec)
@@ -175,7 +175,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     plt.ylabel("Specificity")
     plt.xlabel("Epoch")
 
-    plt.savefig("epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3_specificity")
+    plt.savefig("epoch10_b15_w6_l3_specificity")
     plt.clf()
 
 
@@ -191,5 +191,5 @@ weight_decay = 1e-6
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
         run_train(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
-                  outfile="epoch"+str(epoch[i])+"b"+str(batches[j])+"_w6_l3")
+                  outfile="epoch10_b15_w6_l3")
         
