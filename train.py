@@ -182,7 +182,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [10]
+epoch = [1000]
 batches = [15]
 
 learn = 1e-3
