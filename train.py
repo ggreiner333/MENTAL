@@ -112,7 +112,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
                         preds.append(1)
                     else:
                         preds.append(0)
-                    vals.append(out[i][j])
+                    vals.append(out[i][j].detach())
 
             print(vals)
 
