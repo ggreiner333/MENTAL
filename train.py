@@ -114,7 +114,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
                         preds.append(0)
                     vals.append(out[i][j].detach())
 
-            print(vals)
+            print(vals.__len__())
 
             label = label.squeeze_(1)
             conds = []
