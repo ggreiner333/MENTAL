@@ -168,6 +168,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         plt.xlabel("Output Value")
         plt.savefig("epoch"+str(epoch)+"_b15_w6_l3_values", pad_inches=0.1)
 
+        print(cvals.__len__()+fvals.__len__())
+
         plt.figure(figsize=(15,10))
         plt.hist([cvals, fvals], bins=np.arange(0, 1.01, 0.05), label=['Correct', 'Incorrect'], color=['g', 'r'])
         plt.xticks(np.arange(0, 1.01, 0.05))
