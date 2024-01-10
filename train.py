@@ -83,6 +83,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         
         correct = 0
         vals = []
+        cvals = []
+        fvals = []
         for (h_entry, n_entry, p_entry, label) in test_loader:
 
             h = h_entry.transpose(0,1)
@@ -125,8 +127,6 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
             P = 0
             TP = 0
             TN = 0
-            cvals = []
-            fvals = []
             for i in range(0, len(conds)):
                 lb = conds[i]
                 pd = preds[i]
@@ -146,6 +146,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
                         cvals.append(vals[i])
                     else:
                         fvals.append(vals[i])
+
+            
 
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
