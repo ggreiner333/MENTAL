@@ -173,7 +173,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("epoch10_b15_w6_l3_accuracy")
+    plt.savefig("epoch100_b15_w6_l3_accuracy")
     plt.clf()
 
     plt.figure(figsize=(15,10))
@@ -183,7 +183,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("epoch10_b15_w6_l3_sensitivity")
+    plt.savefig("epoch100_b15_w6_l3_sensitivity")
     plt.clf()
 
     plt.figure(figsize=(15,10))
@@ -193,14 +193,14 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("epoch10_b15_w6_l3_specificity")
+    plt.savefig("epoch100_b15_w6_l3_specificity")
     plt.clf()
 
 
 
 # running code
 
-epoch = [10]
+epoch = [100]
 batches = [15]
 
 learn = 1e-3
@@ -209,5 +209,5 @@ weight_decay = 1e-6
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
         run_train(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
-                  outfile="epoch10_b15_w6_l3")
+                  outfile="epoch100_b15_w6_l3")
         
