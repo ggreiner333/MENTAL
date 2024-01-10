@@ -82,6 +82,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         
         
         correct = 0
+        vals = []
         for (h_entry, n_entry, p_entry, label) in test_loader:
 
             h = h_entry.transpose(0,1)
@@ -111,6 +112,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
                         preds.append(1)
                     else:
                         preds.append(0)
+                    vals.append(out[i][j])
 
             label = label.squeeze_(1)
             conds = []
@@ -147,6 +149,16 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = TN/N
         spec.append(specificity)
 
+        plt.figure(figsize=(15,10))
+        plt.hist(vals, bins=np.arange(0, 1.01, 0.05))
+        plt.xticks(np.arange(0, 1.01, 0.05))
+        plt.yticks(np.arange(0,101,5))
+        plt.title("Histogram of Output Values for epoch " + str(epoch))
+        plt.ylabel("Count")
+        plt.xlabel("Output Value")
+        plt.savefig("epoch"+str(epoch)+"_b15_w6_l3_values", pad_inches=0.1)
+        plt.show()
+
             
     accs = np.array(accs)
     sens = np.array(sens)
@@ -154,26 +166,32 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 
     labels = np.arange(0, epochs, 1)
 
+    plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
-    plt.title("Accuracy of Model for " + str(epoch) + "epochs, batch size " + str(batch_sz))
+    plt.title("Accuracy of Model for " + str(epoch) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
+    plt.xticks(ticks=np.arange(0,1.01,0.1))
 
     plt.savefig("epoch10_b15_w6_l3_accuracy")
     plt.clf()
 
+    plt.figure(figsize=(15,10))
     plt.plot(labels, sens)
-    plt.title("Sensitivity of Model for " + str(epoch) + "epochs, batch size " + str(batch_sz))
+    plt.title("Sensitivity of Model for " + str(epoch) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Sensitivity")
     plt.xlabel("Epoch")
+    plt.xticks(ticks=np.arange(0,1.01,0.1))
 
     plt.savefig("epoch10_b15_w6_l3_sensitivity")
     plt.clf()
 
+    plt.figure(figsize=(15,10))
     plt.plot(labels, spec)
-    plt.title("Specificity of Model for " + str(epoch) + "epochs, batch size " + str(batch_sz))
+    plt.title("Specificity of Model for " + str(epoch) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Specificity")
     plt.xlabel("Epoch")
+    plt.xticks(ticks=np.arange(0,1.01,0.1))
 
     plt.savefig("epoch10_b15_w6_l3_specificity")
     plt.clf()
@@ -182,7 +200,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [1000]
+epoch = [10]
 batches = [15]
 
 learn = 1e-3
