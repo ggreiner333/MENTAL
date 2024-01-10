@@ -154,7 +154,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         plt.figure(figsize=(15,10))
         plt.hist(vals, bins=np.arange(0, 1.01, 0.05))
         plt.xticks(np.arange(0, 1.01, 0.05))
-        plt.yticks(np.arange(0,50,5))
+        plt.yticks(np.arange(0,151,5))
         plt.title("Histogram of Output Values for epoch " + str(epoch))
         plt.ylabel("Count")
         plt.xlabel("Output Value")
