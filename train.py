@@ -179,6 +179,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         plt.xlabel("Output Value")
         plt.savefig("epoch"+str(epoch)+"_b15_w6_l3_accvalues", pad_inches=0.1)
 
+        plt.close('all')
+
             
     accs = np.array(accs)
     sens = np.array(sens)
