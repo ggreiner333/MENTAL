@@ -125,6 +125,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
             P = 0
             TP = 0
             TN = 0
+            cvals = []
+            fvals = []
             for i in range(0, len(conds)):
                 lb = conds[i]
                 pd = preds[i]
@@ -133,11 +135,17 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
                     if(lb==pd): 
                         correct += 1
                         TP+=1
+                        cvals.append(vals[i])
+                    else:
+                        fvals.append(vals[i])
                 if(lb == 0):
                     N+=1
                     if(lb==pd):
                         correct += 1
                         TN+=1
+                        cvals.append(vals[i])
+                    else:
+                        fvals.append(vals[i])
 
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
@@ -157,7 +165,15 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         plt.ylabel("Count")
         plt.xlabel("Output Value")
         plt.savefig("epoch"+str(epoch)+"_b15_w6_l3_values", pad_inches=0.1)
-        plt.show()
+
+        plt.figure(figsize=(15,10))
+        plt.hist([cvals, fvals], bins=np.arange(0, 1.01, 0.05), label=['Correct', 'Incorrect'], color=['g', 'r'])
+        plt.xticks(np.arange(0, 1.01, 0.05))
+        plt.yticks(np.arange(0,151,5))
+        plt.title("Histogram of Correct and Incorrect Values for epoch " + str(epoch))
+        plt.ylabel("Count")
+        plt.xlabel("Output Value")
+        plt.savefig("epoch"+str(epoch)+"_b15_w6_l3_accvalues", pad_inches=0.1)
 
             
     accs = np.array(accs)
