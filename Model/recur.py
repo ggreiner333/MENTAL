@@ -34,6 +34,7 @@ class EegRNN(nn.Module):
 
     def forward(self, x, h):
         x.unsqueeze_(-1)
+        print(x.size())
         x = x.transpose(1,2)
         #print(x.size())
         res, h_1 = self.layer_1(x, h)
