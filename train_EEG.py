@@ -63,7 +63,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
                 batch = []
                 for j in range(0,batch_sz):
                     cur = p_entry[j][i]
-                    print(cur)
+                    print(torch.reshape(cur, -1))
                     arr_cur = np.asarray(cur)
                     batch.append(arr_cur)
                 test.append(batch)
