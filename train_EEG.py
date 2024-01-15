@@ -69,8 +69,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
-            psd_final = torch.reshape(psd_tensor, (-1,))
-
+            psd_final = torch.squeeze(psd_tensor)
+            
             print(psd_final.shape)
 
             for p in psd_final:
