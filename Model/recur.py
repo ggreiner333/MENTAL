@@ -33,7 +33,7 @@ class EegRNN(nn.Module):
         )
 
     def forward(self, x, h):
-        x.unsqueeze_(-1)
+        
         h = torch.squeeze(h)
         print(x.size())
         print(h.size())
