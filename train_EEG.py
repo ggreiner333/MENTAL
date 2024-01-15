@@ -156,6 +156,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
+        print(acc)
 
         sensitivity = TP/P
         sens.append(sensitivity)
@@ -163,6 +164,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = TN/N
         spec.append(specificity)
 
+        '''
         plt.figure(figsize=(15,10))
         plt.hist(vals, bins=np.arange(0, 1.01, 0.05))
         plt.xticks(np.arange(0, 1.01, 0.05))
@@ -184,6 +186,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         plt.savefig("epoch"+str(epoch)+"_b15_w6_l3_accvalues", pad_inches=0.1)
 
         plt.close('all')
+        '''
 
             
     accs = np.array(accs)
