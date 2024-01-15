@@ -54,7 +54,7 @@ class SplitDataset(data.Dataset):
         #dem_out[2] = dem_val[2]
         #dem_out = torch.from_numpy(dem_out)
 
-        h_1 = torch.zeros([2,30], dtype=torch.float32)
+        h_1 = torch.zeros([2, 15, 30], dtype=torch.float32)
         #h_2 = np.zeros(15, dtype="float32")
 
         #h_1t = torch.from_numpy(h_1)

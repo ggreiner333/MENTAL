@@ -42,7 +42,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
 
-    my_mental = MENTAL_EEG(130, 30, 15, batch_sz)
+    my_mental = MENTAL_EEG(130, 30, 1, batch_sz)
 
 
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
