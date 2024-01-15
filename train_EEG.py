@@ -47,6 +47,8 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
 
+    torch.autograd.set_detect_anomaly(True)
+
     accs = []
     sens = []
     spec = []
@@ -70,7 +72,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
             psd_final = torch.squeeze(psd_tensor)
-            
+
             print(psd_final.shape)
 
             for p in psd_final:
