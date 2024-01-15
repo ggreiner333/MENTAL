@@ -63,17 +63,17 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
                 batch = []
                 for j in range(0,batch_sz):
                     cur = p_entry[j][i]
-                    cur = torch.reshape(cur, (-1,))
                     arr_cur = np.asarray(cur)
                     batch.append(arr_cur)
                 test.append(batch)
 
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
+            psd_final = torch.reshape(psd_tensor, (-1,))
 
-            print(psd_tensor.shape)
+            print(psd_final.shape)
 
-            for p in psd_tensor:
+            for p in psd_final:
                 output, h_res = my_mental.forward(p, h)
                 h = h_res
 
