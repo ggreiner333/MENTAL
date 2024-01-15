@@ -37,7 +37,7 @@ class EegRNN(nn.Module):
         h = torch.squeeze(h)
         print(x.size())
         print(h.size())
-        x = x.transpose(1,2)
+        #x = x.transpose(1,2)
         #print(x.size())
         res, h_1 = self.layer_1(x, h)
         #res2, h_2 = self.layer_2(res, h[1])
