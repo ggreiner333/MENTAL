@@ -23,14 +23,15 @@ def generate_EC_Samples(ptc, psd, out):
     survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
 
     complete_samples = []
+    seen = []
 
     for ind in survey[1:]:
         
         # Only consider individuals that we have survey data for
         # This means excluding the individuals marked for replication
         id = ind[0]
-        if(not id[0] == '1'):
-
+        if((not id[0] == '1') and (not seen.__contains__(id))):
+            seen.append(id)
             # Navigate to the directory with the psd information
             loc = os.path.join(psd, id)
             files = os.listdir(loc)
@@ -138,7 +139,6 @@ def generate_EC_EO_Samples(ptc, psd, out):
                         indication = np.array(indication)
                         psds = np.concatenate((ec_psds, eo_psds))
                         res = np.concatenate((indication, psds))
-                        print(res.shape)
                         complete_samples.append(res)
             
             
@@ -148,4 +148,6 @@ def generate_EC_EO_Samples(ptc, psd, out):
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
 
+generate_EC_Samples(participants_path, psds_path, out_path) 
+generate_EO_Samples(participants_path, psds_path, out_path) 
 generate_EC_EO_Samples(participants_path, psds_path, out_path) 
