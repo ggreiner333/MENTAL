@@ -55,3 +55,5 @@ def generate_EC_Samples(ptc, psd, out):
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
+
+generate_EC_Samples(participants_path, psds_path, out_path) 
