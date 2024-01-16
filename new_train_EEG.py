@@ -52,9 +52,10 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
     spec = []
 
     for epoch in range(epochs):
-        
+        count = 0
         for (h_entry, p_entry, label) in train_loader:
-
+            count+=15
+            print(count)
             label_reshaped = np.reshape(label, (batch_sz,1,1))
 
             test = []
