@@ -10,7 +10,7 @@ import torch.nn as nn
 
 import mne
 
-from Model.recur import EegRNN
+from Model.recurEEG import RNN_EEG
 
 ##################################################################################################
 ##################################################################################################
@@ -20,7 +20,7 @@ class MENTAL_EEG(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, batch):
         super().__init__()
 
-        self.rnn = EegRNN(input_size, hidden_size, output_size)
+        self.rnn = RNN_EEG(input_size, hidden_size, output_size)
 
 
     def forward(self, eeg, h):
