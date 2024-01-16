@@ -270,7 +270,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
             psd_final = torch.squeeze(psd_tensor)
-            
+            print(psd_final.shape)
             h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
 
             for p in psd_final:
