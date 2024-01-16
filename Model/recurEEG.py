@@ -38,7 +38,8 @@ class RNN_EEG(nn.Module):
         #print(x.size())
 
         print(h.size())
-        res, h_1 = self.layer_1(x, h)
+        h_new = h.squeeze()
+        res, h_1 = self.layer_1(x, h_new)
         #res2, h_2 = self.layer_2(res, h[1])
         #print(res.shape)
 
