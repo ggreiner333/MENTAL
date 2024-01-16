@@ -73,10 +73,11 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
             psd_tensor = torch.from_numpy(formatted)
             psd_final = torch.squeeze(psd_tensor)
             '''
-            
+            h_1 = torch.zeros([2, 60, 30], dtype=torch.float32)
+
             print(p_entry.shape)
             for p in p_entry:
-                output, h_res = my_mental.forward(p, h_entry)
+                output, h_res = my_mental.forward(p, h_1)
                 h = h_res
 
             loss = torch.nn.MSELoss()
