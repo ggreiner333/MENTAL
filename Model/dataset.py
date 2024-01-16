@@ -141,15 +141,12 @@ class EEGDataset(data.Dataset):
         else:
             output[0] = 0
 
-        print(output.shape)
-
         h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
 
         psd = individual[1:]
         
         psd_val = torch.tensor(psd, dtype=torch.float32)
         psd = torch.reshape(psd_val, [60,130])
-        print(psd.shape)
 
         return h_1, psd, output
     
