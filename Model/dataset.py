@@ -156,3 +156,37 @@ class EEGDataset(data.Dataset):
             res.append((self.__getitem__(i))[0])
         return np.array(res)
     
+class EEGBothDataset(data.Dataset):
+
+    def __init__(self, individuals_file, directory):
+        self.directory = directory
+        self.individuals = np.load(os.path.join(directory, individuals_file))
+        
+    def __len__(self):
+        return np.size(self.individuals, axis=0)
+
+    def __getitem__(self, idx):
+        individual = self.individuals[idx]
+
+        indication = individual[0]
+        output = torch.zeros([1], dtype=torch.float32)
+        if(int(indication) == 2):
+            output[0] = 1
+        else:
+            output[0] = 0
+
+        h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
+
+        psd = individual[1:]
+        
+        psd_val = torch.tensor(psd, dtype=torch.float32)
+        psd = torch.reshape(psd_val, [120,130])
+
+        return h_1, psd, output
+    
+    def __getIndividuals__(self):
+        res = []
+        for i in range(0, self.__len__()):
+            res.append((self.__getitem__(i))[0])
+        return np.array(res)
+    
