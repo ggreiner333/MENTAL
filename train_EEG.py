@@ -57,7 +57,6 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
 
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
-            h = h_entry.transpose(0,1)
             print(h.size())
             label_reshaped = np.reshape(label, (batch_sz,1,1))
 
