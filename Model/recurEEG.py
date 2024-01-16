@@ -24,7 +24,7 @@ class RNN_EEG(nn.Module):
         self.hidden_size = hidden_size
         self.output_size = output_size
 
-        self.layer_1 = nn.GRU(input_size, hidden_size, num_layers=2, batch_first=False)
+        self.layer_1 = nn.GRU(input_size, hidden_size, num_layers=2, batch_first=True)
         self.output = nn.Sequential(
             nn.ReLU(),
             nn.Linear(hidden_size, output_size),
