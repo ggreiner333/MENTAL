@@ -36,6 +36,7 @@ class RNN_EEG(nn.Module):
 
         x = x.transpose(1,2)
         #print(x.size())
+        print(h.size())
         res, h_1 = self.layer_1(x, h)
         #res2, h_2 = self.layer_2(res, h[1])
         #print(res.shape)
