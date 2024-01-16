@@ -48,7 +48,7 @@ def generate_EC_Samples(ptc, psd, out):
             indication = [int(ind[2])]
             indication = np.array(indication)
             print(psds)
-            complete_samples.append(np.concatenate(indication, psds))
+            complete_samples.append(np.concatenate((indication, psds)))
             
             
     all_complete_samples = np.array(complete_samples)
