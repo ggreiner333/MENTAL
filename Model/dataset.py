@@ -27,7 +27,6 @@ class MultiModalDataset(data.Dataset):
             res.append((self.individuals[i])[1:])
         return np.array(res)
     
-
 class SplitDataset(data.Dataset):
 
     def __init__(self, individuals_file, directory):
@@ -83,7 +82,6 @@ class SplitDataset(data.Dataset):
             res.append((self.__getitem__(i))[0])
         return np.array(res)
     
-
 class MSplitDataset(data.Dataset):
 
     def __init__(self, individuals_file, directory):
@@ -123,3 +121,41 @@ class MSplitDataset(data.Dataset):
         for i in range(0, self.__len__()):
             res.append((self.__getitem__(i))[0])
         return np.array(res)
+
+class EEGDataset(data.Dataset):
+
+    def __init__(self, individuals_file, directory):
+        self.directory = directory
+        self.individuals = np.load(os.path.join(directory, individuals_file))
+        
+    def __len__(self):
+        return np.size(self.individuals, axis=0)
+
+    def __getitem__(self, idx):
+        individual = self.individuals[idx]
+
+        indication = individual[0]
+        output = torch.zeros([1], dtype=torch.float32)
+        if(int(indication) == 2):
+            output[0] = 1
+        else:
+            output[0] = 0
+
+        print(output.shape)
+
+        h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
+
+        psd = individual[1:]
+        
+        psd_val = torch.tensor(psd, dtype=torch.float32)
+        psd = torch.reshape(psd_val, [60,130])
+        print(psd.shape)
+
+        return h_1, psd, output
+    
+    def __getIndividuals__(self):
+        res = []
+        for i in range(0, self.__len__()):
+            res.append((self.__getitem__(i))[0])
+        return np.array(res)
+    
