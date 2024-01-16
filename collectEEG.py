@@ -11,7 +11,7 @@ import mne
 preprocess_file_path = 'TDBRAIN/preprocessed'
 
 # path of directory where we will save the PSD features
-psds_path = 'TDBRAIN/PSD_all'
+psds_path = 'TDBRAIN/PSD'
 
 # path of TDBRAIN
 participants_path = 'TDBRAIN'
