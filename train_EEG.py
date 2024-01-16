@@ -76,7 +76,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
             print(psd_final.shape)
 
             for p in psd_final:
-                output, h_res = my_mental.forward(p, h)
+                output, h_res = my_mental.forward(p, h_entry)
                 h = h_res
 
             loss = torch.nn.MSELoss()
