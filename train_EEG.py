@@ -60,7 +60,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
             print(h_entry.size())
             label_reshaped = np.reshape(label, (batch_sz,1,1))
 
-            '''test = []
+            test = []
             for i in range(0, 60):
                 batch = []
                 for j in range(0,batch_sz):
@@ -72,11 +72,11 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
             psd_final = torch.squeeze(psd_tensor)
-            '''
-            h_1 = torch.zeros([2, 60, 30], dtype=torch.float32)
+            
+            h_1 = torch.zeros([2, 15, 30], dtype=torch.float32)
 
-            print(p_entry.shape)
-            for p in p_entry:
+            print(psd_final.shape)
+            for p in psd_final:
                 output, h_res = my_mental.forward(p, h_1)
                 h = h_res
 
