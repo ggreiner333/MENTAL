@@ -212,7 +212,7 @@ def run_EC():
 
     for i in range(0, len(epoch)):
         for j in range(0, len(batches)):
-            run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+            run_train_ec(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="ec_epoch1000_b15_w6_l3")
 
 run_EC()
