@@ -34,7 +34,7 @@ def run_train_neo(learn_rate, batch_sz, epochs):
     if(batch_sz == 15):
         splits = [540, 135, 3]
     else:
-        splits = [555, 150]
+        splits = [540, 135, 3]
 
     res = data.random_split(main_dataset, splits)
 
@@ -163,7 +163,7 @@ def run_NEO():
     # running code
 
     epoch = 300
-    batch = 15
+    batch = 5
 
     learn = 1e-2
     
