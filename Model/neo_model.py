@@ -19,7 +19,7 @@ class NEO_NN(nn.Module):
     def __init__(self, input_size, output_size, batch):
         super().__init__()
 
-        self.l1 = nn.Linear(input_size, 30) 
+        self.l1 = nn.Linear(input_size, 45) 
         self.l2 = nn.Linear(45, 30)
         self.l3 = nn.Linear(30, 15)
         self.l4 = nn.Linear(15, output_size)
