@@ -32,7 +32,7 @@ def generate_NEO_Samples(ptc, out):
             neo = np.array(neo)
 
             print(neo)
-            print(neo.size())
+            print(neo.shape())
             
             indication = [int(ind[2])]
             if((indication[0] != 0) and (ind[6] != -1)):
