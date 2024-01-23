@@ -71,8 +71,6 @@ def run_train_neo(learn_rate, batch_sz, epochs):
         fvals = []
         for (n_entry, label) in test_loader:
 
-            print(label)
-
             out = my_mental.forward(n_entry)
             preds = []
             for i in range(0, batch_sz):
@@ -83,7 +81,10 @@ def run_train_neo(learn_rate, batch_sz, epochs):
                         preds.append(0)
                     vals.append(out[i][j].detach())
 
+            print("\n\n\n\n\n\n\n")
+            print(label)
             label = label.squeeze_(1)
+            print(label)
             conds = []
 
             for i in range(0, len(label)):
