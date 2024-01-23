@@ -169,7 +169,7 @@ def run_NEO():
     # running code
 
     epoch = 50
-    batch = 15
+    batch = 5
 
     learn = 1e-3
     
