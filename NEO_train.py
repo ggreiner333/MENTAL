@@ -55,7 +55,7 @@ def run_train_neo(learn_rate, batch_sz, epochs):
         for (n_entry, label) in train_loader:
             out = my_mental.forward(n_entry)
 
-            loss = torch.nn.MSELoss()
+            loss = torch.nn.BCELoss()
             res = loss(out, label)
 
             optimizer.zero_grad()
