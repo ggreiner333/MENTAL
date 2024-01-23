@@ -36,8 +36,6 @@ def generate_NEO_Samples(ptc, out):
             if((indication[0] != 0) and (neo[6] != -1)):
                 indication = np.array(indication)
                 res = np.concatenate((indication, neo))
-                print(res)
-                print(res.shape)
                 complete_samples.append(res)
             
             
@@ -47,4 +45,4 @@ def generate_NEO_Samples(ptc, out):
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))()
 
-generate_NEO_Samples(participants_path, out_path)
+#generate_NEO_Samples(participants_path, out_path)
