@@ -76,6 +76,7 @@ def run_train_neo(learn_rate, batch_sz, epochs):
             preds = []
             for i in range(0, batch_sz):
                 for j in range(0, len(out[i])):
+                    print(len(out[i]))
                     if(out[i][j] >= 0.5):
                         preds.append(1)
                     else:
