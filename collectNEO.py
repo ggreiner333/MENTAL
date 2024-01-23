@@ -29,6 +29,7 @@ def generate_NEO_Samples(ptc, out):
             seen.append(id)
 
             neo = ind[6:]
+            neo = [int(n) for n in neo]
             neo = np.array(neo)
 
             print(neo)
