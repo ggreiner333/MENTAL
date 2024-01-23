@@ -116,10 +116,16 @@ def run_train_neo(learn_rate, batch_sz, epochs):
         accs.append(acc)
         print(acc)
 
-        sensitivity = TP/P
+        if(P != 0):
+            sensitivity = TP/P
+        else:
+            sensitivity = 0
         sens.append(sensitivity)
 
-        specificity = TN/N
+        if(P != 0):
+            specificity = TN/N
+        else:
+            specificity = 0
         spec.append(specificity)
 
             
