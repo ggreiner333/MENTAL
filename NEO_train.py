@@ -165,7 +165,7 @@ def run_NEO():
     epoch = 300
     batch = 15
 
-    learn = 1e-6
+    learn = 1e-1
     
     run_train_neo(learn_rate=learn, batch_sz=batch, epochs=epoch)
 
