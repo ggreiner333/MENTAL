@@ -122,7 +122,7 @@ def run_train_neo(learn_rate, batch_sz, epochs):
             sensitivity = 0
         sens.append(sensitivity)
 
-        if(P != 0):
+        if(N != 0):
             specificity = TN/N
         else:
             specificity = 0
