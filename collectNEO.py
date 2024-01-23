@@ -31,15 +31,13 @@ def generate_NEO_Samples(ptc, out):
             neo = ind[6:]
             neo = [int(n) for n in neo]
             neo = np.array(neo)
-
-            print(neo)
-            print(neo.shape)
             
             indication = [int(ind[2])]
             if((indication[0] != 0) and (ind[6] != -1)):
                 indication = np.array(indication)
                 res = np.concatenate((indication, neo))
                 print(res)
+                print(res.shape)
                 complete_samples.append(res)
             
             
