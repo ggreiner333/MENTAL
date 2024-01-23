@@ -155,7 +155,7 @@ class EEGDataset(data.Dataset):
         for i in range(0, self.__len__()):
             res.append((self.__getitem__(i))[0])
         return np.array(res)
-    
+
 class EEGBothDataset(data.Dataset):
 
     def __init__(self, individuals_file, directory):
@@ -190,3 +190,33 @@ class EEGBothDataset(data.Dataset):
             res.append((self.__getitem__(i))[0])
         return np.array(res)
     
+class NEODataset(data.Dataset):
+
+    def __init__(self, individuals_file, directory):
+        self.directory = directory
+        self.individuals = np.load(os.path.join(directory, individuals_file))
+        
+    def __len__(self):
+        return np.size(self.individuals, axis=0)
+
+    def __getitem__(self, idx):
+        individual = self.individuals[idx]
+
+        indication = individual[0]
+        output = torch.zeros([1], dtype=torch.float32)
+        if(int(indication) == 2):
+            output[0] = 1
+        else:
+            output[0] = 0
+
+        neo = individual[1:]
+        
+        neo_val = torch.tensor(neo, dtype=torch.float32)
+
+        return neo_val, output
+    
+    def __getIndividuals__(self):
+        res = []
+        for i in range(0, self.__len__()):
+            res.append((self.__getitem__(i))[0])
+        return np.array(res)
