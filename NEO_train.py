@@ -162,7 +162,7 @@ def run_train_neo(learn_rate, batch_sz, epochs):
 def run_NEO():
     # running code
 
-    epoch = 10
+    epoch = 100
     batch = 15
 
     learn = 1e-3
