@@ -169,6 +169,10 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
     sens = np.array(sens)
     spec = np.array(spec)
 
+    np.save('/home/ggreiner/MENTAL/EC_ONLY_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/EC_ONLY_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/EC_ONLY_SPEC', spec)
+
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
@@ -368,6 +372,10 @@ def run_train_eo(learn_rate, wd, batch_sz, epochs, outfile):
     sens = np.array(sens)
     spec = np.array(spec)
 
+    np.save('/home/ggreiner/MENTAL/EO_ONLY_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/EO_ONLY_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/EO_ONLY_SPEC', spec)
+
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
@@ -564,6 +572,10 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
+
+    np.save('/home/ggreiner/MENTAL/EO_EC_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/EO_EC_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/EO_EC_SPEC', spec)
 
     labels = np.arange(0, epochs, 1)
 
