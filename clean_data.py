@@ -296,8 +296,8 @@ def separate_missing_samples_EO_EC(ptc, psd, out):
                     ec_psds = np.squeeze(ec_psds)
                     ec_psds = ec_psds.flatten()
 
-                psds = np.concatenate((ec_psds, eo_psds))
                 if(found_ec and found_eo):
+                    psds = np.concatenate((ec_psds, eo_psds))
                     # Combine survey and PSD data
                     combined = np.asarray(np.concatenate((ind[1:],psds)), dtype="float32")
                     combined[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
