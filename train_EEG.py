@@ -29,7 +29,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
                 'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
 
 
-    main_dataset = SplitDataset('normalized_small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
     if(batch_sz != 15):
