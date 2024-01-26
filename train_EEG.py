@@ -435,7 +435,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
     if(batch_sz != 15):
         splits = [560, 140, 4]
     else:
-        splits = [555, 150]
+        splits = [560, 140, 4]
 
     res = data.random_split(main_dataset, splits)
 
