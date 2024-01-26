@@ -82,6 +82,61 @@ class SplitDataset(data.Dataset):
             res.append((self.__getitem__(i))[0])
         return np.array(res)
     
+class BSplitDataset(data.Dataset):
+
+    def __init__(self, individuals_file, directory):
+        self.directory = directory
+        self.individuals = np.load(os.path.join(directory, individuals_file))
+        
+    def __len__(self):
+        return np.size(self.individuals, axis=0)
+
+    def __getitem__(self, idx):
+        individual = self.individuals[idx]
+
+        indication = individual[1]
+        output = torch.zeros([1], dtype=torch.float32)
+        if(int(indication) == 2):
+            output[0] = 1
+        else:
+            output[0] = 0
+
+        dem_val = individual[2:5]
+        #dem_out = np.zeros(30, dtype="float32")
+        #dem_out[0] = dem_val[0]
+        #dem_out[1] = dem_val[1]
+        #dem_out[2] = dem_val[2]
+        #dem_out = torch.from_numpy(dem_out)
+
+        h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
+        #h_2 = np.zeros(15, dtype="float32")
+
+        #h_1t = torch.from_numpy(h_1)
+        #h_2t = torch.from_numpy(h_2)
+
+        #h_out = (h_1t, h_2t)
+
+        neo = individual[5:65]
+        neo_val = torch.tensor(neo, dtype=torch.float32)
+        neo = torch.reshape(neo_val, [60, 1])
+        #print(neo.shape)
+
+        psd = []
+        for i in range(65,15665, 130):
+            psd.append(individual[i:(i+130)])
+        
+        psd_val = torch.tensor(psd, dtype=torch.float32)
+        psd = torch.reshape(psd_val, [120,130])
+        #print(psd.shape)
+
+        return h_1, neo, psd, output
+    
+    def __getIndividuals__(self):
+        res = []
+        for i in range(0, self.__len__()):
+            res.append((self.__getitem__(i))[0])
+        return np.array(res)
+
 class MSplitDataset(data.Dataset):
 
     def __init__(self, individuals_file, directory):
