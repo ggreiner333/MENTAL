@@ -307,7 +307,7 @@ def separate_missing_samples_EO_EC(ptc, psd, out):
                         complete_samples.append(combined)
 
             if(not (found_ec and found_eo)):
-                combo = np.concatenate((ind[1:], np.zeros(7800)))
+                combo = np.concatenate((ind[1:], np.zeros(7800*2)))
                 combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
                 combo = np.asarray(combo, dtype="float32")
                 missing_samples.append(combo)
