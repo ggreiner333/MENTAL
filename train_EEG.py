@@ -79,7 +79,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, h_1)
                 h = h_res
 
-            loss = torch.nn.BCELoss()
+            loss = torch.nn.MSELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -291,7 +291,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, h_1)
                 h = h_res
 
-            loss = torch.nn.BCELoss()
+            loss = torch.nn.MSELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -478,7 +478,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, h_1)
                 h = h_res
 
-            loss = torch.nn.BCELoss()
+            loss = torch.nn.MSELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
