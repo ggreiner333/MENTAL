@@ -28,6 +28,6 @@ def get_ind():
     ec_psds = np.load('/data/zhanglab/ggreiner/MENTAL/TDBRAIN/small_complete_samples_EC_depression.npy', allow_pickle=True)
 
     for ind in ec_psds[0:20]:
-        print(ind)
+        print(ind[0:70])
 
 get_ind()
