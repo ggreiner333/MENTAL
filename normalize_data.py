@@ -65,7 +65,7 @@ def normalize_data_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     np.save(file=os.path.join(path, 'normalized_small_complete_samples_EO_depression.npy'), arr=normalized)
 
-def normalize_data_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
+def normalize_data_EC_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     # Load Data
     inds = np.load(os.path.join(path, 'small_complete_samples_EC_EO_depression.npy'))
@@ -91,5 +91,5 @@ def test_load(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     print(inds)
     print(inds.shape)
 
-#normalize_data()
-test_load()   
+normalize_data_EO()
+normalize_data_EC_EO()
