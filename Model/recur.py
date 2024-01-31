@@ -25,25 +25,25 @@ class EegRNN(nn.Module):
         self.output_size = output_size
 
         self.layer_1 = nn.GRU(input_size, hidden_size, num_layers=2, batch_first=True)
-        #self.layer_2 = nn.GRU(hidden_size, hidden_size, batch_first=True)
-        self.output = nn.Sequential(
-            nn.ReLU(),
-            nn.Linear(hidden_size, output_size),
-            nn.Sigmoid()
-        )
+
+        self.o1 = nn.Linear(hidden_size, 20) 
+        self.o2 = nn.Linear(20, 10)
+        self.o3 = nn.Linear(10, output_size)
+        
+        self.relu1 = nn.ReLU()
+        self.relu2 = nn.ReLU()
+        self.sig   = nn.Sigmoid()
 
     def forward(self, x, h):
         x.unsqueeze_(-1)
 
         x = x.transpose(1,2)
-        #print(x.size())
-        res, h_1 = self.layer_1(x, h)
-        #res2, h_2 = self.layer_2(res, h[1])
-        #print(res.shape)
 
-        out = self.output(res)
-        #real = out.squeeze(-1)
-        #print(real)
+        res, h_1 = self.layer_1(x, h)
+
+        res = self.relu1(self.o1(res))
+        res = self.relu2(self.o2(res))
+        out = self.sig(self.o3(res))
 
         return out, h_1
         
