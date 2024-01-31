@@ -26,19 +26,127 @@ all_included = [ "Fp1",  "Fp2",   "F7",   "F3",    "Fz",    "F4",   "F8", "FC3",
 ##################################################################################################
 ##################################################################################################
 
+def test():
+    ec_psds = np.load('small_complete_samples_EC_depression.npy', allow_pickle=True)
+    print(ec_psds.shape)
+    seen = []
+    other = []
+    for ind in ec_psds:
+        cur = ind[0]
+        if(seen.__contains__(cur)):
+            print("duped")
+            print(ind[0:7])
+            print(other[seen.index(cur)])
+        else:
+            seen.append(cur)
+            other.append(ind[0:5])
+
+#test()
+
+def test2():
+    ec_psds = np.load('small_complete_samples_EC_depression.npy', allow_pickle=True)
+    seen = []
+    other = []
+    for ind in ec_psds:
+        cur = ind[2]
+        print(cur)
+        if(seen.__contains__(cur)):
+            print("duped")
+            print(ind[0:7])
+            print(other[seen.index(cur)])
+        else:
+            seen.append(cur)
+            other.append(ind[0:5])
+
+def plot_box():
+    ec_psds = np.load('small_complete_samples_EC_depression.npy', allow_pickle=True)
+
+    d_count = 0
+    depressed = []
+    for i in range(0, 26):
+        depressed.append([])
+
+    o_count = 0
+    other = []
+    for i in range(0, 26):
+        other.append([])
+
+    for ind in ec_psds:
+        psds = ind[65:]
+        total = np.zeros(26)
+        for i in range(0,60):
+            res = []
+            for j in range(0,26):
+                res.append(psds[(i*130)+j*5+2])
+            res = np.array(res)
+            total = total+res
+        total = total/60
+
+        if(ind[1] == 0.0):
+            o_count += 1
+            for i in range(0, 26):
+                other[i].append(total[i])
+        else:
+            d_count += 1
+            for i in range(0, 26):
+                depressed[i].append(total[i])
+    
+
+    #, showfliers=False
+    x_pos_range = np.arange(2)
+    x_pos = (x_pos_range * 0.5) + 0.75
+
+    bp1=plt.boxplot(
+        depressed, sym='', widths=0.3, labels=all_included, patch_artist=True,notch=True,
+        positions=[x_pos[0] + j*1 for j in range(0, 26)]
+    )
+    bp2=plt.boxplot(
+        other, sym='', widths=0.3,patch_artist=True, notch=True,
+        positions=[x_pos[1] + j*1 for j in range(0, 26)]
+    )
+
+    for box in bp1['boxes']:
+        box.set_facecolor("red")
+    
+    plt.xticks(ticks=np.arange(1,27,1), labels=all_included)
+    plt.legend([bp1["boxes"][0], bp2["boxes"][0]], ['Depressed', 'Other'], loc='upper right')
+    plt.show()
+
+plot_box()
 
 def get_ind():
-    ec_psds = np.load('/data/zhanglab/ggreiner/MENTAL/TDBRAIN/small_complete_samples_EC_depression.npy', allow_pickle=True)
+    ec_psds = np.load('small_complete_samples_EC_depression.npy', allow_pickle=True)
 
-    for ind in ec_psds[0:3]:
+    total_ct = 0
+    total_nd = np.zeros(26)
+
+    total_dct = 0
+    total_d = np.zeros(26)
+
+    for ind in ec_psds:
         psds = ind[65:]
-        res = []
-        for i in range(0,26):
-            res.append(psds[i*5])
-        res = np.array(res)
+        total = np.zeros(26)
+        for i in range(0,60):
+            res = []
+            for j in range(0,26):
+                res.append(psds[(i*130)+j*5+1])
+            res = np.array(res)
+            total = total+res
+        total = total/60
 
-        plt.plot(res)
-        plt.show()
-        
+        if(ind[1] == 0.0):
+            total_ct += 1
+            total_nd = total_nd + total
+        else:
+            total_dct +=1
+            total_d = total_d + total
 
-get_ind()
+    total_nd = total_nd/total_ct
+    total_d = total_d/total_dct
+    plt.plot(total_nd, label="not depressed")
+    plt.plot(total_d, label="depressed")
+    plt.xticks(ticks=np.arange(0,26,1), labels=all_included)
+    plt.legend(loc='upper right')
+    plt.show()
+
+#get_ind()

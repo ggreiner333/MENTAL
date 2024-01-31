@@ -45,6 +45,46 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     np.save(file=os.path.join(path, 'normalized_small_complete_samples_EC_depression.npy'), arr=normalized)
 
+def normalize_data_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
+
+    # Load Data
+    inds = np.load(os.path.join(path, 'small_complete_samples_EO_depression.npy'))
+
+    normalized = np.zeros_like(inds)
+
+    for i in range(0, inds.shape[0]):
+        for j in range(0, 5):
+            normalized[i][j] = inds[i][j]
+
+    for i in range(5,inds[0].size):
+        test = inds[:, i]
+        z_scored = stats.zscore(test, axis=None)
+        normalized[:, i] = z_scored
+
+    print(normalized.shape)
+
+    np.save(file=os.path.join(path, 'normalized_small_complete_samples_EO_depression.npy'), arr=normalized)
+
+def normalize_data_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
+
+    # Load Data
+    inds = np.load(os.path.join(path, 'small_complete_samples_EC_EO_depression.npy'))
+
+    normalized = np.zeros_like(inds)
+
+    for i in range(0, inds.shape[0]):
+        for j in range(0, 5):
+            normalized[i][j] = inds[i][j]
+
+    for i in range(5,inds[0].size):
+        test = inds[:, i]
+        z_scored = stats.zscore(test, axis=None)
+        normalized[:, i] = z_scored
+
+    print(normalized.shape)
+
+    np.save(file=os.path.join(path, 'normalized_small_complete_samples_EC_EO_depression.npy'), arr=normalized)
+
 
 def test_load(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     inds = np.load(os.path.join(path, 'normalized_small_complete_samples_EC_depression.npy'))
