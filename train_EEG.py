@@ -154,13 +154,21 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
-        print(acc)
 
         sensitivity = TP/P
         sens.append(sensitivity)
 
         specificity = TN/N
         spec.append(specificity)
+
+        if(epoch%100==0):
+            out_accs = np.array(accs)
+            out_sens = np.array(sens)
+            out_spec = np.array(spec)
+
+            np.save('/home/ggreiner/MENTAL/MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/MENTAL_EC_SENS_epoch_'+str(epoch), out_sens)
+            np.save('/home/ggreiner/MENTAL/MENTAL_EC_SPEC_epoch_'+str(epoch), out_spec)
 
         '''
         plt.figure(figsize=(15,10))
@@ -360,13 +368,21 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
-        print(acc)
 
         sensitivity = TP/P
         sens.append(sensitivity)
 
         specificity = TN/N
         spec.append(specificity)
+
+        if(epoch%100==0):
+            out_accs = np.array(accs)
+            out_sens = np.array(sens)
+            out_spec = np.array(spec)
+
+            np.save('/home/ggreiner/MENTAL/MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/MENTAL_EO_SENS_epoch_'+str(epoch), out_sens)
+            np.save('/home/ggreiner/MENTAL/MENTAL_EO_SPEC_epoch_'+str(epoch), out_spec)
             
     accs = np.array(accs)
     sens = np.array(sens)
@@ -541,13 +557,21 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
-        print(acc)
 
         sensitivity = TP/P
         sens.append(sensitivity)
 
         specificity = TN/N
         spec.append(specificity)
+
+        if(epoch%100==0):
+            out_accs = np.array(accs)
+            out_sens = np.array(sens)
+            out_spec = np.array(spec)
+
+            np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_ACCS_epoch_'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_SENS_epoch_'+str(epoch), out_sens)
+            np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_SPEC_epoch_'+str(epoch), out_spec)
             
     accs = np.array(accs)
     sens = np.array(sens)
