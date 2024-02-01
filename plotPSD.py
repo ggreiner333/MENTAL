@@ -165,4 +165,100 @@ def plot_test():
     plt.savefig("diff_mental_epoch200_b15_w6_l3_accuracy_ec_eo")
     plt.clf()
 
-plot_test()
+#plot_test()
+def mdd_healthy_test():
+    ec_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
+
+    total_ct = 0
+    total_nd = np.zeros(26)
+
+    total_dct = 0
+    total_d = np.zeros(26)
+
+    for ind in ec_psds:
+        psds = ind[1:]
+        total = np.zeros(26)
+        for i in range(0,60):
+            res = []
+            for j in range(0,26):
+                res.append(psds[(i*130)+j*5+1])
+            res = np.array(res)
+            total = total+res
+        total = total/60
+
+        if(ind[0] == 3.0):
+            total_ct += 1
+            total_nd = total_nd + total
+        elif(ind[0]==2.0):
+            total_dct +=1
+            total_d = total_d + total
+
+    total_nd = total_nd/total_ct
+    total_d = total_d/total_dct
+    plt.plot(total_nd, label="not depressed")
+    plt.plot(total_d, label="depressed")
+    plt.xticks(ticks=np.arange(0,26,1), labels=all_included)
+    plt.legend(loc='upper right')
+    plt.show()
+
+def mdd_healthy_comp():
+    ec_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
+
+    d_count = 0
+    depressed = []
+    for i in range(0, 26):
+        depressed.append([])
+
+    o_count = 0
+    other = []
+    for i in range(0, 26):
+        other.append([])
+
+    for ind in ec_psds:
+        psds = ind[1:]
+        total = []
+        for i in range(0, 26):
+            total.append([])
+        for i in range(0,60):
+            for j in range(0,26):
+                total[j].append(psds[(i*130)+j*5])
+
+        if(ind[0] == 3.0):
+            o_count += 1
+            for i in range(0, 26):
+                for j in total[i]:
+                    other[i].append(j)
+        elif(ind[0] == 2.0):
+            d_count += 1
+            for i in range(0, 26):
+                for j in total[i]:
+                    depressed[i].append(j)
+    
+
+    #, showfliers=False
+    x_pos_range = np.arange(2)
+    x_pos = (x_pos_range * 0.5) + 0.75
+
+    bp1=plt.boxplot(
+        depressed, sym='', widths=0.3, labels=all_included, patch_artist=True,notch=True,
+        positions=[x_pos[0] + j*1 for j in range(0, 26)]
+    )
+    bp2=plt.boxplot(
+        other, sym='', widths=0.3,patch_artist=True, notch=True,
+        positions=[x_pos[1] + j*1 for j in range(0, 26)]
+    )
+
+    for box in bp1['boxes']:
+        box.set_facecolor("aquamarine")
+
+    for box in bp2['boxes']:
+        box.set_facecolor("green")
+    
+    plt.title("Delta PSD EC", fontsize=20)
+    plt.xticks(ticks=np.arange(1,27,1), labels=all_included)
+    plt.legend([bp1["boxes"][0], bp2["boxes"][0]], ['Depressed', 'ADHD'], loc='upper right')
+    plt.xlabel("Channel", fontsize=16)
+    plt.ylabel("PSD", fontsize=16)
+    plt.show()
+
+mdd_healthy_comp()

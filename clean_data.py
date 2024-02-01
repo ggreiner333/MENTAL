@@ -437,5 +437,51 @@ def create_disorder_psd_EC(ptc, psd, out):
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
 
-get_disorders_for_analysis()
-create_disorder_psd_EC(ptc_path, psd_path, out_path)
+
+#get_disorders_for_analysis()
+#create_disorder_psd_EC(ptc_path, psd_path, out_path)
+
+def create_disorder_psd_EO(ptc, psd, out):
+    survey = np.loadtxt(os.path.join(ptc, "individuals_disorders.csv"), delimiter=",", dtype=str)
+    
+    missing_samples = []
+    complete_samples = []
+
+    for ind in survey:
+        
+        # Only consider individuals that we have survey data for
+        # This means excluding the individuals marked for replication
+        id = ind[0]
+        if(not id[0] == '1'):
+
+            # Navigate to the directory with the psd information
+            loc = os.path.join(psd, id)
+            files = os.listdir(loc)
+
+            sn = ind[1]
+            found = False
+            for f in files:
+                if(f.__contains__("EO") and f.__contains__(sn)):
+                    found = True
+                    # Load the PSD values from the files
+                    pth = os.path.join(loc,f)
+                    psds = np.load(pth, allow_pickle=True)
+                    psds = np.squeeze(psds)
+                    psds = psds.flatten()
+
+                    # Combine survey and PSD data
+                    combined = np.asarray(np.concatenate((ind[2:],psds)), dtype="float32")
+                    complete_samples.append(combined)
+
+            if(not found):
+                combo = np.concatenate((ind[2:], np.zeros(7800)))
+                combo = np.asarray(combo, dtype="float32")
+                missing_samples.append(combo)
+            
+    all_complete_samples = np.array(complete_samples)
+    np.save(os.path.join(out,'disorders_EO_psds'), all_complete_samples)
+
+    print("   Total samples: " + str(survey.shape[0]))
+    print("Complete samples: " + str(all_complete_samples.shape[0]))
+
+create_disorder_psd_EO(ptc_path, psd_path, out_path)
