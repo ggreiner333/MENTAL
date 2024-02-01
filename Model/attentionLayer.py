@@ -25,9 +25,9 @@ class AttentionLayer(nn.Module):
         self.dk = dk
         self.dv = dv
 
-        self.W_q = nn.Linear(60, dk, bias = False)
-        self.W_k = nn.Linear(130, dk, bias = False)
-        self.W_v = nn.Linear(130, dv, bias = False)
+        self.W_q = nn.Linear(1, dk, bias = False)
+        self.W_k = nn.Linear(1, dk, bias = False)
+        self.W_v = nn.Linear(1, dv, bias = False)
 
         self.fc = nn.Linear(dv, 1)
 
