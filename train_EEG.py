@@ -65,11 +65,11 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
-            psd_final = torch.squeeze(psd_tensor)
+            #psd_final = torch.squeeze(psd_tensor)
             
             h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
 
-            for p in psd_final:
+            for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
@@ -100,11 +100,11 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
-            psd_final = torch.squeeze(psd_tensor)
+            #psd_final = torch.squeeze(psd_tensor)
             
             h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
             
-            for p in psd_final:
+            for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
