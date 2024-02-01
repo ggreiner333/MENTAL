@@ -152,6 +152,7 @@ def run_train(learn_rate, wd, batch_sz, epochs, outfile):
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
+        print(acc)
 
         sensitivity = TP/P
         sens.append(sensitivity)
