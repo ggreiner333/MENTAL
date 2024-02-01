@@ -393,7 +393,7 @@ def get_disorders_for_analysis(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
         if((not found) and (not missing)):
             res = [id]
             res.append(i[1])
-            res.append(disorders[0])
+            res.append(diagnoses.index(disorders[0].strip()))
             samples.append(res)
         
     final = np.asarray(samples)
