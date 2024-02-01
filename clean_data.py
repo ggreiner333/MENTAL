@@ -370,11 +370,6 @@ def get_disorders_for_analysis(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     samples = []
 
-    cols = []
-    for name in inds[0]:
-        cols.append(name)
-    samples.append(cols)
-
     for i in inds[1:]:
         id = i[0]
         disorders = (i[2].upper()).split("/")
@@ -395,7 +390,7 @@ def get_disorders_for_analysis(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
             res.append(i[1])
             res.append(diagnoses.index(disorders[0].strip()))
             samples.append(res)
-    print(samples)
+
     final = np.asarray(samples)
     np.savetxt(os.path.join(path,'individuals_disorders.csv'), final, delimiter=',', fmt="%s")
 
@@ -405,7 +400,7 @@ def create_disorder_psd_EC(ptc, psd, out):
     missing_samples = []
     complete_samples = []
 
-    for ind in survey[1:]:
+    for ind in survey:
         
         # Only consider individuals that we have survey data for
         # This means excluding the individuals marked for replication
