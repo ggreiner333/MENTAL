@@ -570,6 +570,14 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = TN/N
         spec.append(specificity)
 
+        if(epoch%100==0):
+            out_accs = np.array(accs)
+            out_sens = np.array(sens)
+            out_spec = np.array(spec)
+
+            np.save('/home/ggreiner/MENTAL/EO_EC_ONLY_ACCS'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/EO_EC_ONLY_SENS'+str(epoch), out_sens)
+            np.save('/home/ggreiner/MENTAL/EO_EC_ONLY_SPEC'+str(epoch), out_spec)
             
     accs = np.array(accs)
     sens = np.array(sens)
