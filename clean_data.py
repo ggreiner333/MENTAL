@@ -353,10 +353,94 @@ def find_min_max_gender():
     print("Min Female: " + str(minF) + ", Max Female: " + str(max_Female))
 
 
-separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
+#separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
 #load_attempt('TDBRAIN/small_complete_samples_EC.csv')
 
 #find_min_max_gender()
+
+
+def get_disorders_for_analysis(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
+
+    # Load Demographic and Survey Data
+
+    inds = np.loadtxt(os.path.join(path, "participants.csv"), delimiter=",", dtype=str)
+
+    samples = []
+
+    cols = []
+    for name in inds[0]:
+        cols.append(name)
+    samples.append(cols)
+
+    for i in inds[1:]:
+        id = i[0]
+        disorders = (i[2].upper()).split("/")
+    
+        found = False
+        missing = False
+        for d in disorders:
+            if(diagnoses.index(d.strip()) == 2):
+                res = [id]
+                res.append(i[1])
+                res.append(diagnoses.index(d.strip()))
+                samples.append(res)
+                found = True
+            if(diagnoses.index(d.strip()) == 0):
+                missing = True
+        if((not found) and (not missing)):
+            res = [id]
+            res.append(i[1])
+            res.append(disorders[0])
+            samples.append(res)
+        
+    final = np.asarray(samples)
+    np.savetxt(os.path.join(path,'individuals_disorders.csv'), final, delimiter=',', fmt="%s")
+
+def create_disorder_psd_EC(ptc, psd, out):
+    survey = np.loadtxt(os.path.join(ptc, "individuals_disorders.csv"), delimiter=",", dtype=str)
+    
+    missing_samples = []
+    complete_samples = []
+
+    for ind in survey[1:]:
+        
+        # Only consider individuals that we have survey data for
+        # This means excluding the individuals marked for replication
+        id = ind[0]
+        if(not id[0] == '1'):
+
+            # Navigate to the directory with the psd information
+            loc = os.path.join(psd, id)
+            files = os.listdir(loc)
+
+            sn = ind[1]
+            found = False
+            for f in files:
+                if(f.__contains__("EC") and f.__contains__(sn)):
+                    found = True
+                    # Load the PSD values from the files
+                    pth = os.path.join(loc,f)
+                    psds = np.load(pth, allow_pickle=True)
+                    psds = np.squeeze(psds)
+                    psds = psds.flatten()
+
+                    # Combine survey and PSD data
+                    combined = np.asarray(np.concatenate((ind[2:],psds)), dtype="float32")
+                    complete_samples.append(combined)
+
+            if(not found):
+                combo = np.concatenate((ind[2:], np.zeros(7800)))
+                combo = np.asarray(combo, dtype="float32")
+                missing_samples.append(combo)
+            
+    all_complete_samples = np.array(complete_samples)
+    np.save(os.path.join(out,'disorders_EC_psds'), all_complete_samples)
+
+    print("   Total samples: " + str(survey.shape[0]))
+    print("Complete samples: " + str(all_complete_samples.shape[0]))
+
+get_disorders_for_analysis()
+create_disorder_psd_EC(ptc_path, psd_path, out_path)

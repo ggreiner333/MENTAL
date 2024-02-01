@@ -152,17 +152,17 @@ def get_ind():
 #get_ind()
 
 def plot_test():
-    accs = np.load('diff_MENTAL_EO_ACCS_epoch_200.npy', allow_pickle=True)
+    accs = np.load('diff_MENTAL_EC_EO_ACCS_epoch_200.npy', allow_pickle=True)
 
     labels = np.arange(0, 201, 1)
     plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
-    plt.title("Accuracy of diff EC MENTAL for 200 epochs, batch size 15")
+    plt.title("Accuracy of diff EC+EO MENTAL for 200 epochs, batch size 15")
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_accuracy_ec")
+    plt.savefig("diff_mental_epoch200_b15_w6_l3_accuracy_ec_eo")
     plt.clf()
 
 plot_test()
