@@ -395,7 +395,7 @@ def get_disorders_for_analysis(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
             res.append(i[1])
             res.append(diagnoses.index(disorders[0].strip()))
             samples.append(res)
-        
+    print(samples)
     final = np.asarray(samples)
     np.savetxt(os.path.join(path,'individuals_disorders.csv'), final, delimiter=',', fmt="%s")
 
