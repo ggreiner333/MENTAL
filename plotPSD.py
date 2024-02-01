@@ -152,20 +152,21 @@ def get_ind():
 #get_ind()
 
 def plot_test():
-    accs = np.load('diff_MENTAL_EC_EO_ACCS_epoch_200.npy', allow_pickle=True)
+    accs = np.load('diff_MENTAL_EO_ACCS_epoch_900.npy', allow_pickle=True)
 
-    labels = np.arange(0, 201, 1)
+    labels = np.arange(0, 901, 1)
     plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
-    plt.title("Accuracy of diff EC+EO MENTAL for 200 epochs, batch size 15")
+    plt.title("Accuracy of diff EO MENTAL for 900 epochs, batch size 15")
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch200_b15_w6_l3_accuracy_ec_eo")
+    plt.savefig("diff_mental_epoch900_b15_w6_l3_accuracy_eo")
     plt.clf()
 
-#plot_test()
+plot_test()
+
 def mdd_healthy_test():
     ec_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
 
@@ -202,7 +203,7 @@ def mdd_healthy_test():
     plt.show()
 
 def mdd_healthy_comp():
-    ec_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
+    ec_psds = np.load('disorders_EO_psds.npy', allow_pickle=True)
 
     d_count = 0
     depressed = []
@@ -223,7 +224,7 @@ def mdd_healthy_comp():
             for j in range(0,26):
                 total[j].append(psds[(i*130)+j*5])
 
-        if(ind[0] == 3.0):
+        if(ind[0] == 1.0):
             o_count += 1
             for i in range(0, 26):
                 for j in total[i]:
@@ -251,14 +252,11 @@ def mdd_healthy_comp():
     for box in bp1['boxes']:
         box.set_facecolor("aquamarine")
 
-    for box in bp2['boxes']:
-        box.set_facecolor("green")
-    
-    plt.title("Delta PSD EC", fontsize=20)
+    plt.title("Delta PSD EO", fontsize=20)
     plt.xticks(ticks=np.arange(1,27,1), labels=all_included)
-    plt.legend([bp1["boxes"][0], bp2["boxes"][0]], ['Depressed', 'ADHD'], loc='upper right')
+    plt.legend([bp1["boxes"][0], bp2["boxes"][0]], ['Depressed', 'Healthy'], loc='upper right')
     plt.xlabel("Channel", fontsize=16)
     plt.ylabel("PSD", fontsize=16)
     plt.show()
 
-mdd_healthy_comp()
+#mdd_healthy_comp()
