@@ -37,7 +37,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
 
-    my_mental = MENTAL_EEG(130, 30, 1, batch_sz)
+    my_mental = MENTAL(130, 30, 1, batch_sz)
 
 
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
@@ -70,7 +70,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
             h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
 
             for p in psd_final:
-                output, h_res = my_mental.forward(p, h_1)
+                output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
             loss = torch.nn.MSELoss()
@@ -105,7 +105,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
             h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
             
             for p in psd_final:
-                output, h_res = my_mental.forward(p, h_1)
+                output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
             out = output.squeeze_(1)
@@ -154,6 +154,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
+        print(acc)
 
         sensitivity = TP/P
         sens.append(sensitivity)
@@ -251,7 +252,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
 
-    my_mental = MENTAL_EEG(130, 30, 1, batch_sz)
+    my_mental = MENTAL(130, 30, 1, batch_sz)
 
 
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
@@ -284,7 +285,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
             h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
 
             for p in psd_final:
-                output, h_res = my_mental.forward(p, h_1)
+                output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
             loss = torch.nn.MSELoss()
@@ -319,7 +320,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
             h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
             
             for p in psd_final:
-                output, h_res = my_mental.forward(p, h_1)
+                output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
             out = output.squeeze_(1)
@@ -368,6 +369,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
+        print(acc)
 
         sensitivity = TP/P
         sens.append(sensitivity)
@@ -440,7 +442,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
 
-    my_mental = MENTAL_EEG(130, 30, 1, batch_sz)
+    my_mental = MENTAL(130, 30, 1, batch_sz)
 
 
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
@@ -473,7 +475,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
             h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
 
             for p in psd_final:
-                output, h_res = my_mental.forward(p, h_1)
+                output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
             loss = torch.nn.MSELoss()
@@ -508,7 +510,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
             h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
             
             for p in psd_final:
-                output, h_res = my_mental.forward(p, h_1)
+                output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
             out = output.squeeze_(1)
@@ -557,6 +559,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
+        print(acc)
 
         sensitivity = TP/P
         sens.append(sensitivity)
