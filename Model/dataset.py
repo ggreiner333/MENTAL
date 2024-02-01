@@ -126,7 +126,7 @@ class BSplitDataset(data.Dataset):
             psd.append(individual[i:(i+130)])
         
         psd_val = torch.tensor(psd, dtype=torch.float32)
-        psd = torch.reshape(psd_val, [120,130])
+        psd = torch.reshape(psd_val, [120,130, 1])
         #print(psd.shape)
 
         return h_1, neo, psd, output
