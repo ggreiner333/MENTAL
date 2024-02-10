@@ -12,6 +12,12 @@ import mne
 ##################################################################################################
 ##################################################################################################
 
+diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
+             'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
+             'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
+             'STROKE', 'TBI', 'ANOREXIA', 'CONVERSION DX', 'DPS', 'DYSPRAXIA', 'LYME', 'MSA-C', 
+             'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
+
 # path of preprocessed EEG data
 preprocess_file_path = 'TDBRAIN/preprocessed'
 
@@ -21,6 +27,12 @@ psds_path = 'TDBRAIN/PSD_all'
 # channels
 all_included = [ "Fp1",  "Fp2",   "F7",   "F3",    "Fz",    "F4",   "F8", "FC3", "FCz", "FC4", "T7", "C3", "Cz",
                   "C4",   "T8",  "CP3",  "CPz",   "CP4",    "P7",   "P3",  "Pz",  "P4",  "P8", "O1", "Oz", "O2" ]
+
+frontal   = np.arange(0,10, 1)
+temporal  = [10,14]
+central   = [11,12,13,15,16,17]
+parietal  = [18,19,20,21,22]
+occupital = [23,24,25]
 
 ##################################################################################################
 ##################################################################################################
@@ -40,8 +52,6 @@ def test():
         else:
             seen.append(cur)
             other.append(ind[0:5])
-
-#test()
 
 def test2():
     ec_psds = np.load('small_complete_samples_EC_depression.npy', allow_pickle=True)
@@ -112,8 +122,6 @@ def plot_box():
     plt.legend([bp1["boxes"][0], bp2["boxes"][0]], ['Depressed', 'Other'], loc='upper right')
     plt.show()
 
-#plot_box()
-
 def get_ind():
     ec_psds = np.load('small_complete_samples_EC_depression.npy', allow_pickle=True)
 
@@ -149,8 +157,6 @@ def get_ind():
     plt.legend(loc='upper right')
     plt.show()
 
-#get_ind()
-
 def plot_test():
     accs = np.load('diff_MENTAL_EC_EO_ACCS_epoch_400.npy', allow_pickle=True)
 
@@ -165,10 +171,71 @@ def plot_test():
     plt.savefig("diff_mental_epoch400_b15_w6_l3_accuracy_ec_eo")
     plt.clf()
 
-plot_test()
 
-def mdd_healthy_test():
-    ec_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
+##################################################################################################
+##################################################################################################
+##################################################################################################
+
+bands = ['Delta', 'Theta', 'Alpha', 'Beta', 'Gamma']
+
+
+def mdd_healthy_means_multiple(band, num_disorders, closed):
+    if(closed):
+        all_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
+    else:
+        all_psds = np.load('disorders_EO_psds.npy', allow_pickle=True)
+
+    index = bands.index(band)
+
+    all = []
+
+    counts = [0 for i in range(0, num_disorders)]
+
+    for i in range(0,num_disorders):
+        all.append(np.zeros(26))
+
+    for ind in all_psds:
+        psds = ind[1:]
+        total = np.zeros(26)
+        for i in range(0,60):
+            res = []
+            for j in range(0,26):
+                res.append(psds[(i*130)+j*5+index])
+            res = np.array(res)
+            total = total+res
+        total = total/60
+
+        disorder = int(ind[0])-1
+        if(disorder < num_disorders and disorder >= 0):
+            counts[disorder] += 1
+            all[disorder] = all[disorder] + total
+
+
+    for i in range(0, num_disorders):
+        plt.plot(all[i]/counts[i], label=diagnoses[i+1])
+        plt.scatter(np.arange(0,26,1), all[i]/counts[i], s=10)
+
+    plt.title(band+" PSD " + ("EC" if closed else "EO"), fontsize=18)
+    plt.xticks(ticks=np.arange(0,26,1), labels=all_included)
+    plt.legend(loc='upper right')
+    plt.xlabel("Channel", fontsize=14)
+    plt.ylabel("PSD", fontsize=14)
+    plt.show()
+
+for b in bands:
+    mdd_healthy_means_multiple(b, 8, closed=True)
+
+
+
+def mdd_healthy_means(band, d1, d2, closed):
+    if(closed):
+        all_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
+    else:
+        all_psds = np.load('disorders_EO_psds.npy', allow_pickle=True)
+
+    index = bands.index(band)
+    d1_idx = diagnoses.index(d1)
+    d2_idx = diagnoses.index(d2)
 
     total_ct = 0
     total_nd = np.zeros(26)
@@ -176,34 +243,212 @@ def mdd_healthy_test():
     total_dct = 0
     total_d = np.zeros(26)
 
-    for ind in ec_psds:
+    for ind in all_psds:
         psds = ind[1:]
         total = np.zeros(26)
         for i in range(0,60):
             res = []
             for j in range(0,26):
-                res.append(psds[(i*130)+j*5+1])
+                res.append(psds[(i*130)+j*5+index])
             res = np.array(res)
             total = total+res
         total = total/60
 
-        if(ind[0] == 3.0):
+        if(ind[0] == d1_idx):
             total_ct += 1
             total_nd = total_nd + total
-        elif(ind[0]==2.0):
+        elif(ind[0]==d2_idx):
             total_dct +=1
             total_d = total_d + total
 
     total_nd = total_nd/total_ct
     total_d = total_d/total_dct
-    plt.plot(total_nd, label="not depressed")
-    plt.plot(total_d, label="depressed")
+
+    dc = 'blue'
+    nc = 'red'
+
+    plt.plot(total_nd, label=d1, c=nc)
+    plt.plot(total_d, label=d2, c=dc)
+    plt.scatter(np.arange(0,26,1), total_nd, s=10, color=nc)
+    plt.scatter(np.arange(0,26,1), total_d, s=10, color=dc)
     plt.xticks(ticks=np.arange(0,26,1), labels=all_included)
+    plt.title(band+" PSD " + ("EC" if closed else "EO"), fontsize=18)
     plt.legend(loc='upper right')
+    plt.xlabel("Channel", fontsize=16)
+    plt.ylabel("PSD", fontsize=16)
     plt.show()
 
+#for b in bands:
+#    mdd_healthy_means(b, 'HEALTHY', 'MDD', closed=True)
+
+
+
+def mdd_healthy_ranges(band, d1, d2, closed):
+    if(closed):
+        all_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
+    else:
+        all_psds = np.load('disorders_EO_psds.npy', allow_pickle=True)
+
+    index = bands.index(band)
+    d1_idx = diagnoses.index(d1)
+    d2_idx = diagnoses.index(d2)
+
+    d_count = 0
+    depressed = []
+    for i in range(0, 26):
+        depressed.append([])
+
+    o_count = 0
+    other = []
+    for i in range(0, 26):
+        other.append([])
+
+    for ind in all_psds:
+        psds = ind[1:]
+        total = []
+        for i in range(0, 26):
+            total.append([])
+        for i in range(0,60):
+            for j in range(0,26):
+                total[j].append(psds[(i*130)+j*5+index])
+
+        if(ind[0] == d1_idx):
+            o_count += 1
+            for i in range(0, 26):
+                for j in total[i]:
+                    other[i].append(j)
+        elif(ind[0] == d2_idx):
+            d_count += 1
+            for i in range(0, 26):
+                for j in total[i]:
+                    depressed[i].append(j)
+    
+
+    dMeans = []
+    dStds = []
+    dStds.append([])
+    dStds.append([])
+    dPairs = []
+    for x in depressed:
+        dMeans.append(np.median(x))
+        res  = np.percentile(x, [75 ,25])
+        dStds[0].append(res[0])
+        dStds[1].append(res[1])
+        dPairs.append(res)
+
+    oMeans = []
+    oStds = []
+    oStds.append([])
+    oStds.append([])
+    oPairs = []
+    for x in other:
+        oMeans.append(np.median(x))
+        res  = np.percentile(x, [75 ,25])
+        oStds[0].append(res[0])
+        oStds[1].append(res[1])
+        oPairs.append(res)
+
+    dStds = np.array(dStds)
+    print(dStds)
+
+    oStds = np.array(oStds)
+
+    dc = 'blue'
+    nc = 'red'
+
+    fig, ax = plt.subplots()
+    plt.scatter(np.arange(0,26,1), dStds[0], marker='_', c='b', s=40)
+    plt.scatter(np.arange(0,26,1), dStds[1], marker='_', c='b', s=40)
+    plt.scatter(np.arange(0,26,1), oStds[0], marker='_', c='r', s=40)
+    plt.scatter(np.arange(0,26,1), oStds[1], marker='_', c='r', s=40)
+    plt.scatter(np.arange(0,26,1), dMeans, s=10, color=dc)
+    plt.scatter(np.arange(0,26,1), oMeans, s=10, color=nc)
+    plt.plot(np.arange(0,26,1), dMeans, label=d2, color=dc)
+    plt.plot(np.arange(0,26,1), oMeans, label=d1, color=nc)
+    for i in range(0, len(dPairs)):
+        plt.plot([i,i], dPairs[i], color=dc)
+    for i in range(0, len(oPairs)):
+        plt.plot([i,i], oPairs[i], color=nc)
+    plt.xticks(ticks=np.arange(0,26,1), labels=all_included)
+    plt.title(band+" PSD " + ("EC" if closed else "EO"), fontsize=18)
+    plt.legend(loc='upper right')
+    plt.xlabel("Channel", fontsize=16)
+    plt.ylabel("PSD", fontsize=16)
+    plt.show()
+    
+#for b in bands:
+#    mdd_healthy_ranges(b, 'HEALTHY', 'MDD', closed=False)
+
+
+
+
+##################################################################################################
+##################################################################################################
+##################################################################################################
+
+
+def regions_means_multiple(band, num_disorders, closed):
+    if(closed):
+        all_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
+    else:
+        all_psds = np.load('disorders_EO_psds.npy', allow_pickle=True)
+
+    index = bands.index(band)
+
+    all = []
+
+    counts = [0 for i in range(0, num_disorders)]
+
+    for i in range(0,num_disorders):
+        all.append(np.zeros(26))
+
+    for ind in all_psds:
+        psds = ind[1:]
+        total = np.zeros(26)
+        for i in range(0,60):
+            res = []
+            for j in range(0,26):
+                res.append(psds[(i*130)+j*5+index])
+            res = np.array(res)
+            total = total+res
+        total = total/60
+
+        disorder = int(ind[0])-1
+        if(disorder < num_disorders and disorder >= 0):
+            counts[disorder] += 1
+            all[disorder] = all[disorder] + total
+
+
+    for i in range(0, num_disorders):
+        all[i] = all[i]/counts[i]
+        F = np.array([all[i][k] for k in frontal])
+        T = np.array([all[i][k] for k in temporal])
+        C = np.array([all[i][k] for k in central])
+        P = np.array([all[i][k] for k in parietal])
+        O = np.array([all[i][k] for k in occupital])
+
+        vals = np.array([np.mean(F), np.mean(T), np.mean(C), np.mean(P), np.mean(O)])
+        plt.plot(vals, label=diagnoses[i+1])
+        plt.scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
+
+
+    plt.title(band+" PSD " + ("EC" if closed else "EO"), fontsize=18)
+    plt.xticks(ticks=np.arange(0,5,1), labels=['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'])
+    plt.legend(loc='upper right')
+    plt.xlabel("Channel", fontsize=14)
+    plt.ylabel("PSD", fontsize=14)
+    plt.show()
+
+#for b in bands:
+#    regions_means_multiple(b, 8, closed=True)
+
+
+##################################################################################################
+##################################################################################################
+##################################################################################################
+    
 def mdd_healthy_comp():
-    ec_psds = np.load('disorders_EO_psds.npy', allow_pickle=True)
+    ec_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
 
     d_count = 0
     depressed = []
@@ -222,9 +467,9 @@ def mdd_healthy_comp():
             total.append([])
         for i in range(0,60):
             for j in range(0,26):
-                total[j].append(psds[(i*130)+j*5])
+                total[j].append(psds[(i*130)+j*5+2])
 
-        if(ind[0] == 1.0):
+        if(ind[0] == 4.0):
             o_count += 1
             for i in range(0, 26):
                 for j in total[i]:
@@ -241,11 +486,11 @@ def mdd_healthy_comp():
     x_pos = (x_pos_range * 0.5) + 0.75
 
     bp1=plt.boxplot(
-        depressed, sym='', widths=0.3, labels=all_included, patch_artist=True,notch=True,
+        depressed, sym='', widths=0.3, labels=all_included, patch_artist=True,notch=True,showmeans=True,
         positions=[x_pos[0] + j*1 for j in range(0, 26)]
     )
     bp2=plt.boxplot(
-        other, sym='', widths=0.3,patch_artist=True, notch=True,
+        other, sym='', widths=0.3,patch_artist=True, notch=True,showmeans=True,
         positions=[x_pos[1] + j*1 for j in range(0, 26)]
     )
 
@@ -259,4 +504,57 @@ def mdd_healthy_comp():
     plt.ylabel("PSD", fontsize=16)
     plt.show()
 
-#mdd_healthy_comp()
+def normal_vs_mental_ec():
+    accs_normal = np.load('EC_ONLY_ACCS.npy', allow_pickle=True)
+    accs_mental = np.load('diff_MENTAL_EC_ACCS.npy', allow_pickle=True)
+
+    labels = np.arange(0, 1000, 1)
+    plt.figure(figsize=(10,5))
+    plt.plot(accs_mental, label="MENTAL")
+    plt.plot(accs_normal, label="EEG Only")
+    plt.title("Accuracy of MENTAL Compared to EEG Only (EC)", fontsize=16)
+    plt.ylabel("Accuracy", fontsize=12)
+    plt.xlabel("Epoch", fontsize=12)
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+    plt.xticks(ticks=np.arange(0,1001,100))
+    plt.legend(loc="upper right")
+
+    plt.savefig("mental_vs_eeg_ec")
+    plt.clf()
+
+def normal_vs_mental_eo():
+    accs_normal = np.load('EO_ONLY_ACCS.npy', allow_pickle=True)
+    accs_mental = np.load('diff_MENTAL_EO_ACCS.npy', allow_pickle=True)
+
+    labels = np.arange(0, 1000, 1)
+    plt.figure(figsize=(10,5))
+    plt.plot(accs_mental, label="MENTAL")
+    plt.plot(accs_normal, label="EEG Only")
+    plt.title("Accuracy of MENTAL Compared to EEG Only (EO)", fontsize=16)
+    plt.ylabel("Accuracy", fontsize=12)
+    plt.xlabel("Epoch", fontsize=12)
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+    plt.xticks(ticks=np.arange(0,1001,100))
+    plt.legend(loc="upper right")
+
+    plt.savefig("mental_vs_eeg_eo")
+    plt.clf()
+
+def normal_vs_mental_eo():
+    accs_normal = np.load('EO_ONLY_ACCS.npy', allow_pickle=True)
+    accs_mental = np.load('diff_MENTAL_EC_EO_ACCS.npy', allow_pickle=True)
+
+    labels = np.arange(0, 1000, 1)
+    plt.figure(figsize=(10,5))
+    plt.plot(accs_mental, label="MENTAL")
+    plt.plot(accs_normal, label="EEG Only")
+    plt.title("Accuracy of MENTAL Compared to EEG Only (EC+EO)", fontsize=16)
+    plt.ylabel("Accuracy", fontsize=12)
+    plt.xlabel("Epoch", fontsize=12)
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+    plt.xticks(ticks=np.arange(0,1001,100))
+    plt.legend(loc="upper right")
+
+    plt.savefig("mental_vs_eeg_ec_eo")
+    plt.clf()
+    
