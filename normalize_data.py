@@ -91,5 +91,6 @@ def test_load(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     print(inds)
     print(inds.shape)
 
-normalize_data_EO()
-normalize_data_EC_EO()
+normalize_data()
+#normalize_data_EO()
+#normalize_data_EC_EO()
