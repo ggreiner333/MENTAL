@@ -24,7 +24,7 @@ from Model.mental import MENTAL_EEG
 
 def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_complete_samples_EC_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
     if(batch_sz != 15):
@@ -160,15 +160,10 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = TN/N
         spec.append(specificity)
 
-        if(epoch%100==0):
+        if(epoch%500==0):
             out_accs = np.array(accs)
-            out_sens = np.array(sens)
-            out_spec = np.array(spec)
 
-            np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
-            np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_SENS_epoch_'+str(epoch), out_sens)
-            np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_SPEC_epoch_'+str(epoch), out_spec)
-
+            np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
         '''
         plt.figure(figsize=(15,10))
         plt.hist(vals, bins=np.arange(0, 1.01, 0.05))
@@ -198,46 +193,46 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_SPEC', spec)
 
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
-    plt.title("Accuracy of diff EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Accuracy of ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_accuracy_ec")
+    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_accuracy_ec")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, sens)
-    plt.title("Sensitivity of diff EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Sensitivity of ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Sensitivity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_sensitivity_ec")
+    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_sensitivity_ec")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, spec)
-    plt.title("Specificity of diff EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Specificity of ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Specificity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_specificity_ec")
+    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_specificity_ec")
     plt.clf()
 
 
 def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_complete_samples_EO_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_complete_samples_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
     if(batch_sz != 15):
@@ -373,59 +368,55 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = TN/N
         spec.append(specificity)
 
-        if(epoch%100==0):
+        if(epoch%500==0):
             out_accs = np.array(accs)
-            out_sens = np.array(sens)
-            out_spec = np.array(spec)
 
-            np.save('/home/ggreiner/MENTAL/diff_MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
-            np.save('/home/ggreiner/MENTAL/diff_MENTAL_EO_SENS_epoch_'+str(epoch), out_sens)
-            np.save('/home/ggreiner/MENTAL/diff_MENTAL_EO_SPEC_epoch_'+str(epoch), out_spec)
+            np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
             
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/diff_MENTAL_EO_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/diff_MENTAL_EO_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/diff_MENTAL_EO_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EO_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EO_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EO_SPEC', spec)
 
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
-    plt.title("Accuracy of diff EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Accuracy of ADHD EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_accuracy_eo")
+    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_accuracy_eo")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, sens)
-    plt.title("Sensitivity of diff EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Sensitivity of ADHD EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Sensitivity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_sensitivity_eo")
+    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_sensitivity_eo")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, spec)
-    plt.title("Specificity of diff EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Specificity of ADHD EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Specificity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_specificity_eo")
+    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_specificity_eo")
     plt.clf()
 
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = BSplitDataset('normalized_small_complete_samples_EC_EO_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = BSplitDataset('normalized_small_complete_samples_EC_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
     if(batch_sz != 15):
@@ -562,51 +553,47 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
         if(epoch%100==0):
             out_accs = np.array(accs)
-            out_sens = np.array(sens)
-            out_spec = np.array(spec)
 
-            np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_EO_ACCS_epoch_'+str(epoch), out_accs)
-            np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_EO_SENS_epoch_'+str(epoch), out_sens)
-            np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_EO_SPEC_epoch_'+str(epoch), out_spec)
+            np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_EO_ACCS_epoch_'+str(epoch), out_accs)
             
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_EO_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_EO_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/diff_MENTAL_EC_EO_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_EO_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_EO_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_EO_SPEC', spec)
 
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
-    plt.title("Accuracy of diff EC+EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Accuracy of ADHD EC+EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_accuracy_ec_eo")
+    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_accuracy_ec_eo")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, sens)
-    plt.title("Sensitivity of diff EC+EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Sensitivity of ADHD EC+EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Sensitivity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_sensitivity_ec_eo")
+    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_sensitivity_ec_eo")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, spec)
-    plt.title("Specificity of diff EC+EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Specificity of ADHD EC+EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Specificity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("diff_mental_epoch1000_b15_w6_l3_specificity_ec_eo")
+    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_specificity_ec_eo")
     plt.clf()
 
 
