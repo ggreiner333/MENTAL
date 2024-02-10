@@ -154,10 +154,10 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
         accs.append(acc)
         print(acc)
 
-        sensitivity = TP/P
+        sensitivity = 1 if(P == 0) else TP/P
         sens.append(sensitivity)
 
-        specificity = TN/N
+        specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
         if(epoch%500==0):
@@ -362,10 +362,10 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
         accs.append(acc)
         print(acc)
 
-        sensitivity = TP/P
+        sensitivity = 1 if(P == 0) else TP/P
         sens.append(sensitivity)
 
-        specificity = TN/N
+        specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
         if(epoch%500==0):
@@ -545,10 +545,10 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         accs.append(acc)
         print(acc)
 
-        sensitivity = TP/P
+        sensitivity = 1 if(P == 0) else TP/P
         sens.append(sensitivity)
 
-        specificity = TN/N
+        specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
         if(epoch%100==0):
