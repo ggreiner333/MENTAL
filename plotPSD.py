@@ -179,7 +179,7 @@ def plot_test():
 bands = ['Delta', 'Theta', 'Alpha', 'Beta', 'Gamma']
 
 
-def mdd_healthy_means_multiple(band, num_disorders, closed):
+def mdd_healthy_means_multiple(band, num_disorders, closed, outliers):
     if(closed):
         all_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
     else:
@@ -194,40 +194,60 @@ def mdd_healthy_means_multiple(band, num_disorders, closed):
     for i in range(0,num_disorders):
         all.append(np.zeros(26))
 
+    ct = 0
     for ind in all_psds:
+        disorder = int(ind[0])-1
         psds = ind[1:]
         total = np.zeros(26)
         for i in range(0,60):
             res = []
             for j in range(0,26):
-                res.append(psds[(i*130)+j*5+index])
+                val = psds[(i*130)+j*5+index]
+                if(outliers):
+                    res.append(val)
+                elif(disorder==0 and j==14 and index>=3):
+                    res.append(val if(val < 20) else 0)
+                else:
+                    res.append(val if(val <= 1000) else 0)
             res = np.array(res)
             total = total+res
         total = total/60
 
-        disorder = int(ind[0])-1
         if(disorder < num_disorders and disorder >= 0):
             counts[disorder] += 1
             all[disorder] = all[disorder] + total
 
-
+    mx = 0
+    mn = 200
     for i in range(0, num_disorders):
-        plt.plot(all[i]/counts[i], label=diagnoses[i+1])
-        plt.scatter(np.arange(0,26,1), all[i]/counts[i], s=10)
+        all[i] = all[i]/counts[i]
+        if(np.max(all[i]) > mx):
+            mx = np.max(all[i])
+        if(np.min(all[i]) < mn):
+            mn = np.min(all[i])
+    
+    for i in range(0, num_disorders):
+        vals = []
+        for item in all[i]:
+            vals.append((item-mn)/(mx-mn))
+        vals = np.array(vals)
+        plt.plot(vals, label=diagnoses[i+1])
+        plt.scatter(np.arange(0,26,1), vals, s=10)
 
     plt.title(band+" PSD " + ("EC" if closed else "EO"), fontsize=18)
     plt.xticks(ticks=np.arange(0,26,1), labels=all_included)
-    plt.legend(loc='upper right')
+    plt.legend(bbox_to_anchor=(1.0, 1.0), loc='upper left')
     plt.xlabel("Channel", fontsize=14)
     plt.ylabel("PSD", fontsize=14)
+    plt.tight_layout()
     plt.show()
 
-for b in bands:
-    mdd_healthy_means_multiple(b, 8, closed=True)
+#for b in bands:
+#    mdd_healthy_means_multiple(b, 3, closed=True, outliers=False)
 
 
 
-def mdd_healthy_means(band, d1, d2, closed):
+def mdd_healthy_means(band, d1, d2, closed, outliers):
     if(closed):
         all_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
     else:
@@ -244,12 +264,19 @@ def mdd_healthy_means(band, d1, d2, closed):
     total_d = np.zeros(26)
 
     for ind in all_psds:
+        disorder = int(ind[0])-1
         psds = ind[1:]
         total = np.zeros(26)
         for i in range(0,60):
             res = []
             for j in range(0,26):
-                res.append(psds[(i*130)+j*5+index])
+                val = psds[(i*130)+j*5+index]
+                if(outliers):
+                    res.append(val)
+                elif(disorder==0 and (j==10 or j==14) and (index==4)):
+                    res.append(val if(val < 20) else 0)
+                else:
+                    res.append(val if(val <= 1000) else 0)
             res = np.array(res)
             total = total+res
         total = total/60
@@ -257,15 +284,15 @@ def mdd_healthy_means(band, d1, d2, closed):
         if(ind[0] == d1_idx):
             total_ct += 1
             total_nd = total_nd + total
-        elif(ind[0]==d2_idx):
+        elif(ind[0] == d2_idx):
             total_dct +=1
             total_d = total_d + total
 
     total_nd = total_nd/total_ct
     total_d = total_d/total_dct
 
-    dc = 'blue'
-    nc = 'red'
+    dc = 'orange'
+    nc = 'green'
 
     plt.plot(total_nd, label=d1, c=nc)
     plt.plot(total_d, label=d2, c=dc)
@@ -273,13 +300,14 @@ def mdd_healthy_means(band, d1, d2, closed):
     plt.scatter(np.arange(0,26,1), total_d, s=10, color=dc)
     plt.xticks(ticks=np.arange(0,26,1), labels=all_included)
     plt.title(band+" PSD " + ("EC" if closed else "EO"), fontsize=18)
-    plt.legend(loc='upper right')
+    plt.legend(bbox_to_anchor=(1.0, 1.0), loc='upper left')
     plt.xlabel("Channel", fontsize=16)
     plt.ylabel("PSD", fontsize=16)
+    plt.tight_layout()
     plt.show()
 
 #for b in bands:
-#    mdd_healthy_means(b, 'HEALTHY', 'MDD', closed=True)
+#    mdd_healthy_means(b, 'HEALTHY', 'MDD', closed=False, outliers=False)
 
 
 
@@ -387,7 +415,7 @@ def mdd_healthy_ranges(band, d1, d2, closed):
 ##################################################################################################
 
 
-def regions_means_multiple(band, num_disorders, closed):
+def regions_means_multiple(band, num_disorders, closed, outliers):
     if(closed):
         all_psds = np.load('disorders_EC_psds.npy', allow_pickle=True)
     else:
@@ -404,11 +432,18 @@ def regions_means_multiple(band, num_disorders, closed):
 
     for ind in all_psds:
         psds = ind[1:]
+        disorder = int(ind[0])-1
         total = np.zeros(26)
         for i in range(0,60):
             res = []
             for j in range(0,26):
-                res.append(psds[(i*130)+j*5+index])
+                val = psds[(i*130)+j*5+index]
+                if(outliers):
+                    res.append(val)
+                elif(disorder==0 and (j==10 or j==14) and (index==4)):
+                    res.append(val if(val < 20) else 0)
+                else:
+                    res.append(val if(val <= 1000) else 0)
             res = np.array(res)
             total = total+res
         total = total/60
@@ -418,7 +453,7 @@ def regions_means_multiple(band, num_disorders, closed):
             counts[disorder] += 1
             all[disorder] = all[disorder] + total
 
-
+    regions_means = []
     for i in range(0, num_disorders):
         all[i] = all[i]/counts[i]
         F = np.array([all[i][k] for k in frontal])
@@ -427,20 +462,38 @@ def regions_means_multiple(band, num_disorders, closed):
         P = np.array([all[i][k] for k in parietal])
         O = np.array([all[i][k] for k in occupital])
 
-        vals = np.array([np.mean(F), np.mean(T), np.mean(C), np.mean(P), np.mean(O)])
+        regions_means.append([np.mean(F), np.mean(T), np.mean(C), np.mean(P), np.mean(O)])
+
+    mx = 0
+    mn = 200
+
+    for r in regions_means:
+        if(max(r) > mx):
+            mx = max(r)
+        if(min(r) < mn):
+            mn = min(r)
+
+    i=0
+    for r in regions_means:
+        vals = []
+        for item in r:
+            vals.append((item-mn)/(mx-mn))
+        vals = np.array(vals)
         plt.plot(vals, label=diagnoses[i+1])
         plt.scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
-
+        i+=1
 
     plt.title(band+" PSD " + ("EC" if closed else "EO"), fontsize=18)
     plt.xticks(ticks=np.arange(0,5,1), labels=['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'])
-    plt.legend(loc='upper right')
-    plt.xlabel("Channel", fontsize=14)
+    plt.yticks(ticks=np.arange(0,1.01,.1))
+    plt.legend(bbox_to_anchor=(1.0, 1.0), loc='upper left')
+    plt.xlabel("Region", fontsize=14)
     plt.ylabel("PSD", fontsize=14)
+    plt.tight_layout()
     plt.show()
 
 #for b in bands:
-#    regions_means_multiple(b, 8, closed=True)
+#   regions_means_multiple(b, 7, closed=False, outliers=False)
 
 
 ##################################################################################################
@@ -540,8 +593,8 @@ def normal_vs_mental_eo():
     plt.savefig("mental_vs_eeg_eo")
     plt.clf()
 
-def normal_vs_mental_eo():
-    accs_normal = np.load('EO_ONLY_ACCS.npy', allow_pickle=True)
+def normal_vs_mental_ec_eo():
+    accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EO_EC_ACCS.npy", allow_pickle=True)
     accs_mental = np.load('diff_MENTAL_EC_EO_ACCS.npy', allow_pickle=True)
 
     labels = np.arange(0, 1000, 1)
@@ -557,4 +610,62 @@ def normal_vs_mental_eo():
 
     plt.savefig("mental_vs_eeg_ec_eo")
     plt.clf()
-    
+
+def normal_vs_adhd_mental_ec():
+    accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EC_ONLY_ADHD_ACCS.npy", allow_pickle=True)
+    accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EC_ACCS.npy", allow_pickle=True)
+
+    labels = np.arange(0, 1000, 1)
+    plt.figure(figsize=(10,5))
+    plt.plot(accs_mental, label="MENTAL")
+    plt.plot(accs_normal, label="EEG Only")
+    plt.title("Accuracy of ADHD MENTAL Compared to EEG Only (EC)", fontsize=16)
+    plt.ylabel("Accuracy", fontsize=12)
+    plt.xlabel("Epoch", fontsize=12)
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+    plt.xticks(ticks=np.arange(0,1001,100))
+    plt.legend(loc="upper right")
+
+    plt.savefig("adhd_mental_vs_eeg_ec")
+    plt.clf()
+
+def normal_vs_adhd_mental_eo():
+    accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EO_ONLY_ADHD_ACCS.npy", allow_pickle=True)
+    accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EO_ACCS.npy", allow_pickle=True)
+
+    labels = np.arange(0, 1000, 1)
+    plt.figure(figsize=(10,5))
+    plt.plot(accs_mental, label="MENTAL")
+    plt.plot(accs_normal, label="EEG Only")
+    plt.title("Accuracy of ADHD MENTAL Compared to EEG Only (EO)", fontsize=16)
+    plt.ylabel("Accuracy", fontsize=12)
+    plt.xlabel("Epoch", fontsize=12)
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+    plt.xticks(ticks=np.arange(0,1001,100))
+    plt.legend(loc="upper right")
+
+    plt.savefig("adhd_mental_vs_eeg_eo")
+    plt.clf()
+
+def normal_vs_adhd_mental_ec_eo():
+    accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EO_EC_ADHD_ACCS.npy", allow_pickle=True)
+    accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EC_EO_ACCS.npy", allow_pickle=True)
+
+    labels = np.arange(0, 1000, 1)
+    plt.figure(figsize=(10,5))
+    plt.plot(accs_mental, label="MENTAL")
+    plt.plot(accs_normal, label="EEG Only")
+    plt.title("Accuracy of ADHD MENTAL Compared to EEG Only (EC+EO)", fontsize=16)
+    plt.ylabel("Accuracy", fontsize=12)
+    plt.xlabel("Epoch", fontsize=12)
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+    plt.xticks(ticks=np.arange(0,1001,100))
+    plt.legend(loc="upper right")
+
+    plt.savefig("adhd_mental_vs_eeg_ec_eo")
+    plt.clf() 
+
+#normal_vs_adhd_mental_ec()
+#normal_vs_adhd_mental_eo()
+#normal_vs_adhd_mental_ec_eo()
+#normal_vs_mental_ec_eo()

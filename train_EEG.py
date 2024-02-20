@@ -72,7 +72,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
-            loss = torch.nn.MSELoss()
+            loss = torch.nn.BCELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -160,10 +160,10 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
-        if(epoch%500==0):
+        if(epoch%100==0):
             out_accs = np.array(accs)
 
-            np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
         '''
         plt.figure(figsize=(15,10))
         plt.hist(vals, bins=np.arange(0, 1.01, 0.05))
@@ -193,40 +193,40 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EC_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EC_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EC_SPEC', spec)
 
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
-    plt.title("Accuracy of ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Accuracy of BCE ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_accuracy_ec")
+    plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_accuracy_ec")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, sens)
-    plt.title("Sensitivity of ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Sensitivity of BCE ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Sensitivity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_sensitivity_ec")
+    plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_sensitivity_ec")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, spec)
-    plt.title("Specificity of ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Specificity of BCE ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Specificity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_specificity_ec")
+    plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_specificity_ec")
     plt.clf()
 
 
@@ -280,7 +280,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
-            loss = torch.nn.MSELoss()
+            loss = torch.nn.BCELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -368,49 +368,49 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
-        if(epoch%500==0):
+        if(epoch%100==0):
             out_accs = np.array(accs)
 
-            np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
             
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EO_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EO_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EO_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EO_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EO_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EO_SPEC', spec)
 
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
-    plt.title("Accuracy of ADHD EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Accuracy of BCE ADHD EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_accuracy_eo")
+    plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_accuracy_eo")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, sens)
-    plt.title("Sensitivity of ADHD EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Sensitivity of BCE ADHD EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Sensitivity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_sensitivity_eo")
+    plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_sensitivity_eo")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, spec)
-    plt.title("Specificity of ADHD EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
+    plt.title("Specificity of BCE ADHD EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Specificity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_specificity_eo")
+    plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_specificity_eo")
     plt.clf()
 
 
