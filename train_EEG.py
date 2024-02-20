@@ -40,7 +40,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
     my_mental = MENTAL(60, 30, 1, batch_sz)
 
 
-    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
+    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate)
 
     torch.autograd.set_detect_anomaly(True)
 
@@ -248,7 +248,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
     my_mental = MENTAL(60, 30, 1, batch_sz)
 
 
-    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
+    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate)
 
     torch.autograd.set_detect_anomaly(True)
 
