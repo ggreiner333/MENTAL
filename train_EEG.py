@@ -69,7 +69,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
             
-            h_1 = torch.zeros([2, 15, 30], dtype=torch.float32)
+            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
 
             for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h_1)
@@ -103,7 +103,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
             
-            h_1 = torch.zeros([2, 15, 30], dtype=torch.float32)
+            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
             
             for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h_1)
@@ -191,7 +191,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
         plt.close('all')
         '''
 
-            
+    """
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
@@ -231,6 +231,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
     plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_specificity_ec")
     plt.clf()
+    """
 
 
 def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
