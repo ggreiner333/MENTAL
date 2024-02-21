@@ -24,13 +24,16 @@ from Model.mental import MENTAL_EEG
 
 def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_complete_samples_EC_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_complete_samples_EC_health_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
+    splits = [40,10,3]
+    """
     if(batch_sz != 15):
         splits = [560, 140, 5]
     else:
         splits = [555, 150]
+    """
 
     res = data.random_split(main_dataset, splits)
 
@@ -601,7 +604,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 # running code
 
 epoch = [1000]
-batches = [15]
+batches = [1]
 
 learn = 1e-3
 weight_decay = 1e-6
