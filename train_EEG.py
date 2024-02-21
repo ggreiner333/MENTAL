@@ -427,7 +427,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
     main_dataset = BSplitDataset('normalized_small_complete_samples_EC_EO_health_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [40,10,2]
+    splits = [40,10,3]
     """
     if(batch_sz != 15):
         splits = [560, 140, 4]
