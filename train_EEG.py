@@ -166,7 +166,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
         if(epoch%100==0):
             out_accs = np.array(accs)
 
-            np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/BCE_TEST_MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
         '''
         plt.figure(figsize=(15,10))
         plt.hist(vals, bins=np.arange(0, 1.01, 0.05))
@@ -604,7 +604,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [20]
+epoch = [1000]
 batches = [10]
 
 learn = 1e-3
