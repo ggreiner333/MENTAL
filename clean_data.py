@@ -137,7 +137,45 @@ def clean_individuals_ADHD(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     #print(final)
     np.savetxt(os.path.join(path,'cleaned_participants_adhd.csv'), final, delimiter=',', fmt="%s")
 
-clean_individuals_ADHD()
+
+def clean_individuals_Health_Non(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
+
+    # Load Demographic and Survey Data
+
+    inds = np.loadtxt(os.path.join(path, "participants.csv"), delimiter=",", dtype=str)
+
+    samples = []
+
+    cols = []
+    for name in inds[0]:
+        cols.append(name)
+    samples.append(cols)
+
+    count = 0
+
+    for i in inds[1:]:
+        id = i[0]
+        disorders = (i[2].upper()).split("/")
+    
+        found = False
+        missing = False
+        for d in disorders:
+            diag = diagnoses.index(d.strip())
+            if(diag == 1 or (diag == 3 and count<47)):
+                res = []
+                for info in i:
+                    res.append(info)
+                res[2] = diag
+                samples.append(res)
+                found = True
+                if(diag == 3):
+                    count+=1
+        
+    final = np.asarray(samples)
+    #print(final)
+    np.savetxt(os.path.join(path,'cleaned_participants_health_adhd.csv'), final, delimiter=',', fmt="%s")
+
+clean_individuals_Health_Non()
 
 def generate_samples(ptc, psd, out):
     survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_depression.csv"), delimiter=",", dtype=str)
@@ -192,7 +230,7 @@ def generate_samples(ptc, psd, out):
 #generate_samples(ptc_path, psd_path, out_path)
 
 def separate_missing_samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_adhd.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_adhd.csv"), delimiter=",", dtype=str)
     
     missing_samples = []
     complete_samples = []
@@ -234,11 +272,11 @@ def separate_missing_samples(ptc, psd, out):
                 missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples)
-    np.save(os.path.join(out,'small_complete_samples_EC_adhd'), all_complete_samples)
+    np.save(os.path.join(out,'small_complete_samples_EC_health_adhd'), all_complete_samples)
 
     print(complete_samples)
     all_missing_samples = np.array(missing_samples)
-    np.save(os.path.join(out,'small_missing_samples_EC_adhd'), all_missing_samples)
+    np.save(os.path.join(out,'small_missing_samples_EC_health_adhd'), all_missing_samples)
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
@@ -246,7 +284,7 @@ def separate_missing_samples(ptc, psd, out):
 
 
 def separate_missing_samples_EO(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_adhd.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_adhd.csv"), delimiter=",", dtype=str)
     
     missing_samples = []
     complete_samples = []
@@ -288,11 +326,11 @@ def separate_missing_samples_EO(ptc, psd, out):
                 missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples)
-    np.save(os.path.join(out,'small_complete_samples_EO_adhd'), all_complete_samples)
+    np.save(os.path.join(out,'small_complete_samples_EO_health_adhd'), all_complete_samples)
 
     print(complete_samples)
     all_missing_samples = np.array(missing_samples)
-    np.save(os.path.join(out,'small_missing_samples_EO_adhd'), all_missing_samples)
+    np.save(os.path.join(out,'small_missing_samples_EO_health_adhd'), all_missing_samples)
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
@@ -300,7 +338,7 @@ def separate_missing_samples_EO(ptc, psd, out):
 
 
 def separate_missing_samples_EO_EC(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_adhd.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_adhd.csv"), delimiter=",", dtype=str)
     
     missing_samples = []
     complete_samples = []
@@ -353,11 +391,11 @@ def separate_missing_samples_EO_EC(ptc, psd, out):
             
     all_complete_samples = np.array(complete_samples)
     print(all_complete_samples.shape)
-    np.save(os.path.join(out,'small_complete_samples_EC_EO_adhd'), all_complete_samples)
+    np.save(os.path.join(out,'small_complete_samples_EC_EO_health_adhd'), all_complete_samples)
 
     print(complete_samples)
     all_missing_samples = np.array(missing_samples)
-    np.save(os.path.join(out,'small_missing_samples_EC_EO_adhd'), all_missing_samples)
+    np.save(os.path.join(out,'small_missing_samples_EC_EO_health_adhd'), all_missing_samples)
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
