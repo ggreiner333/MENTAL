@@ -236,13 +236,16 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
 def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_complete_samples_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_complete_samples_EO_health_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
+    splits = [40,10,3]
+    """
     if(batch_sz != 15):
         splits = [560, 140, 5]
     else:
         splits = [555, 150]
+    """
 
     res = data.random_split(main_dataset, splits)
 
@@ -278,7 +281,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
             
-            h_1 = torch.zeros([2, 15, 30], dtype=torch.float32)
+            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
 
             for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h_1)
@@ -312,7 +315,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
             
-            h_1 = torch.zeros([2, 15, 30], dtype=torch.float32)
+            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
             
             for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h_1)
@@ -375,8 +378,8 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
         if(epoch%100==0):
             out_accs = np.array(accs)
 
-            np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
-            
+            np.save('/home/ggreiner/MENTAL/BCE_TEST_MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
+    """    
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
@@ -416,17 +419,21 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
     plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_specificity_eo")
     plt.clf()
+    """
 
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = BSplitDataset('normalized_small_complete_samples_EC_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = BSplitDataset('normalized_small_complete_samples_EC_EO_health_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
+    splits = [40,10,2]
+    """
     if(batch_sz != 15):
         splits = [560, 140, 4]
     else:
         splits = [540, 150, 14]
+    """
 
     res = data.random_split(main_dataset, splits)
 
@@ -461,7 +468,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
 
-            h_1 = torch.zeros([2, 15, 30], dtype=torch.float32)
+            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
 
             for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h_1)
@@ -495,7 +502,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
             
-            h_1 = torch.zeros([2, 15, 30], dtype=torch.float32)
+            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
             
             for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h_1)
@@ -558,8 +565,8 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         if(epoch%100==0):
             out_accs = np.array(accs)
 
-            np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_EO_ACCS_epoch_'+str(epoch), out_accs)
-            
+            np.save('/home/ggreiner/MENTAL/ADHD_TEST_MENTAL_EC_EO_ACCS_epoch_'+str(epoch), out_accs)
+    """     
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
@@ -599,6 +606,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
     plt.savefig("adhd_mental_epoch1000_b15_w6_l3_specificity_ec_eo")
     plt.clf()
+    """
 
 
 
@@ -612,6 +620,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_EC(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EO(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="epoch1000_b15_w6_l3")
         
