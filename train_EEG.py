@@ -603,7 +603,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [1000]
+epoch = [20]
 batches = [1]
 
 learn = 1e-3
