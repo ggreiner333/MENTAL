@@ -44,9 +44,9 @@ class AttentionLayer(nn.Module):
         k_res = self.W_k(k)
         v_res = self.W_v(v)
 
-        #print("Q size: " + str(q_res.size()))
-        #print("K size: " + str(k_res.size()))
-        #print("V size: " + str(v_res.size()))
+        print("Q size: " + str(q_res.size()))
+        print("K size: " + str(k_res.size()))
+        print("V size: " + str(v_res.size()))
 
         k_T = k_res.transpose(1,2)
 
@@ -62,7 +62,7 @@ class AttentionLayer(nn.Module):
         result = self.fc(out)
 
         reshaped = torch.reshape(result, [self.batch,60])
-        #print(reshaped.size())
+        print(attn_weights.size())
 
         return reshaped, attn_weights
 
