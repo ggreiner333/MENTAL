@@ -483,17 +483,17 @@ def regions_means_multiple(band, num_disorders, closed, outliers):
         plt.scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
         i+=1
 
-    plt.title(band+" PSD " + ("EC" if closed else "EO"), fontsize=18)
+    plt.title("Mean " +band+" PSD " + ("(EC)" if closed else "(EO)"), fontsize=18)
     plt.xticks(ticks=np.arange(0,5,1), labels=['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'])
     plt.yticks(ticks=np.arange(0,1.01,.1))
     plt.legend(bbox_to_anchor=(1.0, 1.0), loc='upper left')
     plt.xlabel("Region", fontsize=14)
-    plt.ylabel("PSD", fontsize=14)
+    plt.ylabel("PSD (scaled)", fontsize=14)
     plt.tight_layout()
     plt.show()
 
-#for b in bands:
-#   regions_means_multiple(b, 7, closed=False, outliers=False)
+for b in bands:
+   regions_means_multiple(b, 7, closed=False, outliers=False)
 
 
 ##################################################################################################

@@ -28,7 +28,7 @@ out_path = 'TDBRAIN'
 def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     # Load Data
-    inds = np.load(os.path.join(path, 'small_complete_samples_EC_health_adhd.npy'))
+    inds = np.load(os.path.join(path, 'small_complete_samples_EC_health_mdd.npy'))
 
     normalized = np.zeros_like(inds)
 
@@ -43,12 +43,12 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     print(normalized.shape)
 
-    np.save(file=os.path.join(path, 'normalized_small_complete_samples_EC_health_adhd.npy'), arr=normalized)
+    np.save(file=os.path.join(path, 'normalized_small_complete_samples_EC_health_mdd.npy'), arr=normalized)
 
 def normalize_data_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     # Load Data
-    inds = np.load(os.path.join(path, 'small_complete_samples_EO_health_adhd.npy'))
+    inds = np.load(os.path.join(path, 'small_complete_samples_EO_health_mdd.npy'))
 
     normalized = np.zeros_like(inds)
 
@@ -63,12 +63,12 @@ def normalize_data_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     print(normalized.shape)
 
-    np.save(file=os.path.join(path, 'normalized_small_complete_samples_EO_health_adhd.npy'), arr=normalized)
+    np.save(file=os.path.join(path, 'normalized_small_complete_samples_EO_health_mdd.npy'), arr=normalized)
 
 def normalize_data_EC_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     # Load Data
-    inds = np.load(os.path.join(path, 'small_complete_samples_EC_EO_health_adhd.npy'))
+    inds = np.load(os.path.join(path, 'small_complete_samples_EC_EO_health_mdd.npy'))
 
     normalized = np.zeros_like(inds)
 
@@ -83,11 +83,11 @@ def normalize_data_EC_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     print(normalized.shape)
 
-    np.save(file=os.path.join(path, 'normalized_small_complete_samples_EC_EO_health_adhd.npy'), arr=normalized)
+    np.save(file=os.path.join(path, 'normalized_small_complete_samples_EC_EO_health_mdd.npy'), arr=normalized)
 
 
 def test_load(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
-    inds = np.load(os.path.join(path, 'normalized_small_complete_samples_EC_health_adhd.npy'))
+    inds = np.load(os.path.join(path, 'normalized_small_complete_samples_EC_health_mdd.npy'))
     print(inds)
     print(inds.shape)
 
