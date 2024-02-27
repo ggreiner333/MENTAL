@@ -168,7 +168,7 @@ def clean_individuals_Health_Non(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
                 res[2] = diag
                 samples.append(res)
                 found = True
-                if(diag == 3):
+                if(diag == 2):
                     count+=1
         
     final = np.asarray(samples)
