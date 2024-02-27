@@ -24,10 +24,10 @@ from Model.mental import MENTAL_EEG
 
 def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_complete_samples_EC_health_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_complete_samples_EC_health_mdd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [40,10,3]
+    splits = [45,20,2]
     """
     if(batch_sz != 15):
         splits = [560, 140, 5]
@@ -163,10 +163,10 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
-        if(epoch%100==0):
+        if(epoch==999):
             out_accs = np.array(accs)
 
-            np.save('/home/ggreiner/MENTAL/BCE_TEST_MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/MDD_HEALTH_MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
         '''
         plt.figure(figsize=(15,10))
         plt.hist(vals, bins=np.arange(0, 1.01, 0.05))
@@ -236,10 +236,10 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
 def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_complete_samples_EO_health_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_complete_samples_EO_health_mdd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [40,10,3]
+    splits = [45,20,2]
     """
     if(batch_sz != 15):
         splits = [560, 140, 5]
@@ -375,10 +375,10 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
-        if(epoch%100==0):
+        if(epoch==999):
             out_accs = np.array(accs)
 
-            np.save('/home/ggreiner/MENTAL/BCE_TEST_MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/MDD_HEALTH_MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
     """    
     accs = np.array(accs)
     sens = np.array(sens)
@@ -424,10 +424,10 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = BSplitDataset('normalized_small_complete_samples_EC_EO_health_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = BSplitDataset('normalized_small_complete_samples_EC_EO_health_mdd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [40,10,3]
+    splits = [45,20,2]
     """
     if(batch_sz != 15):
         splits = [560, 140, 4]
@@ -562,10 +562,10 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
-        if(epoch%100==0):
+        if(epoch==999):
             out_accs = np.array(accs)
 
-            np.save('/home/ggreiner/MENTAL/ADHD_TEST_MENTAL_EC_EO_ACCS_epoch_'+str(epoch), out_accs)
+            np.save('/home/ggreiner/MENTAL/MDD_HEALTH_MENTAL_EC_EO_ACCS_epoch_'+str(epoch), out_accs)
     """     
     accs = np.array(accs)
     sens = np.array(sens)
@@ -613,13 +613,13 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 # running code
 
 epoch = [1000]
-batches = [10]
+batches = [5]
 
 learn = 1e-3
 weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EC(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="epoch1000_b15_w6_l3")
         
