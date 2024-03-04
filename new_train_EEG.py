@@ -209,7 +209,7 @@ def run_EC():
     # running code
 
     epoch = [1000]
-    batches = [15]
+    batches = [9]
 
     learn = 1e-3
     weight_decay = 1e-6
