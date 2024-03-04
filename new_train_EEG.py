@@ -208,7 +208,7 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
 def run_EC():
     # running code
 
-    epoch = [1000]
+    epoch = [500]
     batches = [5]
 
     learn = 1e-3
@@ -219,7 +219,7 @@ def run_EC():
             run_train_ec(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="ec_epoch1000_b15_w6_l3")
 
-run_EC()
+#run_EC()
 
 def run_train_eo(learn_rate, wd, batch_sz, epochs, outfile):
     diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
@@ -229,13 +229,13 @@ def run_train_eo(learn_rate, wd, batch_sz, epochs, outfile):
                 'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
 
 
-    main_dataset = EEGDataset('only_EO_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = EEGDataset('only_EO_adhd_healthy_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = []
-    if(batch_sz == 15):
-        splits = [720, 180, 11]
-    else:
-        splits = [555, 150]
+    splits = [60, 30]
+    #if(batch_sz == 15):
+    #    splits = [720, 180, 11]
+    #else:
+    #    splits = [555, 150]
 
     res = data.random_split(main_dataset, splits)
 
@@ -372,47 +372,47 @@ def run_train_eo(learn_rate, wd, batch_sz, epochs, outfile):
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/EO_ONLY_ADHD_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/EO_ONLY_ADHD_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/EO_ONLY_ADHD_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/EO_ONLY_ADHD_HEALTHY_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/EO_ONLY_ADHD_HEALTHY_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/EO_ONLY_ADHD_HEALTHY_SPEC', spec)
 
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
-    plt.title("EO Accuracy of ADHD Model for " + str(epoch) + " epochs, batch size " + str(batch_sz))
+    plt.title("EO Accuracy of ADHD v HEALTHY Model for " + str(epoch) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Accuracy")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("eo_adhd_epoch1000_b15_w6_l3_accuracy")
+    plt.savefig("eo_adhd_healthy_epoch1000_b15_w6_l3_accuracy")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, sens)
-    plt.title("EO Sensitivity of ADHD Model for " + str(epoch) + " epochs, batch size " + str(batch_sz))
+    plt.title("EO Sensitivity of ADHD v HEALTHY Model for " + str(epoch) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Sensitivity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("eo_adhd_epoch1000_b15_w6_l3_sensitivity")
+    plt.savefig("eo_adhd_healthy_epoch1000_b15_w6_l3_sensitivity")
     plt.clf()
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, spec)
-    plt.title("EO Specificity of ADHD Model for " + str(epoch) + " epochs, batch size " + str(batch_sz))
+    plt.title("EO Specificity of ADHD v HEALTHY Model for " + str(epoch) + " epochs, batch size " + str(batch_sz))
     plt.ylabel("Specificity")
     plt.xlabel("Epoch")
     plt.yticks(ticks=np.arange(0,1.01,0.1))
 
-    plt.savefig("eo_adhd_epoch1000_b15_w6_l3_specificity")
+    plt.savefig("eo_adhd_healthy_epoch1000_b15_w6_l3_specificity")
     plt.clf()
 
 def run_EO():
     # running code
 
-    epoch = [1000]
-    batches = [15]
+    epoch = [500]
+    batches = [5]
 
     learn = 1e-3
     weight_decay = 1e-6
@@ -422,7 +422,7 @@ def run_EO():
             run_train_eo(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="eo_epoch1000_b15_w6_l3")
 
-#run_EO()
+run_EO()
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
     diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
