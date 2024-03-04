@@ -92,8 +92,7 @@ def test_load(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     dcount = 0
     for i in inds:
         v = int(i[1])
-        print(i)
-        if(v == 0):
+        if(v == 1):
             hcount+=1
         else:
             dcount+=1
