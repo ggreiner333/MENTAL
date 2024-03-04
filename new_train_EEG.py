@@ -420,7 +420,7 @@ def run_EO():
             run_train_eo(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="eo_epoch1000_b15_w6_l3")
 
-run_EO()
+#run_EO()
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
     diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
@@ -567,7 +567,15 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
-       
+        if(epoch==100):
+            c_accs = np.array(accs)
+            c_sens = np.array(sens)
+            c_spec = np.array(spec)
+
+            np.save('/home/ggreiner/MENTAL/EO_EC_ADHD_HEALTHY_ACCS_e100', c_accs)
+            np.save('/home/ggreiner/MENTAL/EO_EC_ADHD_HEALTHY_SENS_e100', c_sens)
+            np.save('/home/ggreiner/MENTAL/EO_EC_ADHD_HEALTHY_SPEC_e100', c_spec)
+            
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
@@ -622,4 +630,4 @@ def run_EC_EO():
             run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="ec_eo_epoch1000_b15_w6_l3")
             
-#run_EC_EO()
+run_EC_EO()
