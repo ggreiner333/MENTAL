@@ -20,7 +20,7 @@ participants_path = 'TDBRAIN'
 out_path = 'TDBRAIN'
 
 def generate_EC_Samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_mdd.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_adhd.csv"), delimiter=",", dtype=str)
 
     complete_samples = []
     seen = []
@@ -60,7 +60,7 @@ def generate_EC_Samples(ptc, psd, out):
     print("Complete samples: " + str(all_complete_samples.shape[0]))
 
 def generate_EO_Samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_mdd.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_adhd.csv"), delimiter=",", dtype=str)
 
     complete_samples = []
     seen = []
@@ -101,7 +101,7 @@ def generate_EO_Samples(ptc, psd, out):
     print("Complete samples: " + str(all_complete_samples.shape[0]))
 
 def generate_EC_EO_Samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_mdd.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_adhd.csv"), delimiter=",", dtype=str)
 
     complete_samples = []
     seen = []
