@@ -29,7 +29,7 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
                 'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
 
 
-    main_dataset = EEGDataset('only_EC_adhd_healthy_samples', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = EEGDataset('only_EC_adhd_healthy_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = [63, 27]
     #if(batch_sz == 15):
