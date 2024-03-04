@@ -191,7 +191,7 @@ class EEGDataset(data.Dataset):
 
         indication = individual[0]
         output = torch.zeros([1], dtype=torch.float32)
-        if(int(indication) == 3):
+        if(int(indication) == 2):
             output[0] = 1
         else:
             output[0] = 0
