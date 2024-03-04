@@ -161,7 +161,7 @@ def clean_individuals_Health_Non(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
         missing = False
         for d in disorders:
             diag = diagnoses.index(d.strip())
-            if(diag == 1 or (diag == 2 and count<47)):
+            if(diag == 1 or (diag == 2 and count < 80)):
                 res = []
                 for info in i:
                     res.append(info)
@@ -229,7 +229,7 @@ def generate_samples(ptc, psd, out):
 
 #generate_samples(ptc_path, psd_path, out_path)
 
-def separate_missing_samples(ptc, psd, out):
+def separate_missing_samples_EC(ptc, psd, out):
     survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_mdd.csv"), delimiter=",", dtype=str)
     
     missing_samples = []
@@ -429,7 +429,7 @@ def find_min_max_gender():
     print("Min Male: " + str(minM) + ", Max Male: " + str(max_Male))
     print("Min Female: " + str(minF) + ", Max Female: " + str(max_Female))
 
-separate_missing_samples(ptc_path, psd_path, out_path)
+separate_missing_samples_EC(ptc_path, psd_path, out_path)
 separate_missing_samples_EO(ptc_path, psd_path, out_path)
 separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)

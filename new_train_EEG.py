@@ -22,11 +22,6 @@ from Model.mental import MENTAL_EEG
 ##################################################################################################
 
 def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
-    diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
-                'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
-                'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
-                'STROKE', 'TBI', 'ANOREXIA', 'CONVERSION DX', 'DPS', 'DYSPRAXIA', 'LYME', 'MSA-C', 
-                'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
 
 
     main_dataset = EEGDataset('only_EC_mdd_healthy_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
@@ -75,7 +70,7 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, h_1)
                 h = h_res
 
-            loss = torch.nn.MSELoss()
+            loss = torch.nn.BCELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -208,7 +203,7 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
 def run_EC():
     # running code
 
-    epoch = [500]
+    epoch = [1000]
     batches = [5]
 
     learn = 1e-3
@@ -222,12 +217,6 @@ def run_EC():
 #run_EC()
 
 def run_train_eo(learn_rate, wd, batch_sz, epochs, outfile):
-    diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
-                'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
-                'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
-                'STROKE', 'TBI', 'ANOREXIA', 'CONVERSION DX', 'DPS', 'DYSPRAXIA', 'LYME', 'MSA-C', 
-                'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
-
 
     main_dataset = EEGDataset('only_EO_mdd_healthy_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
@@ -276,7 +265,7 @@ def run_train_eo(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, h_1)
                 h = h_res
 
-            loss = torch.nn.MSELoss()
+            loss = torch.nn.BCELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -409,7 +398,7 @@ def run_train_eo(learn_rate, wd, batch_sz, epochs, outfile):
 def run_EO():
     # running code
 
-    epoch = [500]
+    epoch = [1000]
     batches = [5]
 
     learn = 1e-3
@@ -423,12 +412,6 @@ def run_EO():
 #run_EO()
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
-    diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
-                'ANXIETY', 'PAIN', 'CHRONIC PAIN', 'PDD NOS', 'BURNOUT', 'BIPOLAR', 'ASPERGER', 
-                'DEPERSONALIZATION', 'ASD', 'WHIPLASH', 'MIGRAINE', 'EPILEPSY', 'GTS', 'PANIC', 
-                'STROKE', 'TBI', 'ANOREXIA', 'CONVERSION DX', 'DPS', 'DYSPRAXIA', 'LYME', 'MSA-C', 
-                'PTSD', 'TRAUMA', 'TUMOR', 'DYSCALCULIA']
-
 
     main_dataset = EEGBothDataset('only_EC_EO_mdd_healthy_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
@@ -478,7 +461,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, h_1)
                 h = h_res
 
-            loss = torch.nn.MSELoss()
+            loss = torch.nn.BCELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -619,7 +602,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 def run_EC_EO():
     # running code
 
-    epoch = [500]
+    epoch = [1000]
     batches = [5]
 
     learn = 1e-3
