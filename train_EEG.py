@@ -27,7 +27,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
     main_dataset = SplitDataset('normalized_small_complete_samples_EC_health_mdd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [45,20,2]
+    splits = [60,30,6]
     """
     if(batch_sz != 15):
         splits = [560, 140, 5]
@@ -161,45 +161,17 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
         sens.append(sensitivity)
 
         specificity = 1 if(N==0) else TN/N
-        spec.append(specificity)
-
-        if(epoch==999):
-            out_accs = np.array(accs)
-
-            np.save('/home/ggreiner/MENTAL/MDD_HEALTH_MENTAL_EC_ACCS_epoch_'+str(epoch), out_accs)
-        '''
-        plt.figure(figsize=(15,10))
-        plt.hist(vals, bins=np.arange(0, 1.01, 0.05))
-        plt.xticks(np.arange(0, 1.01, 0.05))
-        plt.yticks(np.arange(0,151,5))
-        plt.title("Histogram of Output Values for epoch " + str(epoch))
-        plt.ylabel("Count")
-        plt.xlabel("Output Value")
-        plt.savefig("epoch"+str(epoch)+"_b15_w6_l3_values", pad_inches=0.1)
-
-        print(cvals.__len__()+fvals.__len__())
-
-        plt.figure(figsize=(15,10))
-        plt.hist([cvals, fvals], bins=np.arange(0, 1.01, 0.05), label=['Correct', 'Incorrect'], color=['g', 'r'])
-        plt.xticks(np.arange(0, 1.01, 0.05))
-        plt.yticks(np.arange(0,151,5))
-        plt.title("Histogram of Correct and Incorrect Values for epoch " + str(epoch))
-        plt.ylabel("Count")
-        plt.xlabel("Output Value")
-        plt.savefig("epoch"+str(epoch)+"_b15_w6_l3_accvalues", pad_inches=0.1)
-
-        plt.close('all')
-        '''
-
-    """
+        spec.append(specificity)     
+ 
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EC_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EC_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EC_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_HEALTHY_MDD_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_HEALTHY_MDD_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_HEALTHY_MDD_SPEC', spec)
 
+    """
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
@@ -239,7 +211,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
     main_dataset = SplitDataset('normalized_small_complete_samples_EO_health_mdd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [45,20,2]
+    splits = [60,30,6]
     """
     if(batch_sz != 15):
         splits = [560, 140, 5]
@@ -374,20 +346,16 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
-
-        if(epoch==999):
-            out_accs = np.array(accs)
-
-            np.save('/home/ggreiner/MENTAL/MDD_HEALTH_MENTAL_EO_ACCS_epoch_'+str(epoch), out_accs)
-    """    
+        
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EO_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EO_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/BCE_MENTAL_EO_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EO_HEALTHY_MDD_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EO_HEALTHY_MDD_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EO_HEALTHY_MDD_SPEC', spec)
 
+    """
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
@@ -427,7 +395,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
     main_dataset = BSplitDataset('normalized_small_complete_samples_EC_EO_health_mdd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [45,20,2]
+    splits = [60,30,6]
     """
     if(batch_sz != 15):
         splits = [560, 140, 4]
@@ -474,7 +442,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
-            loss = torch.nn.MSELoss()
+            loss = torch.nn.BCELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -562,19 +530,16 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
-        if(epoch==999):
-            out_accs = np.array(accs)
-
-            np.save('/home/ggreiner/MENTAL/MDD_HEALTH_MENTAL_EC_EO_ACCS_epoch_'+str(epoch), out_accs)
-    """     
+       
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_EO_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_EO_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/ADHD_MENTAL_EC_EO_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_HEALTHY_MDD_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_HEALTHY_MDD_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_HEALTHY_MDD_SPEC', spec)
 
+    """
     labels = np.arange(0, epochs, 1)
 
     plt.figure(figsize=(15,10))
@@ -612,7 +577,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [1000]
+epoch = [500]
 batches = [5]
 
 learn = 1e-3
@@ -620,6 +585,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EC(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="epoch1000_b15_w6_l3")
         
