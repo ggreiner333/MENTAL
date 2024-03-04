@@ -492,8 +492,8 @@ def regions_means_multiple(band, num_disorders, closed, outliers):
     plt.tight_layout()
     plt.show()
 
-for b in bands:
-   regions_means_multiple(b, 7, closed=False, outliers=False)
+#for b in bands:
+#   regions_means_multiple(b, 7, closed=False, outliers=False)
 
 
 ##################################################################################################
@@ -669,3 +669,37 @@ def normal_vs_adhd_mental_ec_eo():
 #normal_vs_adhd_mental_eo()
 #normal_vs_adhd_mental_ec_eo()
 #normal_vs_mental_ec_eo()
+
+def plot_accs():
+    accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MDD_HEALTH_MENTAL_EO_ACCS_epoch_999.npy", allow_pickle=True)
+
+    labels = np.arange(0, 1000, 1)
+
+    plt.figure(figsize=(15,10))
+    plt.plot(labels, accs)
+    plt.title("Accuracy of MDD EC+EO MENTAL for " + str(999+1) + " epochs")
+    plt.ylabel("Accuracy")
+    plt.xlabel("Epoch")
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+
+    plt.savefig("test")
+    plt.show()
+
+#plot_accs()
+
+def plot_accs2():
+    accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\adhd_EC_EO.npy", allow_pickle=True)
+
+    labels = np.arange(0, 901, 1)
+
+    plt.figure(figsize=(15,10))
+    plt.plot(labels, accs)
+    plt.title("Accuracy of ADHD EC MENTAL for " + str(999+1) + " epochs")
+    plt.ylabel("Accuracy")
+    plt.xlabel("Epoch")
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+
+    plt.savefig("test")
+    plt.show()
+
+plot_accs2()

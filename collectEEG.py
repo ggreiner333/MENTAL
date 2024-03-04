@@ -20,7 +20,7 @@ participants_path = 'TDBRAIN'
 out_path = 'TDBRAIN'
 
 def generate_EC_Samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_mdd.csv"), delimiter=",", dtype=str)
 
     complete_samples = []
     seen = []
@@ -54,13 +54,13 @@ def generate_EC_Samples(ptc, psd, out):
             
             
     all_complete_samples = np.array(complete_samples)
-    np.save(os.path.join(out,'only_EC_samples'), all_complete_samples)
+    np.save(os.path.join(out,'only_EC_adhd_healthy_samples'), all_complete_samples)
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
 
 def generate_EO_Samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_mdd.csv"), delimiter=",", dtype=str)
 
     complete_samples = []
     seen = []
@@ -95,13 +95,13 @@ def generate_EO_Samples(ptc, psd, out):
             
             
     all_complete_samples = np.array(complete_samples)
-    np.save(os.path.join(out,'only_EO_samples'), all_complete_samples)
+    np.save(os.path.join(out,'only_EO_adhd_healthy_samples'), all_complete_samples)
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
 
 def generate_EC_EO_Samples(ptc, psd, out):
-    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants.csv"), delimiter=",", dtype=str)
+    survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_health_mdd.csv"), delimiter=",", dtype=str)
 
     complete_samples = []
     seen = []
@@ -145,7 +145,7 @@ def generate_EC_EO_Samples(ptc, psd, out):
             
             
     all_complete_samples = np.array(complete_samples)
-    np.save(os.path.join(out,'only_EC_EO_samples'), all_complete_samples)
+    np.save(os.path.join(out,'only_EC_EO_adhd_healthy_samples'), all_complete_samples)
 
     print("   Total samples: " + str(survey.shape[0]))
     print("Complete samples: " + str(all_complete_samples.shape[0]))
