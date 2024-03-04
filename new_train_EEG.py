@@ -31,7 +31,7 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
 
     main_dataset = EEGDataset('only_EC_adhd_healthy_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = [63, 27]
+    splits = [60, 30]
     #if(batch_sz == 15):
     #    splits = [720, 180, 11]
     #else:
@@ -209,7 +209,7 @@ def run_EC():
     # running code
 
     epoch = [1000]
-    batches = [9]
+    batches = [5]
 
     learn = 1e-3
     weight_decay = 1e-6
