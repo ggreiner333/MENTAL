@@ -87,7 +87,7 @@ def normalize_data_EC_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
 
 def test_load(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
-    inds = np.load(os.path.join(path, 'normalized_small_complete_samples_EC_health_adhd.npy'))
+    inds = np.load(os.path.join(path, 'normalized_small_complete_samples_EC_health_mdd.npy'))
     hcount = 0
     dcount = 0
     for i in inds:
