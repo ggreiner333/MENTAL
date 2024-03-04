@@ -31,7 +31,7 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
 
     main_dataset = EEGDataset('only_EC_adhd_healthy_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = [60, 30]
+    splits = [60, 28]
     #if(batch_sz == 15):
     #    splits = [720, 180, 11]
     #else:
@@ -209,7 +209,7 @@ def run_EC():
     # running code
 
     epoch = [500]
-    batches = [5]
+    batches = [4]
 
     learn = 1e-3
     weight_decay = 1e-6
@@ -219,7 +219,7 @@ def run_EC():
             run_train_ec(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="ec_epoch1000_b15_w6_l3")
 
-#run_EC()
+run_EC()
 
 def run_train_eo(learn_rate, wd, batch_sz, epochs, outfile):
     diagnoses = ['-1', 'HEALTHY', 'MDD', 'ADHD', 'SMC', 'OCD', 'TINNITUS', 'INSOMNIA', 'PARKINSON', 'DYSLEXIA',
@@ -231,7 +231,7 @@ def run_train_eo(learn_rate, wd, batch_sz, epochs, outfile):
 
     main_dataset = EEGDataset('only_EO_adhd_healthy_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = [60, 30]
+    splits = [60, 28]
     #if(batch_sz == 15):
     #    splits = [720, 180, 11]
     #else:
@@ -410,7 +410,7 @@ def run_EO():
     # running code
 
     epoch = [500]
-    batches = [5]
+    batches = [4]
 
     learn = 1e-3
     weight_decay = 1e-6
@@ -432,7 +432,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
     main_dataset = EEGBothDataset('only_EC_EO_adhd_healthy_samples.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = [60, 30]
+    splits = [60, 28]
     #if(batch_sz == 15):
     #    splits = [720, 180, 9]
     #else:
@@ -612,7 +612,7 @@ def run_EC_EO():
     # running code
 
     epoch = [500]
-    batches = [5]
+    batches = [4]
 
     learn = 1e-3
     weight_decay = 1e-6
@@ -622,4 +622,4 @@ def run_EC_EO():
             run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="ec_eo_epoch1000_b15_w6_l3")
             
-run_EC_EO()
+#run_EC_EO()
