@@ -629,5 +629,5 @@ def run_EC_EO():
         for j in range(0, len(batches)):
             run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="ec_eo_epoch1000_b15_w6_l3")
-            
+
 run_EC_EO()
