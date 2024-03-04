@@ -161,7 +161,7 @@ def clean_individuals_Health_Non(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
         missing = False
         for d in disorders:
             diag = diagnoses.index(d.strip())
-            if(diag == 1 or (diag == 3 and count < 80)):
+            if(diag == 1 or (diag == 3 and count < 90)):
                 res = []
                 for info in i:
                     res.append(info)
