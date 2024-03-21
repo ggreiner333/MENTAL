@@ -44,6 +44,7 @@ for epoch in range(epochs):
         kl_loss = torch.sum(1 + torch.log(var.pow(2))-mu.pow(2)+var.pow(2))
 
         loss = loss + kl_loss
+        print(loss)
 
         optimizer.zero_grad()
         loss.backward()
