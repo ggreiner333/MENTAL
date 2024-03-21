@@ -45,6 +45,8 @@ for epoch in range(epochs):
 
         loss = loss + kl_loss
 
+        print(loss)
+
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
