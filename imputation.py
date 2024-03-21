@@ -62,6 +62,7 @@ missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=Fal
 imputed = []
 
 for (ind, mask, missing) in missing_data_loader:
+    print(ind)
     if(ind[0][1].detach().numpy() != -1):
         masked = ind*mask
         masked = masked.type(torch.float32)
