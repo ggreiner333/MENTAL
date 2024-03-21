@@ -62,28 +62,24 @@ missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=Fal
 imputed = []
 
 for (ind, mask, missing) in missing_data_loader:
-    print(ind)
-    if(ind[0][1].detach().numpy() != -1):
-        masked = ind*mask
-        masked = masked.type(torch.float32)
-        test = masked.size()
+    masked = ind*mask
+    masked = masked.type(torch.float32)
+    test = masked.size()
 
-        out = encoder.forward(masked[0][1:])
-        imputed_ind = torch.mul(missing[0][1:], out[0])
-        
-        filled = ind[0][1:]+imputed_ind
-        filled = filled.detach().numpy()
-        test = [ind[0][0].detach().numpy()]
-        test = np.array(test)
-        filled = np.array(filled)
-        res = np.concatenate([test, filled])
+    out = encoder.forward(masked[0][1:])
+    imputed_ind = torch.mul(missing[0][1:], out[0])
+    
+    filled = ind[0][1:]+imputed_ind
+    filled = filled.detach().numpy()
+    test = [ind[0][0].detach().numpy()]
+    test = np.array(test)
+    filled = np.array(filled)
+    res = np.concatenate([test, filled])
 
-        imputed.append(res)
-    else:
-        print(ind)
-
+    imputed.append(res)
 
 imputed = np.array(imputed)
+print(imputed.size())
 
 np.save(os.path.join('TDBRAIN','small_imputed_samples_EC_adhd.npy'), imputed)
 
