@@ -41,6 +41,8 @@ for epoch in range(epochs):
         recon_loss = torch.nn.MSELoss()
         loss = recon_loss(output, vals)
 
+        print(loss)
+
         kl_loss = - torch.sum(1 + torch.log(var.pow(2))-mu.pow(2)-var.pow(2))
 
         loss = loss + kl_loss
