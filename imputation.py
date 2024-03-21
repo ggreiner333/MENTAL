@@ -71,7 +71,7 @@ for (ind, mask, missing) in missing_data_loader:
     
     filled = ind[0][1:]+imputed_ind
     filled = filled.detach().numpy()
-    test = [ind[0][0]]
+    test = [ind[0][0].detach().numpy()]
     print(test)
     test = np.array(test)
     res = np.concatenate(test, filled)
