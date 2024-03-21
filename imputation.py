@@ -59,7 +59,6 @@ individuals = np.load(os.path.join('TDBRAIN', 'small_missing_samples_EC_adhd.npy
 imputed = []
 
 for ind in individuals:
-    print(ind.size)
     if(ind[1] != (-1.0)):
         mask = np.ones(ind.size)
         missing = np.zeros_like(ind)
@@ -70,7 +69,9 @@ for ind in individuals:
                 missing[i] = 1.0
         
         masked = ind*mask
-        imputed_ind = missing*(encoder.forward(masked[1:]))
+        masked = torch.from_numpy(masked)
+        out = encoder.forward(masked[1:])
+        imputed_ind = missing*(out.numpy())
         
         imputed.append(ind+imputed_ind)
     else:
