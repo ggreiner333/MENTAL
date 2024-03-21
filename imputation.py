@@ -66,7 +66,7 @@ for (ind, mask, missing) in missing_data_loader:
     masked = masked.type(torch.float32)
     test = masked.size()
     print(test)
-    out = encoder.forward(masked[1][0])
+    out = encoder.forward(masked[0][1:])
     imputed_ind = missing*(out.numpy())
     
     imputed.append(ind+imputed_ind)
