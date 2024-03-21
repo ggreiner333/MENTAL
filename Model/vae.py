@@ -54,6 +54,9 @@ class VAE(nn.Module):
     def forward(self, x):
         mu, var = self.encode(x)
 
+        print(mu)
+        print(var)
+        print("\n\n")
         dist = torch.distributions.normal.Normal(mu, torch.exp(0.5*var))
         sample = dist.rsample()
 
