@@ -36,6 +36,7 @@ class VAE(nn.Module):
         self.decode3 = nn.Linear(1024, input_dim)
 
     def encode(self, x):
+        print(x)
         res = F.relu(self.encode1(x  ))
         res = F.relu(self.encode2(res))
 
