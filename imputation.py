@@ -36,6 +36,7 @@ epochs = 2
 for epoch in range(epochs):
 
     for vals in data_loader:
+        print(vals)
 
         output, mu, var = encoder.forward(vals)
 
