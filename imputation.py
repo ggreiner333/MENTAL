@@ -61,7 +61,7 @@ imputed = []
 for ind in individuals:
     if(ind[1] != (-1.0)):
         mask = np.ones(ind.size[0])
-        missing = np.zeros_like(ind.size[0])
+        missing = np.zeros_like([ind.size])
         missing[0] = 1.0
         for i in range(1, ind.size):
             if(ind[i]==(-1.0)):
