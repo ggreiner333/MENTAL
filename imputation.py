@@ -38,7 +38,7 @@ for epoch in range(epochs):
 
         output, mu, var = encoder.forward(vals)
 
-        recon_loss = torch.nn.BCELoss(reduction='sum')
+        recon_loss = torch.nn.BCELoss()
         loss = recon_loss(output, vals)
 
         kl_loss = - torch.sum(1 + torch.log(var.pow(2))-mu.pow(2)-var.pow(2))
