@@ -24,10 +24,10 @@ from Model.mental import MENTAL_EEG
 
 def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_complete_samples_EC_health_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_imputed_complete_samples_EC_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [60,30]
+    splits = [735,225, 8]
     """
     if(batch_sz != 15):
         splits = [560, 140, 5]
@@ -162,14 +162,17 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)     
+
+        if(epoch%100==0):
+            np.save('/home/ggreiner/MENTAL/MENTAL_EC_IMPUTED_ADHD_ACCS'+str(epoch), accs)
  
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_HEALTHY_ADHD_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_HEALTHY_ADHD_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_HEALTHY_ADHD_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_IMPUTED_ADHD_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_IMPUTED_ADHD_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_IMPUTED_ADHD_SPEC', spec)
 
     """
     labels = np.arange(0, epochs, 1)
@@ -577,14 +580,14 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [500]
-batches = [5]
+epoch = [1000]
+batches = [15]
 
 learn = 1e-3
 weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EC(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="epoch1000_b15_w6_l3")
         
