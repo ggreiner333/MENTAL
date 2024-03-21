@@ -10,37 +10,36 @@ import mne
 
 
 from Model.dataset import MultiModalDataset
+from Model.dataset import ImputingDataset
 from Model.vae import VAE
 
 ##################################################################################################
 ##################################################################################################
 ##################################################################################################
 
-test = np.loadtxt(os.path.join('TDBRAIN', 'complete_samples_EC.csv'), delimiter=",", dtype=float)
+INPUT_DIM = 7864
+Z_DIM = 128
+
 
 # Create Dataset and Dataset Loader
-mm_dataset = MultiModalDataset('complete_samples_EC.csv', 'TDBRAIN')
-dataset_loader = data.DataLoader(mm_dataset, batch_size=20, shuffle=True)
-
-# Create Missing Dataset
-mis_dataset = MultiModalDataset('missing_samples_EC.csv', 'TDBRAIN')
-mis_dataset_loader = data.DataLoader(mis_dataset, batch_size=20, shuffle=True)
+complete_dataset = ImputingDataset('small_complete_samples_EC_adhd.npy', 'TDBRAIN')
+data_loader = data.DataLoader(complete_dataset, batch_size=20, shuffle=True)
 
 # Create an instance of the encoder
-my_encoder = VAE(7864, 128)
+encoder = VAE(INPUT_DIM, Z_DIM)
 
-optimizer = torch.optim.Adam(my_encoder.parameters(), lr=1e-7, weight_decay=1e-9)
+optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-4)
 
-epochs = 1000
+epochs = 10
 
 for epoch in range(epochs):
 
-    for (entry, label) in dataset_loader:
+    for vals in data_loader:
 
-        output = my_encoder.forward(entry)
+        output, mu, var = encoder.forward(vals)
 
         loss = torch.nn.MSELoss()
-        res = loss(output, entry)
+        res = loss(output, vals)
 
         optimizer.zero_grad()
         res.backward()
@@ -51,10 +50,4 @@ for epoch in range(epochs):
     print(" Loss: " + str(res) )
     print("-----------------------")
 
-predictions = []
 
-for (entry, label) in mis_dataset_loader:
-    res = my_encoder(entry)
-    predictions.append(res)
-
-print(predictions)

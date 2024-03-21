@@ -275,3 +275,24 @@ class NEODataset(data.Dataset):
         for i in range(0, self.__len__()):
             res.append((self.__getitem__(i))[0])
         return np.array(res)
+
+
+class ImputingDataset(data.Dataset):
+
+    def __init__(self, individuals_file, directory):
+        self.directory = directory
+        self.individuals = np.load(os.path.join(directory, individuals_file))
+        
+    def __len__(self):
+        return np.size(self.individuals, axis=0)
+
+    def __getitem__(self, idx):
+        individual = self.individuals[idx]
+
+        return individual[1:]
+    
+    def __getIndividuals__(self):
+        res = []
+        for i in range(0, self.__len__()):
+            res.append((self.__getitem__(i))[0])
+        return np.array(res)

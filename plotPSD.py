@@ -473,13 +473,19 @@ def regions_means_multiple(band, num_disorders, closed, outliers):
         if(min(r) < mn):
             mn = min(r)
 
-    i=0
+    scaled = []
     for r in regions_means:
         vals = []
         for item in r:
             vals.append((item-mn)/(mx-mn))
-        vals = np.array(vals)
-        plt.plot(vals, label=diagnoses[i+1])
+        scaled.append(vals)
+
+    scaled = np.array(scaled)
+
+    """
+    i=0
+    for s in scaled:
+        plt.plot(s, label=diagnoses[i+1])
         plt.scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
         i+=1
 
@@ -491,10 +497,110 @@ def regions_means_multiple(band, num_disorders, closed, outliers):
     plt.ylabel("PSD (scaled)", fontsize=14)
     plt.tight_layout()
     plt.show()
+    """
+    return scaled
 
 #for b in bands:
 #   regions_means_multiple(b, 7, closed=False, outliers=False)
 
+
+def plot_PSD_Comparison():
+
+    figure, axis = plt.subplots(3, 2, figsize=(17, 17)) 
+  
+    figure.suptitle("Mean PSD Values for Regions of Brain", fontsize=24, weight="bold")
+
+    # For DELTA EC
+    delta_EC = regions_means_multiple("Delta", 7, closed=True, outliers=False)
+    i=0
+    for vals in delta_EC:
+        axis[0, 0].plot(vals, label=diagnoses[i+1])
+        axis[0, 0].scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
+        i+=1
+
+    axis[0, 0].set_title("(a) Delta PSD (EC)", fontsize=20, weight="bold")
+    axis[0, 0].set_xticks(ticks=np.arange(0,5,1), labels=['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], fontsize=14)
+    axis[0, 0].set_yticks(ticks=np.arange(0,1.01,.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],fontsize=14)
+    axis[0, 0].set_xlabel("Region", fontsize=18)
+    axis[0, 0].set_ylabel("PSD (scaled)", fontsize=18)
+    
+    # For DELTA EO
+    delta_EO = regions_means_multiple("Delta", 7, closed=False, outliers=False)
+    i=0
+    for vals in delta_EO:
+        axis[0, 1].plot(vals)
+        axis[0, 1].scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
+        i+=1
+
+    axis[0, 1].set_title("(b) Delta PSD (EO)", fontsize=20, weight="bold")
+    axis[0, 1].set_xticks(ticks=np.arange(0,5,1), labels=['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], fontsize=14)
+    axis[0, 1].set_yticks(ticks=np.arange(0,1.01,.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],fontsize=14)
+    axis[0, 1].set_xlabel("Region", fontsize=18)
+    axis[0, 1].set_ylabel("PSD (scaled)", fontsize=18)
+
+    # For THETA EC
+    theta_EC = regions_means_multiple("Theta", 7, closed=True, outliers=False)
+    i=0
+    for vals in theta_EC:
+        axis[1, 0].plot(vals)
+        axis[1, 0].scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
+        i+=1
+
+    axis[1, 0].set_title("(c) Theta PSD (EC)", fontsize=20, weight="bold")
+    axis[1, 0].set_xticks(ticks=np.arange(0,5,1), labels=['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], fontsize=14)
+    axis[1, 0].set_yticks(ticks=np.arange(0,1.01,.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],fontsize=14)
+    axis[1, 0].set_xlabel("Region", fontsize=18)
+    axis[1, 0].set_ylabel("PSD (scaled)", fontsize=18)
+
+    # For THETA EO
+    theta_EO = regions_means_multiple("Theta", 7, closed=False, outliers=False)
+    i=0
+    for vals in theta_EO:
+        axis[1, 1].plot(vals)
+        axis[1, 1].scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
+        i+=1
+
+    axis[1, 1].set_title("(d) Theta PSD (EO)", fontsize=20, weight="bold")
+    axis[1, 1].set_xticks(ticks=np.arange(0,5,1), labels=['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], fontsize=14)
+    axis[1, 1].set_yticks(ticks=np.arange(0,1.01,.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],fontsize=14)
+    axis[1, 1].set_xlabel("Region", fontsize=18)
+    axis[1, 1].set_ylabel("PSD (scaled)", fontsize=18)
+
+    # For Alpha EC
+    alpha_EC = regions_means_multiple("Alpha", 7, closed=True, outliers=False)
+    i=0
+    for vals in alpha_EC:
+        axis[2, 0].plot(vals)
+        axis[2, 0].scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
+        i+=1
+
+    axis[2, 0].set_title("(e) Alpha PSD (EC)", fontsize=20, weight="bold")
+    axis[2, 0].set_xticks(ticks=np.arange(0,5,1), labels=['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], fontsize=14)
+    axis[2, 0].set_yticks(ticks=np.arange(0,1.01,.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],fontsize=14)
+    axis[2, 0].set_xlabel("Region", fontsize=18)
+    axis[2, 0].set_ylabel("PSD (scaled)", fontsize=18)
+
+    # For Alpha EO
+    alpha_EO = regions_means_multiple("Alpha", 7, closed=False, outliers=False)
+    i=0
+    for vals in alpha_EO:
+        axis[2, 1].plot(vals)
+        axis[2, 1].scatter(['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], vals, s=10)
+        i+=1
+
+    axis[2, 1].set_title("(f) Alpha PSD (EO)", fontsize=20, weight="bold")
+    axis[2, 1].set_xticks(ticks=np.arange(0,5,1), labels=['Frontal', 'Temporal', 'Central', 'Parietal', 'Occupital'], fontsize=14)
+    axis[2, 1].set_yticks(ticks=np.arange(0,1.01,.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],fontsize=14)
+    axis[2, 1].set_xlabel("Region", fontsize=18)
+    axis[2, 1].set_ylabel("PSD (scaled)", fontsize=18)
+
+
+    figure.legend(loc="lower center", fontsize=16, ncol=7)
+    plt.subplots_adjust(hspace = 0.3, wspace=0.2)
+    #plt.tight_layout()
+    plt.savefig("psd_Comparison_test")
+
+#plot_PSD_Comparison()
 
 ##################################################################################################
 ##################################################################################################
@@ -625,9 +731,10 @@ def normal_vs_adhd_mental_ec():
     plt.yticks(ticks=np.arange(0,1.01,0.1))
     plt.xticks(ticks=np.arange(0,1001,100))
     plt.legend(loc="upper right")
-
-    plt.savefig("adhd_mental_vs_eeg_ec")
-    plt.clf()
+    plt.tight_layout()
+    plt.show()
+    #plt.savefig("adhd_mental_vs_eeg_ec")
+    #plt.clf()
 
 def normal_vs_adhd_mental_eo():
     accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EO_ONLY_ADHD_ACCS.npy", allow_pickle=True)
@@ -665,10 +772,169 @@ def normal_vs_adhd_mental_ec_eo():
     plt.savefig("adhd_mental_vs_eeg_ec_eo")
     plt.clf() 
 
-#normal_vs_adhd_mental_ec()
-#normal_vs_adhd_mental_eo()
-#normal_vs_adhd_mental_ec_eo()
-#normal_vs_mental_ec_eo()
+def plot_MENTAL_EEG_Comparison():
+
+    mc = "tab:orange"
+    nc = "tab:blue"
+
+    figure, axis = plt.subplots(3, 2, figsize=(15, 14)) 
+  
+    figure.suptitle("Accuracy of MENTAL vs. EEG Only", fontsize=24, weight="bold")
+
+    # For ADHD EO
+    adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EC_ONLY_ADHD_ACCS.npy", allow_pickle=True)
+    adhd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EC_ACCS.npy", allow_pickle=True)
+    axis[0, 0].plot(adhd_accs_normal, label="EEG Only", c= nc)
+    axis[0, 0].plot(adhd_accs_mental, label="MENTAL", c= mc) 
+    axis[0, 0].set_xlabel("Epoch", fontsize=16)
+    axis[0, 0].set_ylabel("Accuracy", fontsize=16)
+    axis[0, 0].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[0, 0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[0, 0].set_title("(a) ADHD (EC)", fontsize=16, weight="bold") 
+    
+    # For MDD EC
+    mdd_accs_normal = np.load('EC_ONLY_ACCS.npy', allow_pickle=True)
+    mdd_accs_mental = np.load('diff_MENTAL_EC_ACCS.npy', allow_pickle=True)
+    axis[0, 1].plot(mdd_accs_normal, c= nc)
+    axis[0, 1].plot(mdd_accs_mental, c= mc) 
+    axis[0, 1].set_xlabel("Epoch", fontsize=16)
+    axis[0, 1].set_ylabel("Accuracy", fontsize=16)
+    axis[0, 1].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[0, 1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[0, 1].set_title("(b) MDD (EC)", fontsize=16, weight="bold") 
+
+    # For ADHD EO
+    adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EO_ONLY_ADHD_ACCS.npy", allow_pickle=True)
+    adhd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EO_ACCS.npy", allow_pickle=True)
+    axis[1, 0].plot(adhd_accs_normal, c= nc)
+    axis[1, 0].plot(adhd_accs_mental, c= mc) 
+    axis[1, 0].set_xlabel("Epoch", fontsize=16)
+    axis[1, 0].set_ylabel("Accuracy", fontsize=16)
+    axis[1, 0].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[1, 0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[1, 0].set_title("(c) ADHD (EO)", fontsize=16, weight="bold") 
+    
+    # For MDD EO
+    mdd_accs_normal = np.load('EO_ONLY_ACCS.npy', allow_pickle=True)
+    mdd_accs_mental = np.load('diff_MENTAL_EO_ACCS.npy', allow_pickle=True)
+    axis[1, 1].plot(mdd_accs_normal, c= nc)
+    axis[1, 1].plot(mdd_accs_mental, c= mc) 
+    axis[1, 1].set_xlabel("Epoch", fontsize=16)
+    axis[1, 1].set_ylabel("Accuracy", fontsize=16)
+    axis[1, 1].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[1, 1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[1, 1].set_title("(d) MDD (EO)", fontsize=16, weight="bold") 
+
+    # For ADHD EC+EO
+    adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EO_EC_ADHD_ACCS.npy", allow_pickle=True)
+    adhd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EC_EO_ACCS.npy", allow_pickle=True)
+    axis[2, 0].plot(adhd_accs_normal, c= nc)
+    axis[2, 0].plot(adhd_accs_mental, c= mc)
+    axis[2, 0].set_xlabel("Epoch", fontsize=16)
+    axis[2, 0].set_ylabel("Accuracy", fontsize=16)
+    axis[2, 0].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[2, 0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[2, 0].set_title("(e) ADHD (EC+EO)", fontsize=16, weight="bold") 
+    
+    # For MDD EC+EO
+    mdd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EO_EC_ACCS.npy", allow_pickle=True)
+    mdd_accs_mental = np.load('diff_MENTAL_EC_EO_ACCS.npy', allow_pickle=True)
+    axis[2, 1].plot(mdd_accs_normal, c= nc)
+    axis[2, 1].plot(mdd_accs_mental, c= mc) 
+    axis[2, 1].set_xlabel("Epoch", fontsize=16)
+    axis[2, 1].set_ylabel("Accuracy", fontsize=16)
+    axis[2, 1].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[2, 1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[2, 1].set_title("(f) MDD (EC+EO)", fontsize=16, weight="bold") 
+
+    figure.legend(loc="lower center", fontsize=20)
+    plt.subplots_adjust(hspace = 0.3, wspace=0.15)
+    #plt.tight_layout()
+    plt.savefig("testerrr")
+    
+#plot_MENTAL_EEG_Comparison()
+
+def plot_MENTAL_EEG_Control_Comparison():
+
+    mc = "tab:orange"
+    nc = "tab:blue"
+
+    figure, axis = plt.subplots(3, 2, figsize=(15, 14)) 
+  
+    figure.suptitle("Accuracy of MENTAL vs. EEG Only (Healthy vs Non)", fontsize=24, weight="bold")
+
+    # For ADHD EC
+    adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EC_ONLY_ADHD_HEALTHY_ACCS.npy", allow_pickle=True)
+    adhd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\mentalControls\\MENTAL_EC_HEALTHY_ADHD_ACCS.npy", allow_pickle=True)
+    axis[0, 0].plot(adhd_accs_normal, label="EEG Only", c= nc)
+    axis[0, 0].plot(adhd_accs_mental, label="MENTAL", c= mc) 
+    axis[0, 0].set_xlabel("Epoch", fontsize=16)
+    axis[0, 0].set_ylabel("Accuracy", fontsize=16)
+    axis[0, 0].set_xticks(ticks=np.arange(0,501,100), labels=np.arange(0,501,100), fontsize=14)
+    axis[0, 0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[0, 0].set_title("(a) ADHD (EC)", fontsize=16, weight="bold") 
+    
+    # For MDD EC
+    mdd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EC_ONLY_MDD_HEALTHY_ACCS.npy", allow_pickle=True)
+    mdd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\mentalControls\\MENTAL_EC_HEALTHY_MDD_ACCS.npy", allow_pickle=True)
+    axis[0, 1].plot(mdd_accs_normal, c= nc)
+    axis[0, 1].plot(mdd_accs_mental, c= mc) 
+    axis[0, 1].set_xlabel("Epoch", fontsize=16)
+    axis[0, 1].set_ylabel("Accuracy", fontsize=16)
+    axis[0, 1].set_xticks(ticks=np.arange(0,501,100), labels=np.arange(0,501,100), fontsize=14)
+    axis[0, 1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[0, 1].set_title("(b) MDD (EC)", fontsize=16, weight="bold") 
+
+    # For ADHD EO
+    adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EO_ONLY_ADHD_HEALTHY_ACCS.npy", allow_pickle=True)
+    adhd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\mentalControls\\MENTAL_EO_HEALTHY_ADHD_ACCS.npy", allow_pickle=True)
+    axis[1, 0].plot(adhd_accs_normal, c= nc)
+    axis[1, 0].plot(adhd_accs_mental, c= mc) 
+    axis[1, 0].set_xlabel("Epoch", fontsize=16)
+    axis[1, 0].set_ylabel("Accuracy", fontsize=16)
+    axis[1, 0].set_xticks(ticks=np.arange(0,501,100), labels=np.arange(0,501,100), fontsize=14)
+    axis[1, 0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[1, 0].set_title("(c) ADHD (EO)", fontsize=16, weight="bold") 
+    
+    # For MDD EO
+    mdd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EO_ONLY_MDD_HEALTHY_ACCS.npy", allow_pickle=True)
+    mdd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\mentalControls\\MENTAL_EO_HEALTHY_MDD_ACCS.npy", allow_pickle=True)
+    axis[1, 1].plot(mdd_accs_normal, c= nc)
+    axis[1, 1].plot(mdd_accs_mental, c= mc) 
+    axis[1, 1].set_xlabel("Epoch", fontsize=16)
+    axis[1, 1].set_ylabel("Accuracy", fontsize=16)
+    axis[1, 1].set_xticks(ticks=np.arange(0,501,100), labels=np.arange(0,501,100), fontsize=14)
+    axis[1, 1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[1, 1].set_title("(d) MDD (EO)", fontsize=16, weight="bold") 
+
+    # For ADHD EC+EO
+    adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EO_EC_ADHD_HEALTHY_ACCS.npy", allow_pickle=True)
+    adhd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\mentalControls\\MENTAL_EC_EO_HEALTHY_ADHD_ACCS.npy", allow_pickle=True)
+    axis[2, 0].plot(adhd_accs_normal, c= nc)
+    axis[2, 0].plot(adhd_accs_mental, c= mc)
+    axis[2, 0].set_xlabel("Epoch", fontsize=16)
+    axis[2, 0].set_ylabel("Accuracy", fontsize=16)
+    axis[2, 0].set_xticks(ticks=np.arange(0,501,100), labels=np.arange(0,501,100), fontsize=14)
+    axis[2, 0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[2, 0].set_title("(e) ADHD (EC+EO)", fontsize=16, weight="bold") 
+    
+    # For MDD EC+EO
+    mdd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EO_EC_MDD_HEALTHY_ACCS.npy", allow_pickle=True)
+    mdd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\mentalControls\\MENTAL_EC_EO_HEALTHY_MDD_ACCS.npy", allow_pickle=True)
+    axis[2, 1].plot(mdd_accs_normal, c= nc)
+    axis[2, 1].plot(mdd_accs_mental, c= mc) 
+    axis[2, 1].set_xlabel("Epoch", fontsize=16)
+    axis[2, 1].set_ylabel("Accuracy", fontsize=16)
+    axis[2, 1].set_xticks(ticks=np.arange(0,501,100), labels=np.arange(0,501,100), fontsize=14)
+    axis[2, 1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[2, 1].set_title("(f) MDD (EC+EO)", fontsize=16, weight="bold") 
+
+    figure.legend(loc="lower center", fontsize=20)
+    plt.subplots_adjust(hspace = 0.3, wspace=0.15)
+    #plt.tight_layout()
+    plt.savefig("mental_eeg_control_comparison")
+    
+plot_MENTAL_EEG_Control_Comparison()
 
 def plot_accs():
     accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EO_EC_ADHD_HEALTHY_ACCS.npy", allow_pickle=True)
@@ -685,12 +951,12 @@ def plot_accs():
     plt.savefig("test")
     plt.show()
 
-plot_accs()
+
 
 def plot_accs2():
-    accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\adhd_EC_EO.npy", allow_pickle=True)
+    accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MDD_HEALTH_MENTAL_EC_ACCS_epoch_999.npy", allow_pickle=True)
 
-    labels = np.arange(0, 901, 1)
+    labels = np.arange(0, 1000, 1)
 
     plt.figure(figsize=(15,10))
     plt.plot(labels, accs)
@@ -702,4 +968,3 @@ def plot_accs2():
     plt.savefig("test")
     plt.show()
 
-#plot_accs2()

@@ -8,28 +8,11 @@ from matplotlib import pyplot as plt
 import torch
 import torch.nn as nn
 
-import mne
-
 
 ##################################################################################################
 ##################################################################################################
 ##################################################################################################
 
-
-#----------------------------------#
-#       Size of input vector       #
-#----------------------------------#
-#       disorder | 1               #
-#    demographic | 3               #
-#        NEO-FFI | 60              #
-#   PSD Features | 130 x 60 = 7800 #
-# ---------------------------------#
-#          total | 7864            #
-#----------------------------------#
-
-# Layers
-#     Input: shape(7864, 1)
-#     
  
 
 class VAE(nn.Module):
@@ -42,23 +25,42 @@ class VAE(nn.Module):
         self.input_dim  = input_dim
         self.z_dim      = z_dim
 
-        self.encoder = nn.Sequential(
-            nn.Linear(input_dim, 1024),
-            nn.ReLU(),
-            nn.Linear(1024, 512),
-            nn.ReLU(),
-            nn.Linear(512, z_dim)
-        )
+        self.encode1 = nn.Linear(input_dim, 1024)
+        self.encode2 = nn.Linear(1024, 512)
+        self.encode3 = nn.Linear(512, 256)
 
-        self.decoder = nn.Sequential(
-            nn.Linear(z_dim, 512),
-            nn.ReLU(),
-            nn.Linear(512, 1024),
-            nn.ReLU(),
-            nn.Linear(1024, input_dim)
-        )
+        self.mu  = nn.Linear(256, z_dim)
+        self.var = nn.Linear(256, z_dim)
 
-    def forward(self, input):
-        z = self.encoder(input)
-        res = self.decoder(z) 
+        self.decode1 = nn.Linear(z_dim, 256)
+        self.decode2 = nn.Linear(256, 512)
+        self.decode3 = nn.Linear(512, 1024)
+        self.decode4 = nn.Linear(1024, input_dim)
+
+    def encode(self, x):
+        res = nn.ReLU(self.encode1(x  ))
+        res = nn.ReLU(self.encode2(res))
+        res = nn.ReLU(self.encode3(res))
+
+        mu  = self.mu(res)
+        var = self.var(res)
+
+        return mu, var
+    
+    def decode(self, z):
+        res = nn.ReLU(self.decode1(z  ))
+        res = nn.ReLU(self.decode2(res))
+        res = nn.ReLU(self.decode3(res))
+        res = nn.ReLU(self.decode4(res))
+
         return res
+
+    def forward(self, x):
+        mu, var = self.encode(x)
+
+        dist = torch.distributions.normal.Normal(mu, torch.exp(0.5*var))
+        sample = dist.rsample()
+
+        out = self.decode(sample)
+
+        return out, mu, var
