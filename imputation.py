@@ -24,20 +24,19 @@ Z_DIM = 256
 
 # Create Dataset and Dataset Loader
 complete_dataset = ImputingDataset('small_complete_samples_EC_adhd.npy', 'TDBRAIN')
-data_loader = data.DataLoader(complete_dataset, batch_size=20, shuffle=True)
+data_loader = data.DataLoader(complete_dataset, batch_size=10, shuffle=True)
 
 # Create an instance of the encoder
 encoder = VAE(INPUT_DIM, Z_DIM)
 
 optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-4)
 
-epochs = 200
+epochs = 20
 
 for epoch in range(epochs):
 
     for vals in data_loader:
-        print("t")
-
+        print("test")
         output, mu, var = encoder.forward(vals)
 
         recon_loss = torch.nn.MSELoss()
