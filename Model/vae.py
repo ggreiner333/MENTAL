@@ -36,7 +36,6 @@ class VAE(nn.Module):
         self.decode3 = nn.Linear(1024, input_dim)
 
     def encode(self, x):
-        print(x)
         res = F.relu(self.encode1(x  ))
         res = F.relu(self.encode2(res))
 
@@ -55,9 +54,6 @@ class VAE(nn.Module):
     def forward(self, x):
         mu, var = self.encode(x)
 
-        print(mu)
-        print(var)
-        print("\n\n")
         dist = torch.distributions.normal.Normal(mu, torch.exp(0.5*var))
         sample = dist.rsample()
 
