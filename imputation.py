@@ -36,7 +36,6 @@ epochs = 20
 for epoch in range(epochs):
 
     for vals in data_loader:
-        print("test")
         output, mu, var = encoder.forward(vals)
 
         recon_loss = torch.nn.MSELoss()
