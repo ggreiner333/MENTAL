@@ -30,7 +30,7 @@ encoder = VAE(INPUT_DIM, Z_DIM)
 
 optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-3)
 
-epochs = 10
+epochs = 2
 
 for epoch in range(epochs):
 
@@ -60,8 +60,8 @@ imputed = []
 
 for ind in individuals:
     if(ind[1] != (-1.0)):
-        mask = np.ones(ind.size)
-        missing = np.zeros_like(ind.size)
+        mask = np.ones(ind.size[0])
+        missing = np.zeros_like(ind.size[0])
         missing[0] = 1.0
         for i in range(1, ind.size):
             if(ind[i]==(-1.0)):
