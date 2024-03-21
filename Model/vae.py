@@ -52,11 +52,11 @@ class VAE(nn.Module):
         return res
 
     def forward(self, x):
-        mu, var = self.encode(x)
+        Mu, Var = self.encode(x)
 
-        dist = torch.distributions.normal.Normal(mu, torch.exp(0.5*var))
+        dist = torch.distributions.normal.Normal(Mu, torch.exp(0.5*Var))
         sample = dist.rsample()
 
         out = self.decode(sample)
 
-        return out, mu, var
+        return out, Mu, Var
