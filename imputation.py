@@ -29,7 +29,7 @@ data_loader = data.DataLoader(complete_dataset, batch_size=10, shuffle=True)
 # Create an instance of the encoder
 encoder = VAE(INPUT_DIM, Z_DIM)
 
-optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-4)
+optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-3)
 
 epochs = 20
 
