@@ -42,7 +42,6 @@ for epoch in range(epochs):
         loss = recon_loss(output, vals)
 
         print(output)
-        print(vals)
 
         kl_loss = - torch.sum(1 + torch.log(var.pow(2))-mu.pow(2)-var.pow(2))
 
