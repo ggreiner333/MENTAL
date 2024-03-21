@@ -42,8 +42,8 @@ class VAE(nn.Module):
         res = F.relu(self.encode2(res))
         res = F.relu(self.encode3(res))
 
-        mu  = self.mu(res)
-        var = self.var(res)
+        mu  = F.sigmoid(self.mu(res))
+        var = F.sigmoid(self.var(res))
 
         return mu, var
     
