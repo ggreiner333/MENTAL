@@ -69,7 +69,7 @@ for ind in individuals:
                 missing[i] = 1.0
         
         masked = ind*mask
-        masked = torch.from_numpy(masked)
+        masked = torch.from_numpy(masked, dtype='double')
         masked = masked.double()
         print(masked)
         out = encoder.forward(masked[1:].double())
