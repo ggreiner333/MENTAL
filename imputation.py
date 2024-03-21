@@ -11,6 +11,7 @@ import mne
 
 from Model.dataset import MultiModalDataset
 from Model.dataset import ImputingDataset
+from Model.dataset import ImputingMissingDataset
 from Model.vae import VAE
 
 ##################################################################################################
@@ -55,27 +56,18 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-individuals = np.load(os.path.join('TDBRAIN', 'small_missing_samples_EC_adhd.npy'))
+missing_dataset = ImputingMissingDataset('small_missing_samples_EC_adhd.npy', 'TDBRAIN')
+missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=True)
 imputed = []
 
-for ind in individuals:
-    if(ind[1] != (-1.0)):
-        mask = np.ones(ind.size, dtype='double')
-        missing = np.zeros_like(ind, dtype='double')
-        missing[0] = 1
-        for i in range(1, ind.size):
-            if(ind[i]==(-1)):
-                mask[i] = 0
-                missing[i] = 1
-        
-        masked = ind*mask
-        masked = torch.from_numpy(masked)
-        out = encoder.forward(masked[1:])
-        imputed_ind = missing*(out.numpy())
-        
-        imputed.append(ind+imputed_ind)
-    else:
-        print(ind[0:10])
+for (ind, mask, missing) in missing_data_loader:
+    masked = ind*mask
+    masked = torch.from_numpy(masked)
+    out = encoder.forward(masked[1:])
+    imputed_ind = missing*(out.numpy())
+    
+    imputed.append(ind+imputed_ind)
+
 
 imputed = np.array(imputed)
 

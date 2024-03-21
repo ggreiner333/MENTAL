@@ -296,3 +296,34 @@ class ImputingDataset(data.Dataset):
         for i in range(0, self.__len__()):
             res.append((self.__getitem__(i))[0])
         return np.array(res)
+    
+class ImputingMissingDataset(data.Dataset):
+
+    def __init__(self, individuals_file, directory):
+        self.directory = directory
+        self.individuals = np.load(os.path.join(directory, individuals_file))
+        
+    def __len__(self):
+        return np.size(self.individuals, axis=0)
+
+    def __getitem__(self, idx):
+        ind = self.individuals[idx]
+
+        if(ind[1] != (-1.0)):
+            mask = np.ones(ind.size)
+            missing = np.zeros_like(ind)
+            missing[0] = 1
+            for i in range(1, ind.size):
+                if(ind[i]==(-1)):
+                    mask[i] = 0
+                    missing[i] = 1
+        else:
+            print(ind[0:10])
+
+        return ind, mask, missing
+    
+    def __getIndividuals__(self):
+        res = []
+        for i in range(0, self.__len__()):
+            res.append((self.__getitem__(i))[0])
+        return np.array(res)
