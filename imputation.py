@@ -62,11 +62,11 @@ for ind in individuals:
     if(ind[1] != (-1.0)):
         mask = np.ones(ind.size)
         missing = np.zeros_like(ind)
-        missing[0] = 1.0
+        missing[0] = 1
         for i in range(1, ind.size):
-            if(ind[i]==(-1.0)):
-                mask[i] = 0.0
-                missing[i] = 1.0
+            if(ind[i]==(-1)):
+                mask[i] = 0
+                missing[i] = 1
         
         masked = ind*mask
         masked = torch.from_numpy(masked)
