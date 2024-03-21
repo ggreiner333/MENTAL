@@ -30,7 +30,7 @@ encoder = VAE(INPUT_DIM, Z_DIM)
 
 optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-3)
 
-epochs = 200
+epochs = 10
 
 for epoch in range(epochs):
 
@@ -53,5 +53,32 @@ for epoch in range(epochs):
     print("Epoch: " + str(epoch))
     print(" Loss: " + str(loss) )
     print("-----------------------")
+
+
+individuals = np.load(os.path.join('TDBRAIN', 'small_missing_samples_EC_adhd.npy'))
+imputed = []
+
+for ind in individuals:
+    if(ind[1] != (-1.0)):
+        mask = np.ones(ind.size)
+        missing = np.zeros_like(ind.size)
+        missing[0] = 1.0
+        for i in range(1, ind.size):
+            if(ind[i]==(-1.0)):
+                mask[i] = 0.0
+                missing[i] = 1.0
+        
+        masked = ind*mask
+        imputed_ind = missing*(encoder.forward(masked[1:]))
+        
+        imputed.append(ind+imputed_ind)
+    else:
+        print(ind[0:10])
+
+imputed = np.array(imputed)
+
+np.save(os.path.join('TDBRAIN','small_imputed_samples_EC_adhd.npy'), imputed)
+
+    
 
 
