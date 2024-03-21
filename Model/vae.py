@@ -39,10 +39,10 @@ class VAE(nn.Module):
         res = F.relu(self.encode1(x  ))
         res = F.relu(self.encode2(res))
 
-        mu  = F.relu(self.mu(res))
-        var = F.relu(self.var(res))
+        Mu  = F.relu(self.mu(res))
+        Var = F.relu(self.var(res))
 
-        return mu, var
+        return Mu, Var
     
     def decode(self, z):
         res = F.relu(self.decode1(z  ))
