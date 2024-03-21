@@ -23,7 +23,7 @@ Z_DIM = 256
 
 # Create Dataset and Dataset Loader
 complete_dataset = ImputingDataset('small_complete_samples_EC_adhd.npy', 'TDBRAIN')
-data_loader = data.DataLoader(complete_dataset, batch_size=5, shuffle=True)
+data_loader = data.DataLoader(complete_dataset, batch_size=20, shuffle=True)
 
 # Create an instance of the encoder
 encoder = VAE(INPUT_DIM, Z_DIM)
@@ -40,8 +40,6 @@ for epoch in range(epochs):
 
         recon_loss = torch.nn.MSELoss()
         loss = recon_loss(output, vals)
-
-        print(output)
 
         kl_loss = - torch.sum(1 + torch.log(var.pow(2))-mu.pow(2)-var.pow(2))
 
