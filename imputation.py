@@ -69,7 +69,7 @@ for (ind, mask, missing) in missing_data_loader:
     out = encoder.forward(masked[0][1:])
     imputed_ind = torch.mul(missing[0][1:], out[0])
     
-    imputed.append(ind+imputed_ind)
+    imputed.append(ind[0][1:]+imputed_ind)
 
 
 imputed = np.array(imputed)
