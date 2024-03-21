@@ -79,7 +79,7 @@ for (ind, mask, missing) in missing_data_loader:
     imputed.append(res)
 
 imputed = np.array(imputed)
-print(imputed.size())
+print(imputed.size)
 
 np.save(os.path.join('TDBRAIN','small_imputed_samples_EC_adhd.npy'), imputed)
 
