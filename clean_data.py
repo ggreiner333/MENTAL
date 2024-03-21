@@ -175,7 +175,7 @@ def clean_individuals_Health_Non(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     #print(final)
     np.savetxt(os.path.join(path,'cleaned_participants_health_adhd.csv'), final, delimiter=',', fmt="%s")
 
-clean_individuals_Health_Non()
+#clean_individuals_Health_Non()
 
 def generate_samples(ptc, psd, out):
     survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_depression.csv"), delimiter=",", dtype=str)
@@ -429,9 +429,9 @@ def find_min_max_gender():
     print("Min Male: " + str(minM) + ", Max Male: " + str(max_Male))
     print("Min Female: " + str(minF) + ", Max Female: " + str(max_Female))
 
-separate_missing_samples_EC(ptc_path, psd_path, out_path)
-separate_missing_samples_EO(ptc_path, psd_path, out_path)
-separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
+#separate_missing_samples_EC(ptc_path, psd_path, out_path)
+#separate_missing_samples_EO(ptc_path, psd_path, out_path)
+#separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
 #generate_samples(ptc_path, psd_path, out_path)
 
 
@@ -563,3 +563,21 @@ def create_disorder_psd_EO(ptc, psd, out):
     print("Complete samples: " + str(all_complete_samples.shape[0]))
 
 #create_disorder_psd_EO(ptc_path, psd_path, out_path)
+    
+def combine_imputed_complete():
+    complete = np.load(os.path.join('TDBRAIN','small_complete_samples_EC_adhd.npy'))
+    imputed = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_adhd.npy'))
+
+    combined = []
+    for c in complete:
+        combined.append(c)
+    for i in imputed:
+        combined.append(i)
+    
+    combined = np.array(combined)
+    print(combined.size)
+    print(combined)
+
+    np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_adhd.npy'), combined)
+
+combine_imputed_complete()
