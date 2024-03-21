@@ -31,7 +31,7 @@ encoder = VAE(INPUT_DIM, Z_DIM)
 
 optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-3)
 
-epochs = 20
+epochs = 100
 
 for epoch in range(epochs):
 
