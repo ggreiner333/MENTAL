@@ -18,7 +18,7 @@ from Model.vae import VAE
 ##################################################################################################
 
 INPUT_DIM = 7864
-Z_DIM = 128
+Z_DIM = 256
 
 
 # Create Dataset and Dataset Loader
