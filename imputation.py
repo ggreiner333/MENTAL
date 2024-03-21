@@ -38,16 +38,20 @@ for epoch in range(epochs):
 
         output, mu, var = encoder.forward(vals)
 
-        loss = torch.nn.MSELoss()
-        res = loss(output, vals)
+        recon_loss = torch.nn.MSELoss()
+        reconstruction = recon_loss(output, vals)
+
+        kl_loss = torch.sum(1 + torch.log(var.pow(2))-mu.pow(2)+var.pow(2))
+
+        loss = recon_loss + kl_loss
 
         optimizer.zero_grad()
-        res.backward()
+        loss.backward()
         optimizer.step()
 
     print("-----------------------")
     print("Epoch: " + str(epoch))
-    print(" Loss: " + str(res) )
+    print(" Loss: " + str(loss) )
     print("-----------------------")
 
 
