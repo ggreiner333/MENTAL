@@ -47,7 +47,7 @@ class VAE(nn.Module):
     def decode(self, z):
         res = F.relu(self.decode1(z  ))
         res = F.relu(self.decode2(res))
-        res = self.decode3(res)
+        res = F.relu(self.decode3(res))
 
         return res
 

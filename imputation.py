@@ -38,7 +38,7 @@ for epoch in range(epochs):
 
         output, mu, var = encoder.forward(vals)
 
-        recon_loss = torch.nn.BCELoss()
+        recon_loss = torch.nn.MSELoss()
         loss = recon_loss(output, vals)
 
         print(output)
