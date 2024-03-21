@@ -313,9 +313,7 @@ class ImputingMissingDataset(data.Dataset):
         missing = np.zeros_like(ind)
         missing[0] = 1
         for i in range(1, ind.size):
-            print(ind[i])
             if(ind[i]==(-1)):
-                print("k")
                 mask[i] = 0
                 missing[i] = 1
 
