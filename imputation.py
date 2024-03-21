@@ -59,6 +59,7 @@ individuals = np.load(os.path.join('TDBRAIN', 'small_missing_samples_EC_adhd.npy
 imputed = []
 
 for ind in individuals:
+    print(ind.size)
     if(ind[1] != (-1.0)):
         mask = np.ones(ind.size)
         missing = np.zeros_like([ind.size])
