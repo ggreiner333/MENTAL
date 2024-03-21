@@ -309,16 +309,14 @@ class ImputingMissingDataset(data.Dataset):
     def __getitem__(self, idx):
         ind = self.individuals[idx]
 
-        if(ind[1] != (-1.0)):
-            mask = np.ones(ind.size)
-            missing = np.zeros_like(ind)
-            missing[0] = 1
-            for i in range(1, ind.size):
-                if(ind[i]==(-1)):
-                    mask[i] = 0
-                    missing[i] = 1
-        else:
-            print(ind[0:10])
+        mask = np.ones(ind.size)
+        missing = np.zeros_like(ind)
+        missing[0] = 1
+        for i in range(1, ind.size):
+            if(ind[i]==(-1)):
+                print("k")
+                mask[i] = 0
+                missing[i] = 1
 
         return ind, mask, missing
     
