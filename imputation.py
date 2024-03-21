@@ -57,11 +57,12 @@ for epoch in range(epochs):
 
 
 missing_dataset = ImputingMissingDataset('small_missing_samples_EC_adhd.npy', 'TDBRAIN')
-missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=True)
+missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=False)
 imputed = []
 
 for (ind, mask, missing) in missing_data_loader:
     masked = ind*mask
+    masked.type(torch.float32)
     out = encoder.forward(masked[1:])
     imputed_ind = missing*(out.numpy())
     
