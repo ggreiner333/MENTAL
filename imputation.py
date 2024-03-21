@@ -72,7 +72,7 @@ for ind in individuals:
         masked = torch.from_numpy(masked)
         masked = masked.double()
         print(masked)
-        out = encoder.forward(masked[1:])
+        out = encoder.forward(masked[1:].double())
         imputed_ind = missing*(out.numpy())
         
         imputed.append(ind+imputed_ind)
