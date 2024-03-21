@@ -934,7 +934,7 @@ def plot_MENTAL_EEG_Control_Comparison():
     #plt.tight_layout()
     plt.savefig("mental_eeg_control_comparison")
     
-plot_MENTAL_EEG_Control_Comparison()
+#plot_MENTAL_EEG_Control_Comparison()
 
 def plot_accs():
     accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EO_EC_ADHD_HEALTHY_ACCS.npy", allow_pickle=True)
@@ -968,3 +968,24 @@ def plot_accs2():
     plt.savefig("test")
     plt.show()
 
+
+def imputed_adhd_mental_ec():
+    accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_IMPUTED_ADHD_ACCS800.npy", allow_pickle=True)
+    accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EC_ONLY_ADHD_ACCS.npy", allow_pickle=True)
+    accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EC_ACCS.npy", allow_pickle=True)
+
+    labels = np.arange(0, 1000, 1)
+    plt.figure(figsize=(10,5))
+    plt.plot(accs_mental, label="MENTAL")
+    plt.plot(accs_normal, label="EEG Only")
+    plt.plot(accs, label="MENTAL with Imputed")
+    plt.title("Accuracy of ADHD MENTAL Compared to EEG Only (EC)", fontsize=16)
+    plt.ylabel("Accuracy", fontsize=12)
+    plt.xlabel("Epoch", fontsize=12)
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+    plt.xticks(ticks=np.arange(0,1001,100))
+    plt.legend(loc="lower right")
+    plt.tight_layout()
+    plt.show()
+
+imputed_adhd_mental_ec()

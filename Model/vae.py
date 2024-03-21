@@ -49,6 +49,8 @@ class VAE(nn.Module):
         res = F.relu(self.decode2(res))
         res = F.relu(self.decode3(res))
 
+        print("hi")
+
         return res
 
     def forward(self, x):
