@@ -25,15 +25,15 @@ class VAE(nn.Module):
         self.input_dim  = input_dim
         self.z_dim      = z_dim
 
-        self.encode1 = nn.Linear(input_dim, 1024)
-        self.encode2 = nn.Linear(1024, 512)
+        self.encode1 = nn.Linear(input_dim, 3000)
+        self.encode2 = nn.Linear(3000, 1000)
 
-        self.mu  = nn.Linear(512, z_dim)
-        self.var = nn.Linear(512, z_dim)
+        self.mu  = nn.Linear(1024, z_dim)
+        self.var = nn.Linear(1024, z_dim)
 
-        self.decode1 = nn.Linear(z_dim, 512)
-        self.decode2 = nn.Linear(512, 1024)
-        self.decode3 = nn.Linear(1024, input_dim)
+        self.decode1 = nn.Linear(z_dim, 1024)
+        self.decode2 = nn.Linear(1024, 3000)
+        self.decode3 = nn.Linear(3000, input_dim)
 
     def encode(self, x):
         res = F.relu(self.encode1(x  ))
@@ -41,7 +41,7 @@ class VAE(nn.Module):
 
         Mu  = F.sigmoid(self.mu(res))
         Var = F.sigmoid(self.var(res))
-
+        
         return Mu, Var
     
     def decode(self, z):
