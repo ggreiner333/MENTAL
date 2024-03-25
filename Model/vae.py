@@ -26,7 +26,7 @@ class VAE(nn.Module):
         self.z_dim      = z_dim
 
         self.encode1 = nn.Linear(input_dim, 3000)
-        self.encode2 = nn.Linear(3000, 1000)
+        self.encode2 = nn.Linear(3000, 1024)
 
         self.mu  = nn.Linear(1024, z_dim)
         self.var = nn.Linear(1024, z_dim)
