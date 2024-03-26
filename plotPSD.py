@@ -970,7 +970,7 @@ def plot_accs2():
 
 
 def imputed_adhd_mental_ec():
-    accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_IMPUTED_ADHD_ACCS800.npy", allow_pickle=True)
+    accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_IMPUTED_ADHD_ACCS.npy", allow_pickle=True)
     accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EC_ONLY_ADHD_ACCS.npy", allow_pickle=True)
     accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EC_ACCS.npy", allow_pickle=True)
 
