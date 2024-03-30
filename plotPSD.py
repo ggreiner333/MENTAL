@@ -988,4 +988,91 @@ def imputed_adhd_mental_ec():
     plt.tight_layout()
     plt.show()
 
-imputed_adhd_mental_ec()
+def imputed_mdd_mental():
+    accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_IMPUTED_MDD_ACCS.npy", allow_pickle=True)
+    accs_normal = np.load('EC_ONLY_ACCS.npy', allow_pickle=True)
+    accs_mental = np.load('diff_MENTAL_EC_ACCS.npy', allow_pickle=True)
+
+    labels = np.arange(0, 1000, 1)
+    plt.figure(figsize=(10,5))
+    plt.plot(accs_mental, label="MENTAL")
+    plt.plot(accs_normal, label="EEG Only")
+    plt.plot(accs, label="MENTAL with Imputed")
+    plt.title("Accuracy of MDD MENTAL Compared to EEG Only (EC)", fontsize=16)
+    plt.ylabel("Accuracy", fontsize=12)
+    plt.xlabel("Epoch", fontsize=12)
+    plt.yticks(ticks=np.arange(0,1.01,0.1))
+    plt.xticks(ticks=np.arange(0,1001,100))
+    plt.legend(loc="lower right")
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_MENTAL_EEG_Imputed_Comparison():
+
+    mc = "tab:orange"
+    nc = "tab:blue"
+    ic = "tab:orange"
+
+    figure, axis = plt.subplots(2, 2, figsize=(15, 14)) 
+  
+    figure.suptitle("Accuracy of MENTAL vs. EEG Only", fontsize=24, weight="bold")
+
+    # For ADHD EC
+    adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EC_ONLY_ADHD_ACCS.npy", allow_pickle=True)
+    #adhd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EC_ACCS.npy", allow_pickle=True)
+    adhd_accs_impute = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_IMPUTED_ADHD_ACCS.npy", allow_pickle=True)
+    axis[0, 0].plot(adhd_accs_normal, label="EEG Only", c=nc)
+    #axis[0, 0].plot(adhd_accs_mental, label="MENTAL"  , c=mc)
+    axis[0, 0].plot(adhd_accs_impute, label="Imputed" , c=ic) 
+    axis[0, 0].set_xlabel("Epoch", fontsize=16)
+    axis[0, 0].set_ylabel("Accuracy", fontsize=16)
+    axis[0, 0].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[0, 0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[0, 0].set_title("(a) ADHD (EC)", fontsize=16, weight="bold") 
+    
+    # For MDD EC
+    mdd_accs_normal = np.load('EC_ONLY_ACCS.npy', allow_pickle=True)
+    #mdd_accs_mental = np.load('diff_MENTAL_EC_ACCS.npy', allow_pickle=True)
+    mdd_accs_impute = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_IMPUTED_MDD_ACCS.npy", allow_pickle=True)
+    axis[0, 1].plot(mdd_accs_normal, c=nc)
+    #axis[0, 1].plot(mdd_accs_mental, c=mc) 
+    axis[0, 1].plot(mdd_accs_impute, c=ic) 
+    axis[0, 1].set_xlabel("Epoch", fontsize=16)
+    axis[0, 1].set_ylabel("Accuracy", fontsize=16)
+    axis[0, 1].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[0, 1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[0, 1].set_title("(b) MDD (EC)", fontsize=16, weight="bold") 
+
+    # For ADHD EO
+    adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EO_ONLY_ADHD_ACCS.npy", allow_pickle=True)
+    #adhd_accs_mental = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\ADHD_MENTAL_EO_ACCS.npy", allow_pickle=True)
+    adhd_accs_impute = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EO_IMPUTED_ADHD_ACCS.npy", allow_pickle=True)
+    axis[1, 0].plot(adhd_accs_normal, c= nc)
+    #axis[1, 0].plot(adhd_accs_mental, c= mc)
+    axis[1, 0].plot(adhd_accs_impute, c=ic) 
+    axis[1, 0].set_xlabel("Epoch", fontsize=16)
+    axis[1, 0].set_ylabel("Accuracy", fontsize=16)
+    axis[1, 0].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[1, 0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[1, 0].set_title("(c) ADHD (EO)", fontsize=16, weight="bold") 
+    
+    # For MDD EO
+    mdd_accs_normal = np.load('EO_ONLY_ACCS.npy', allow_pickle=True)
+    #mdd_accs_mental = np.load('diff_MENTAL_EO_ACCS.npy', allow_pickle=True)
+    mdd_accs_impute = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EO_IMPUTED_MDD_ACCS.npy", allow_pickle=True)
+    axis[1, 1].plot(mdd_accs_normal, c= nc)
+    #axis[1, 1].plot(mdd_accs_mental, c= mc) 
+    axis[1, 1].plot(mdd_accs_impute, c= ic) 
+    axis[1, 1].set_xlabel("Epoch", fontsize=16)
+    axis[1, 1].set_ylabel("Accuracy", fontsize=16)
+    axis[1, 1].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[1, 1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[1, 1].set_title("(d) MDD (EO)", fontsize=16, weight="bold") 
+
+    figure.legend(loc="lower center", fontsize=10)
+    plt.subplots_adjust(hspace = 0.3, wspace=0.15)
+    plt.show()
+    #plt.savefig("imputedcomparison")
+    
+plot_MENTAL_EEG_Imputed_Comparison()
