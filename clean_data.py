@@ -588,6 +588,8 @@ def view_data():
     for i in range(0, 100):
         print(imputed[0][i])
 
+    print("\n\n")
+
     missing = np.load(os.path.join('TDBRAIN','small_missing_samples_EO_depression.npy'))
     for i in range(0, 100):
         print(missing[0][i])
