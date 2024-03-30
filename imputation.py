@@ -23,7 +23,7 @@ Z_DIM = 512
 
 
 # Create Dataset and Dataset Loader
-complete_dataset = ImputingDataset('small_complete_samples_EC_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+complete_dataset = ImputingDataset('small_complete_samples_EC_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 data_loader = data.DataLoader(complete_dataset, batch_size=10, shuffle=True)
 
 # Create an instance of the encoder
@@ -31,7 +31,7 @@ encoder = VAE(INPUT_DIM, Z_DIM)
 
 optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-3)
 
-epochs = 200
+epochs = 2
 
 for epoch in range(epochs):
 
@@ -55,7 +55,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-missing_dataset = ImputingMissingDataset('small_missing_samples_EC_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+missing_dataset = ImputingMissingDataset('small_missing_samples_EC_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=False)
 imputed = []
 
@@ -67,7 +67,7 @@ for (ind, mask, missing) in missing_data_loader:
     out = encoder.forward(masked[0][1:])
     imputed_ind = torch.mul(missing[0][1:], out[0])
     
-    filled = ind[0][1:]+imputed_ind
+    filled = masked[0][1:]+imputed_ind
     filled = filled.detach().numpy()
     test = [ind[0][0].detach().numpy()]
     test = np.array(test)
@@ -79,83 +79,4 @@ for (ind, mask, missing) in missing_data_loader:
 imputed = np.array(imputed)
 print(imputed.shape)
 
-np.save(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN','small_imputed_samples_EC_adhd.npy'), imputed)
-
-missing_dataset = ImputingMissingDataset('small_missing_samples_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
-missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=False)
-imputed = []
-
-for (ind, mask, missing) in missing_data_loader:
-    masked = ind*mask
-    masked = masked.type(torch.float32)
-    test = masked.size()
-
-    out = encoder.forward(masked[0][1:])
-    imputed_ind = torch.mul(missing[0][1:], out[0])
-    
-    filled = ind[0][1:]+imputed_ind
-    filled = filled.detach().numpy()
-    test = [ind[0][0].detach().numpy()]
-    test = np.array(test)
-    filled = np.array(filled)
-    res = np.concatenate([test, filled])
-
-    imputed.append(res)
-
-imputed = np.array(imputed)
-print(imputed.shape)
-
-np.save(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN','small_imputed_samples_EO_adhd.npy'), imputed)
-
-missing_dataset = ImputingMissingDataset('small_missing_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
-missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=False)
-imputed = []
-
-for (ind, mask, missing) in missing_data_loader:
-    masked = ind*mask
-    masked = masked.type(torch.float32)
-    test = masked.size()
-
-    out = encoder.forward(masked[0][1:])
-    imputed_ind = torch.mul(missing[0][1:], out[0])
-    
-    filled = ind[0][1:]+imputed_ind
-    filled = filled.detach().numpy()
-    test = [ind[0][0].detach().numpy()]
-    test = np.array(test)
-    filled = np.array(filled)
-    res = np.concatenate([test, filled])
-
-    imputed.append(res)
-
-imputed = np.array(imputed)
-print(imputed.shape)
-
-np.save(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN','small_imputed_samples_EC_depression.npy'), imputed)
-    
-missing_dataset = ImputingMissingDataset('small_missing_samples_EO_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
-missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=False)
-imputed = []
-
-for (ind, mask, missing) in missing_data_loader:
-    masked = ind*mask
-    masked = masked.type(torch.float32)
-    test = masked.size()
-
-    out = encoder.forward(masked[0][1:])
-    imputed_ind = torch.mul(missing[0][1:], out[0])
-    
-    filled = ind[0][1:]+imputed_ind
-    filled = filled.detach().numpy()
-    test = [ind[0][0].detach().numpy()]
-    test = np.array(test)
-    filled = np.array(filled)
-    res = np.concatenate([test, filled])
-
-    imputed.append(res)
-
-imputed = np.array(imputed)
-print(imputed.shape)
-
-np.save(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN','small_imputed_samples_EO_depression.npy'), imputed)
-
+np.save(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN','small_imputed_samples_EC_EO_adhd.npy'), imputed)
