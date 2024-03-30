@@ -591,4 +591,6 @@ def view_data():
     missing = np.load(os.path.join('TDBRAIN','small_missing_samples_EO_depression.npy'))
     for i in range(0, 100):
         print(missing[0][i])
+
+view_data()
     
