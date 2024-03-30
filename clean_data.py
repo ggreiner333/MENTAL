@@ -586,6 +586,8 @@ def combine_imputed_complete():
 def view_data():
     imputed = np.load(os.path.join('TDBRAIN','small_imputed_samples_EO_depression.npy'))
     missing = np.load(os.path.join('TDBRAIN','small_missing_samples_EC_EO_depression.npy'))
+    print(imputed.shape[0])
+    print(missing.shape[0])
     for i in range(0, imputed.shape[0]):
         print(f"{imputed[i][0]}, {missing[i][0]}")
 
