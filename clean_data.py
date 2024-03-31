@@ -581,3 +581,10 @@ def combine_imputed_complete():
     np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EO_depression.npy'), combined)
 
 #combine_imputed_complete()
+    
+def testing():
+    imputed = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_EO_adhd.npy'))
+    for i in range(0,100):
+        print(imputed[0][i])
+
+testing()
