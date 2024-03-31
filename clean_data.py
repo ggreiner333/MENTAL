@@ -591,11 +591,11 @@ def testing():
     new_imp = []
     for m in missing:
         first = m[0:4]
-        print(first.size())
+        print(first.size)
         middle = m[5:65]
-        print(middle.size())
+        print(middle.size)
         last = m[66:]
-        print(last.size())
+        print(last.size)
         print("\n\n")
         found = False
         for ind in imputed1:
