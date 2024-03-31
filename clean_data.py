@@ -609,6 +609,8 @@ def testing():
         if(found):
             new_imp.append(res)
     
+    new_imp = np.array(new_imp)
+    
     print(new_imp)
     print(new_imp.shape)
 testing()
