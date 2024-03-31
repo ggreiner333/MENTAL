@@ -585,7 +585,7 @@ def combine_imputed_complete():
 def testing():
     imputed1 = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_depression.npy'))
     imputed2 = np.load(os.path.join('TDBRAIN','small_imputed_samples_EO_depression.npy'))
-    missing = np.load(os.path.join('TDBRAIN','small_missing_samples_EC_depression.npy'))
+    missing = np.load(os.path.join('TDBRAIN','small_missing_samples_EC_EO_depression.npy'))
     print(missing.shape)
     
     new_imp = []
@@ -614,4 +614,7 @@ def testing():
     
     print(new_imp)
     print(new_imp.shape)
+
+    np.save(os.path.join('TDBRAIN','small_imputed_samples_EC_EO_depression.npy'), new_imp)
+
 testing()
