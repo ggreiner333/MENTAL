@@ -13,6 +13,7 @@ from Model.dataset import MultiModalDataset
 from Model.dataset import ImputingDataset
 from Model.dataset import ImputingMissingDataset
 from Model.vae import VAE
+from Model.vae import VAE_Both
 
 ##################################################################################################
 ##################################################################################################
@@ -27,7 +28,7 @@ complete_dataset = ImputingDataset('small_complete_samples_EC_EO_adhd.npy', '/da
 data_loader = data.DataLoader(complete_dataset, batch_size=10, shuffle=True)
 
 # Create an instance of the encoder
-encoder = VAE(INPUT_DIM, Z_DIM)
+encoder = VAE_Both(INPUT_DIM, Z_DIM)
 
 optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-3)
 
