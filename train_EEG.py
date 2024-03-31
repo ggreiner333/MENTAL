@@ -415,7 +415,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
     my_mental = MENTAL(60, 30, 1, batch_sz)
 
-    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate)
+    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
 
     torch.autograd.set_detect_anomaly(True)
 
