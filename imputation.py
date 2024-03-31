@@ -34,6 +34,9 @@ optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-3)
 
 epochs = 1
 
+for i in range(epochs):
+    print(i)
+
 for epoch in range(epochs):
 
     for vals in data_loader:
