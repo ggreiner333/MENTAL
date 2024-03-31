@@ -617,4 +617,13 @@ def testing():
 
     np.save(os.path.join('TDBRAIN','small_imputed_samples_EC_EO_adhd.npy'), new_imp)
 
-testing()
+#testing()
+
+
+def testtt():
+    msing = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_EO_adhd.npy'))
+
+    for m in msing:
+        print(m[0:65])
+
+testtt()
