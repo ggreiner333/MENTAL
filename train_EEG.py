@@ -397,7 +397,7 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = BSplitDataset('normalized_small_imputed_complete_samples_EC_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = BSplitDataset('normalized_small_imputed_complete_samples_EC_EO_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
     splits = [735,225,8]
@@ -536,16 +536,16 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         spec.append(specificity)
 
         if(epoch%100==0):
-            np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_ADHD_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_ACCS'+str(epoch), accs)
 
        
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_ADHD_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_ADHD_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_ADHD_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_SPEC', spec)
 
     """
     labels = np.arange(0, epochs, 1)
