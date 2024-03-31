@@ -25,17 +25,14 @@ Z_DIM = 512
 
 # Create Dataset and Dataset Loader
 complete_dataset = ImputingDataset('small_complete_samples_EC_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
-data_loader = data.DataLoader(complete_dataset, batch_size=10, shuffle=True)
+data_loader = data.DataLoader(complete_dataset, batch_size=5, shuffle=True)
 
 # Create an instance of the encoder
 encoder = VAE_Both(INPUT_DIM, Z_DIM)
 
 optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-3)
 
-epochs = 1
-
-for i in range(epochs):
-    print(i)
+epochs = 2
 
 for epoch in range(epochs):
 
