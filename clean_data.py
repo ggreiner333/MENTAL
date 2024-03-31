@@ -588,6 +588,6 @@ def testing():
     
     new_imp = []
     for m in missing:
-        print(m[0:66])
+        print(m[4:66])
 
 testing()
