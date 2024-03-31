@@ -594,7 +594,7 @@ def testing():
         print(first)
         middle = m[5:65]
         print(middle)
-        last = m[66:]
+        last = m[65:]
         print(last)
         print("\n\n")
         found = False
