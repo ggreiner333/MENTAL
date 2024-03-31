@@ -583,8 +583,11 @@ def combine_imputed_complete():
 #combine_imputed_complete()
     
 def testing():
-    imputed = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_EO_adhd.npy'))
-    for i in range(0,100):
-        print(imputed[0][i])
+    imputed = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_depression.npy'))
+    missing = np.load(os.path.join('TDBRAIN','small_missing_samples_EC_depression.npy'))
+    
+    new_imp = []
+    for m in missing:
+        print(m[0:66])
 
 testing()

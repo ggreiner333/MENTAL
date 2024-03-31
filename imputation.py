@@ -19,20 +19,20 @@ from Model.vae import VAE_Both
 ##################################################################################################
 ##################################################################################################
 
-INPUT_DIM = 15664
+INPUT_DIM = 7864
 Z_DIM = 512
 
 
 # Create Dataset and Dataset Loader
-complete_dataset = ImputingDataset('small_complete_samples_EC_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+complete_dataset = ImputingDataset('small_complete_samples_EC_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 data_loader = data.DataLoader(complete_dataset, batch_size=5, shuffle=True)
 
 # Create an instance of the encoder
-encoder = VAE_Both(INPUT_DIM, Z_DIM)
+encoder = VAE(INPUT_DIM, Z_DIM)
 
 optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-6)
 
-epochs = 1
+epochs = 200
 
 for epoch in range(epochs):
 
@@ -56,7 +56,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-missing_dataset = ImputingMissingDataset('small_missing_samples_EC_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+missing_dataset = ImputingMissingDataset('small_missing_samples_EC_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=False)
 imputed = []
 
@@ -80,4 +80,4 @@ for (ind, mask, missing) in missing_data_loader:
 imputed = np.array(imputed)
 print(imputed.shape)
 
-np.save(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN','small_imputed_samples_EC_EO_adhd.npy'), imputed)
+np.save(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN','small_imputed_samples_EC_adhd.npy'), imputed)
