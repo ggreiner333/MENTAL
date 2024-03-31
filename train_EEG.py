@@ -397,10 +397,10 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = BSplitDataset('normalized_small_complete_samples_EC_EO_health_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = BSplitDataset('normalized_small_imputed_complete_samples_EC_EO_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [60,30]
+    splits = [735,225,8]
     """
     if(batch_sz != 15):
         splits = [560, 140, 4]
@@ -415,7 +415,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
     my_mental = MENTAL(60, 30, 1, batch_sz)
 
-    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate, weight_decay=wd)
+    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate)
 
     torch.autograd.set_detect_anomaly(True)
 
@@ -535,14 +535,17 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
         specificity = 1 if(N==0) else TN/N
         spec.append(specificity)
 
+        if(epoch%100==0):
+            np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_ACCS'+str(epoch), accs)
+
        
     accs = np.array(accs)
     sens = np.array(sens)
     spec = np.array(spec)
 
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_HEALTHY_ADHD_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_HEALTHY_ADHD_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_HEALTHY_ADHD_SPEC', spec)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_SENS', sens)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_SPEC', spec)
 
     """
     labels = np.arange(0, epochs, 1)
