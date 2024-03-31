@@ -580,7 +580,7 @@ def combine_imputed_complete():
 
     np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_EO_adhd.npy'), combined)
 
-combine_imputed_complete()
+#combine_imputed_complete()
     
 def testing():
     imputed1 = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_depression.npy'))
@@ -596,6 +596,7 @@ def testing():
         found = False
         for ind in imputed1:
             if(ind[0] == m[0]):
+                print(ind[0])
                 middle = ind[5:65]
                 found = True
         if(not found):
@@ -617,4 +618,4 @@ def testing():
 
     np.save(os.path.join('TDBRAIN','small_imputed_samples_EC_EO_depression.npy'), new_imp)
 
-#testing()
+testing()
