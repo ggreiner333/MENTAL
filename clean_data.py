@@ -137,7 +137,6 @@ def clean_individuals_ADHD(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     #print(final)
     np.savetxt(os.path.join(path,'cleaned_participants_adhd.csv'), final, delimiter=',', fmt="%s")
 
-
 def clean_individuals_Health_Non(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     # Load Demographic and Survey Data
@@ -176,6 +175,46 @@ def clean_individuals_Health_Non(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
     np.savetxt(os.path.join(path,'cleaned_participants_health_adhd.csv'), final, delimiter=',', fmt="%s")
 
 #clean_individuals_Health_Non()
+
+def clean_multiclass_top5(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
+
+    # Load Demographic and Survey Data
+
+    inds = np.loadtxt(os.path.join(path, "participants.csv"), delimiter=",", dtype=str)
+
+    samples = []
+
+    cols = []
+    for name in inds[0]:
+        cols.append(name)
+    samples.append(cols)
+
+    for i in inds[1:]:
+        id = i[0]
+        disorders = (i[2].upper()).split("/")
+    
+        found = False
+        missing = False
+        for d in disorders:
+            if(diagnoses.index(d.strip()) == 0):
+                missing = True
+            elif(diagnoses.index(d.strip()) <= 5):
+                res = []
+                for info in i:
+                    res.append(info)
+                res[2] = diagnoses.index(d.strip())
+                samples.append(res)
+                found = True
+                print(f"\n Diagnosis: {d.strip()}")
+                break
+        
+    final = np.asarray(samples)
+    for f in final:
+        print(f[0:10])
+
+    np.savetxt(os.path.join(path,'cleaned_participants_top5.csv'), final, delimiter=',', fmt="%s")
+
+clean_multiclass_top5()
 
 def generate_samples(ptc, psd, out):
     survey = np.loadtxt(os.path.join(ptc, "cleaned_participants_depression.csv"), delimiter=",", dtype=str)
@@ -618,4 +657,4 @@ def testing():
 
     np.save(os.path.join('TDBRAIN','small_imputed_samples_EC_EO_depression.npy'), new_imp)
 
-testing()
+#testing()
