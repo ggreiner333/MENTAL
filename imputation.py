@@ -57,7 +57,7 @@ for epoch in range(epochs):
 
 
 missing_dataset = ImputingMissingDataset('small_missing_samples_EC_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
-missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=False)
+missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=True)
 imputed = []
 
 for (ind, mask, missing) in missing_data_loader:
