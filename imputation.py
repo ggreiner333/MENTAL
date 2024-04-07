@@ -24,7 +24,7 @@ Z_DIM = 512
 
 
 # Create Dataset and Dataset Loader
-complete_dataset = ImputingDataset('small_complete_samples_EC_top5', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+complete_dataset = ImputingDataset('small_complete_samples_EC_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 data_loader = data.DataLoader(complete_dataset, batch_size=5, shuffle=True)
 
 # Create an instance of the encoder
@@ -56,7 +56,7 @@ for epoch in range(epochs):
     print("-----------------------")
 
 
-missing_dataset = ImputingMissingDataset('small_missing_samples_EC_top5', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+missing_dataset = ImputingMissingDataset('small_missing_samples_EC_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=False)
 imputed = []
 
@@ -85,7 +85,7 @@ np.save(os.path.join('/data/zhanglab/ggreiner/MENTAL/TDBRAIN','small_imputed_sam
 
 # Do EO now
 
-missing_dataset = ImputingMissingDataset('small_missing_samples_EO_top5', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+missing_dataset = ImputingMissingDataset('small_missing_samples_EO_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 missing_data_loader = data.DataLoader(missing_dataset, batch_size=1, shuffle=False)
 imputed = []
 
