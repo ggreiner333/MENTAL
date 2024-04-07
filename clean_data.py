@@ -461,9 +461,9 @@ def find_min_max_gender():
     print("Min Male: " + str(minM) + ", Max Male: " + str(max_Male))
     print("Min Female: " + str(minF) + ", Max Female: " + str(max_Female))
 
-separate_missing_samples_EC(ptc_path, psd_path, out_path)
-separate_missing_samples_EO(ptc_path, psd_path, out_path)
-separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
+#separate_missing_samples_EC(ptc_path, psd_path, out_path)
+#separate_missing_samples_EO(ptc_path, psd_path, out_path)
+#separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
 
 
 def get_disorders_for_analysis(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
