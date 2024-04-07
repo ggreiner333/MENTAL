@@ -300,11 +300,11 @@ def separate_missing_samples_EC(ptc, psd, out):
                     else:
                         complete_samples.append(combined)
 
-            if(not found):
-                combo = np.concatenate((ind[1:], np.zeros(7800)))
-                combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
-                combo = np.asarray(combo, dtype="float32")
-                missing_samples.append(combo)
+            #if(not found):
+            #    combo = np.concatenate((ind[1:], np.zeros(7800)))
+            #    combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
+            #    combo = np.asarray(combo, dtype="float32")
+            #    missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples)
     np.save(os.path.join(out,'small_complete_samples_EC_top5'), all_complete_samples)
@@ -353,11 +353,11 @@ def separate_missing_samples_EO(ptc, psd, out):
                     else:
                         complete_samples.append(combined)
 
-            if(not found):
-                combo = np.concatenate((ind[1:], np.zeros(7800)))
-                combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
-                combo = np.asarray(combo, dtype="float32")
-                missing_samples.append(combo)
+            #if(not found):
+            #    combo = np.concatenate((ind[1:], np.zeros(7800)))
+            #    combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
+            #    combo = np.asarray(combo, dtype="float32")
+            #    missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples)
     np.save(os.path.join(out,'small_complete_samples_EO_top5'), all_complete_samples)
@@ -416,11 +416,11 @@ def separate_missing_samples_EO_EC(ptc, psd, out):
                 else:
                     complete_samples.append(combined)
 
-            if(not (found_ec and found_eo)):
-                combo = np.concatenate((ind[1:], np.zeros(7800*2)))
-                combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
-                combo = np.asarray(combo, dtype="float32")
-                missing_samples.append(combo)
+            #if(not (found_ec and found_eo)):
+            #    combo = np.concatenate((ind[1:], np.zeros(7800*2)))
+            #    combo[0] = float((ind[0].split("-"))[1])+(int(sn)/10)
+            #    combo = np.asarray(combo, dtype="float32")
+            #    missing_samples.append(combo)
             
     all_complete_samples = np.array(complete_samples)
     print(all_complete_samples.shape)
@@ -461,9 +461,9 @@ def find_min_max_gender():
     print("Min Male: " + str(minM) + ", Max Male: " + str(max_Male))
     print("Min Female: " + str(minF) + ", Max Female: " + str(max_Female))
 
-#separate_missing_samples_EC(ptc_path, psd_path, out_path)
-#separate_missing_samples_EO(ptc_path, psd_path, out_path)
-#separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
+separate_missing_samples_EC(ptc_path, psd_path, out_path)
+separate_missing_samples_EO(ptc_path, psd_path, out_path)
+separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
 
 
 def get_disorders_for_analysis(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
