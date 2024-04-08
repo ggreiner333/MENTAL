@@ -461,9 +461,9 @@ def find_min_max_gender():
     print("Min Male: " + str(minM) + ", Max Male: " + str(max_Male))
     print("Min Female: " + str(minF) + ", Max Female: " + str(max_Female))
 
-separate_missing_samples_EC(ptc_path, psd_path, out_path)
-separate_missing_samples_EO(ptc_path, psd_path, out_path)
-separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
+#separate_missing_samples_EC(ptc_path, psd_path, out_path)
+#separate_missing_samples_EO(ptc_path, psd_path, out_path)
+#separate_missing_samples_EO_EC(ptc_path, psd_path, out_path)
 
 
 def get_disorders_for_analysis(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
@@ -590,8 +590,8 @@ def create_disorder_psd_EO(ptc, psd, out):
 #create_disorder_psd_EO(ptc_path, psd_path, out_path)
     
 def combine_imputed_complete():
-    complete = np.load(os.path.join('TDBRAIN','small_complete_samples_EC_EO_adhd.npy'))
-    imputed = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_EO_adhd.npy'))
+    complete = np.load(os.path.join('TDBRAIN','small_complete_samples_EC_top5.npy'))
+    imputed = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_top5.npy'))
 
     combined = []
     for c in complete:
@@ -603,9 +603,9 @@ def combine_imputed_complete():
     print(combined.size)
     print(combined)
 
-    np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_EO_adhd.npy'), combined)
+    np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_top5.npy'), combined)
 
-#combine_imputed_complete()
+combine_imputed_complete()
     
 def testing():
     imputed1 = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_depression.npy'))
