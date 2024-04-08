@@ -590,8 +590,8 @@ def create_disorder_psd_EO(ptc, psd, out):
 #create_disorder_psd_EO(ptc_path, psd_path, out_path)
     
 def combine_imputed_complete():
-    complete = np.load(os.path.join('TDBRAIN','small_complete_samples_EC_top5.npy'))
-    imputed = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_top5.npy'))
+    complete = np.load(os.path.join('TDBRAIN','small_complete_samples_EO_top5.npy'))
+    imputed = np.load(os.path.join('TDBRAIN','small_imputed_samples_EO_top5.npy'))
 
     combined = []
     for c in complete:
@@ -600,10 +600,10 @@ def combine_imputed_complete():
         combined.append(i)
     
     combined = np.array(combined)
-    print(combined.size)
+    print(combined.shape)
     print(combined)
 
-    np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_top5.npy'), combined)
+    np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EO_top5.npy'), combined)
 
 combine_imputed_complete()
     
