@@ -33,6 +33,7 @@ class EegRNN(nn.Module):
         self.relu1 = nn.ReLU()
         self.relu2 = nn.ReLU()
         self.sig   = nn.Sigmoid()
+        self.soft  = nn.Softmax()
 
     def forward(self, x, h):
         x.unsqueeze_(-1)
@@ -43,7 +44,7 @@ class EegRNN(nn.Module):
 
         res = self.relu1(self.o1(res))
         res = self.relu2(self.o2(res))
-        out = self.sig(self.o3(res))
+        out = self.soft(self.o3(res))
 
         return out, h_1
         
