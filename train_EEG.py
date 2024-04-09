@@ -837,10 +837,10 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         print(f"Epoch {epoch}: {acc}")
 
         if(epoch%100==0):
-            np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/TOP5_e3_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EO_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/TOP5_e3_MENTAL_EO_IMPUTED_ACCS', accs)
 
 
 # running code
@@ -848,7 +848,7 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 epoch = [1000]
 batches = [15]
 
-learn = 1e-2
+learn = 1e-3
 weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
