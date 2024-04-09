@@ -706,17 +706,17 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         accs.append(acc)
         print(f"Epoch {epoch}: {acc}")
 
-        #if(epoch%100==0):
-            #np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
+        if(epoch%100==0):
+            np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
  
     accs = np.array(accs)
-    #np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EC_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EC_IMPUTED_ACCS', accs)
 
 def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
     main_dataset = MSplitDataset('normalized_small_imputed_complete_samples_EO_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = [615, 165, 10]
+    splits = [615,165, 11]
 
     res = data.random_split(main_dataset, splits)
 
@@ -737,8 +737,8 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
-            label_reshaped = np.reshape(label, (batch_sz,1,5))
-            label_reshaped = label_reshaped.type(torch.float32)
+            label = label.type(torch.float32)
+            #print(f"lable: {label}")
 
             test = []
             for i in range(0, 60):
@@ -758,10 +758,13 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
-            output = output.type(torch.float32)
-        
-            loss = torch.nn.MSELoss()
-            res = loss(output, label_reshaped)
+            #output = output.type(torch.float32)
+            #print(f"out  : {output}")
+            #print(f"shape: {output.shape}")
+
+            loss = torch.nn.CrossEntropyLoss()
+            res = loss(output, label)
+            #print(f"loss: {res}")
 
             optimizer.zero_grad()
             res.backward()
@@ -774,8 +777,7 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         fvals = []
         for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label_reshaped = np.reshape(label, (batch_sz,1,5))
-            label_reshaped = label_reshaped.type(torch.float32)
+            label = label.type(torch.float32)
 
             test = []
             for i in range(0, 60):
@@ -796,15 +798,19 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 h = h_res
 
             #out = output.squeeze_(1)
+            soft = torch.nn.Softmax(dim=1)
+            output = soft(output)
+            
             #print(f"out  : {output}")
             #print(f"shape: {output.shape}")
+
             preds = []
             for i in range(0, batch_sz):
                 mx = 0
                 loc = 0
                 for j in range(0, 5):
-                    if(output[i][0][j] > mx):
-                        mx = output[i][0][j]
+                    if(output[i][j] > mx):
+                        mx = output[i][j]
                         loc = j
                 #if(i==14):
                 #    print(f"row: {output[i][0]}")
@@ -813,17 +819,11 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 preds.append(loc)
 
             conds = []
-
             for i in range(0, batch_sz):
                 for j in range(0, 5):
-                    if(label_reshaped[i][0][j] > 0):
+                    if(label[i][j] > 0):
                         conds.append(j)
-                        #print(f"row: {label_reshaped[i][0]}")
-                        #print(f"max: {loc}")
-                        #print(f"val: {mx}")
                         break
-
-            # Variables for calculating specificity and sensitivity
             
             for i in range(0, len(conds)):
                 lb = conds[i]
@@ -837,10 +837,10 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         print(f"Epoch {epoch}: {acc}")
 
         if(epoch%100==0):
-            np.save('/home/ggreiner/MENTAL/TOP5_e3_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_e3_MENTAL_EO_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EO_IMPUTED_ACCS', accs)
 
 
 # running code
