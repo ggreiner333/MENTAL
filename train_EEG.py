@@ -679,7 +679,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 mx = 0
                 loc = 0
                 for j in range(0, 5):
-                    if(output[i][0][j] > mx):
+                    if(output[i][j] > mx):
                         mx = output[i][0][j]
                         loc = j
                 #if(i==14):
