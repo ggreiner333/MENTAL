@@ -609,7 +609,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
             print(f"lable: {label}")
             label_reshaped = np.reshape(label, (batch_sz, 5))
-            label_reshaped = label_reshaped.type(torch.long)
+            label_reshaped = label_reshaped.type(torch.float32)
             print(f"reshaped: {label_reshaped}")
 
             test = []
