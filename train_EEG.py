@@ -713,6 +713,135 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
     accs = np.array(accs)
     np.save('/home/ggreiner/MENTAL/TOP5_MENTAL_EC_IMPUTED_ACCS', accs)
 
+def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
+
+    main_dataset = MSplitDataset('normalized_small_imputed_complete_samples_EO_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+
+    splits = [615, 165, 10]
+
+    res = data.random_split(main_dataset, splits)
+
+    train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
+    test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
+
+    my_mental = MENTAL(60, 30, 5, batch_sz)
+
+    optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate)
+
+    torch.autograd.set_detect_anomaly(True)
+
+    accs = []
+    sens = []
+    spec = []
+
+    for epoch in range(epochs):
+        
+        for (h_entry, n_entry, p_entry, label) in train_loader:
+
+            label_reshaped = np.reshape(label, (batch_sz,1,5))
+            label_reshaped = label_reshaped.type(torch.float32)
+
+            test = []
+            for i in range(0, 60):
+                batch = []
+                for j in range(0,batch_sz):
+                    cur = p_entry[j][i]
+                    arr_cur = np.asarray(cur)
+                    batch.append(arr_cur)
+                test.append(batch)
+
+            formatted = np.array(test)
+            psd_tensor = torch.from_numpy(formatted)
+            
+            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
+
+            for p in psd_tensor:
+                output, h_res = my_mental.forward(p, n_entry, h_1)
+                h = h_res
+
+            output = output.type(torch.float32)
+        
+            loss = torch.nn.MSELoss()
+            res = loss(output, label_reshaped)
+
+            optimizer.zero_grad()
+            res.backward()
+            optimizer.step()
+        
+        
+        correct = 0
+        vals = []
+        cvals = []
+        fvals = []
+        for (h_entry, n_entry, p_entry, label) in test_loader:
+
+            label_reshaped = np.reshape(label, (batch_sz,1,5))
+            label_reshaped = label_reshaped.type(torch.float32)
+
+            test = []
+            for i in range(0, 60):
+                batch = []
+                for j in range(0,batch_sz):
+                    cur = p_entry[j][i]
+                    arr_cur = np.asarray(cur)
+                    batch.append(arr_cur)
+                test.append(batch)
+
+            formatted = np.array(test)
+            psd_tensor = torch.from_numpy(formatted)
+            
+            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
+            
+            for p in psd_tensor:
+                output, h_res = my_mental.forward(p, n_entry, h_1)
+                h = h_res
+
+            #out = output.squeeze_(1)
+            #print(f"out  : {output}")
+            #print(f"shape: {output.shape}")
+            preds = []
+            for i in range(0, batch_sz):
+                mx = 0
+                loc = 0
+                for j in range(0, 5):
+                    if(output[i][0][j] > mx):
+                        mx = output[i][0][j]
+                        loc = j
+                #if(i==14):
+                #    print(f"row: {output[i][0]}")
+                #    print(f"max: {loc}")
+                #    print(f"val: {mx}")
+                preds.append(loc)
+
+            conds = []
+
+            for i in range(0, batch_sz):
+                for j in range(0, 5):
+                    if(label_reshaped[i][0][j] > 0):
+                        conds.append(j)
+                        #print(f"row: {label_reshaped[i][0]}")
+                        #print(f"max: {loc}")
+                        #print(f"val: {mx}")
+                        break
+
+            # Variables for calculating specificity and sensitivity
+            
+            for i in range(0, len(conds)):
+                lb = conds[i]
+                pd = preds[i]
+                if(lb==pd): 
+                    correct += 1
+            
+        total = (test_loader.__len__())*batch_sz
+        acc = correct/total
+        accs.append(acc)
+        print(f"Epoch {epoch}: {acc}")
+
+        if(epoch%100==0):
+            np.save('/home/ggreiner/MENTAL/TOP5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
+ 
+    accs = np.array(accs)
+    np.save('/home/ggreiner/MENTAL/TOP5_MENTAL_EO_IMPUTED_ACCS', accs)
 
 
 # running code
@@ -725,6 +854,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_EC_Multi(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EO_Multi(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="epoch1000_b15_w6_l3")
         
