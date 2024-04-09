@@ -635,6 +635,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
             print(f"o label: {output}")
             print(f"o shape: {output.shape}\n")
+            output = output.type(torch.float32)
         
             loss = torch.nn.CrossEntropyLoss()
             res = loss(output, label_reshaped)
