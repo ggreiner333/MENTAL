@@ -611,6 +611,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
             print(f"label: {label}")
             print(f"shape: {label.shape}\n")
             label_reshaped = np.reshape(label, (batch_sz,1,5))
+            label_reshaped = label_reshaped.type(torch.LongTensor)
             print(f"label: {label_reshaped}")
             print(f"shape: {label_reshaped.shape}\n")
 
@@ -636,7 +637,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
             print(f"o shape: {output.shape}\n")
         
             loss = torch.nn.CrossEntropyLoss()
-            res = loss(output, label)
+            res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
             res.backward()
