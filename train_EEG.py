@@ -608,7 +608,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
-            label_reshaped = np.reshape(label, (batch_sz,1,1))
+            #label_reshaped = np.reshape(label, (batch_sz,1,1))
 
             test = []
             for i in range(0, 60):
@@ -629,7 +629,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 h = h_res
 
             loss = torch.nn.CrossEntropyLoss()
-            res = loss(output, label_reshaped)
+            res = loss(output, label)
 
             optimizer.zero_grad()
             res.backward()
