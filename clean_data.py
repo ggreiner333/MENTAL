@@ -605,7 +605,7 @@ def combine_imputed_complete():
 
     np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EO_top5.npy'), combined)
 
-combine_imputed_complete()
+#combine_imputed_complete()
     
 def testing():
     imputed1 = np.load(os.path.join('TDBRAIN','small_imputed_samples_EC_depression.npy'))
@@ -644,3 +644,9 @@ def testing():
     np.save(os.path.join('TDBRAIN','small_imputed_samples_EC_EO_depression.npy'), new_imp)
 
 #testing()
+
+def test_findlen():
+    complete = np.load(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_top5.npy'))
+    print(complete.shape)
+
+test_findlen()
