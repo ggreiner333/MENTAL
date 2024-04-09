@@ -608,7 +608,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
             print(f"lable: {label}")
-            label_reshaped = np.reshape(label, (batch_sz))
+            label_reshaped = np.reshape(label, (batch_sz, 5))
             label_reshaped = label_reshaped.type(torch.float32)
             print(f"reshaped: {label_reshaped}")
 
@@ -646,7 +646,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         fvals = []
         for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label_reshaped = np.reshape(label, (batch_sz))
+            label_reshaped = np.reshape(label, (batch_sz, 5))
             label_reshaped = label_reshaped.type(torch.float32)
 
             test = []
@@ -687,7 +687,12 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 #    print(f"val: {mx}")
                 preds.append(loc)
 
-            # Variables for calculating specificity and sensitivity
+            conds = []
+            for i in range(0, batch_sz):
+                for j in range(0, 5):
+                    if(label_reshaped[i][j] > 0):
+                        conds.append(j)
+                        break
             
             for i in range(0, len(label_reshaped)):
                 lb = label_reshaped[i]
