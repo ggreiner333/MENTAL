@@ -588,7 +588,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
     main_dataset = MSplitDataset('normalized_small_imputed_complete_samples_EC_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
-    splits = [735,225, 8]
+    splits = [615,165, 11]
 
     res = data.random_split(main_dataset, splits)
 
