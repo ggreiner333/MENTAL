@@ -642,7 +642,9 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         fvals = []
         for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label_reshaped = np.reshape(label, (batch_sz,1,1))
+            print(label)
+            print(label.shape)
+            label_reshaped = np.reshape(label, (batch_sz,5))
 
             test = []
             for i in range(0, 60):
