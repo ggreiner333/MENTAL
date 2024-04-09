@@ -608,12 +608,8 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
-            print(f"label: {label}")
-            print(f"shape: {label.shape}\n")
             label_reshaped = np.reshape(label, (batch_sz,1,5))
             label_reshaped = label_reshaped.type(torch.float32)
-            print(f"label: {label_reshaped}")
-            print(f"shape: {label_reshaped.shape}\n")
 
             test = []
             for i in range(0, 60):
@@ -633,8 +629,6 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
-            print(f"o label: {output}")
-            print(f"o shape: {output.shape}\n")
             output = output.type(torch.float32)
         
             loss = torch.nn.CrossEntropyLoss()
@@ -651,9 +645,8 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         fvals = []
         for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            print(f"label: {label}")
-            print(f"shape: {label.shape}\n")
-            #label_reshaped = np.reshape(label, (batch_sz,5))
+            label_reshaped = np.reshape(label, (batch_sz,1,5))
+            label_reshaped = label_reshaped.type(torch.float32)
 
             test = []
             for i in range(0, 60):
@@ -673,70 +666,53 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
-            out = output.squeeze_(1)
+            #out = output.squeeze_(1)
+            print(f"out  : {output}")
+            print(f"shape: {output.shape}")
             preds = []
             for i in range(0, batch_sz):
-                for j in range(0, len(out[i])):
-                    if(out[i][j] >= 0.5):
-                        preds.append(1)
-                    else:
-                        preds.append(0)
-                    vals.append(out[i][j].detach())
+                mx = 0
+                loc = 0
+                for j in range(0, 5):
+                    if(output[i][0][j] > mx):
+                        mx = output[i][0][5]
+                        loc = j
+                print(f"row: {output[i][0]}")
+                print(f"max: {loc}")
+                print(f"val: {mx}")
+                preds.append(loc)
 
             label = label.squeeze_(1)
             conds = []
 
-            for i in range(0, len(label)):
-                conds.append(label[i].item())
+            for i in range(0, batch_sz):
+                for j in range(0, 5):
+                    if(output[i][0][j] > 0):
+                        conds.append(j)
+                        print(f"row: {output[i][0]}")
+                        print(f"max: {loc}")
+                        print(f"val: {mx}")
+                        break
 
             # Variables for calculating specificity and sensitivity
-            N = 0
-            P = 0
-            TP = 0
-            TN = 0
+            
             for i in range(0, len(conds)):
                 lb = conds[i]
                 pd = preds[i]
-                if(lb == 1):
-                    P+=1
-                    if(lb==pd): 
-                        correct += 1
-                        TP+=1
-                        cvals.append(vals[i])
-                    else:
-                        fvals.append(vals[i])
-                if(lb == 0):
-                    N+=1
-                    if(lb==pd):
-                        correct += 1
-                        TN+=1
-                        cvals.append(vals[i])
-                    else:
-                        fvals.append(vals[i])
-
+                if(lb==pd): 
+                    correct += 1
             
-
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
         print(acc)
 
-        sensitivity = 1 if(P == 0) else TP/P
-        sens.append(sensitivity)
-
-        specificity = 1 if(N==0) else TN/N
-        spec.append(specificity)     
-
         if(epoch%100==0):
             np.save('/home/ggreiner/MENTAL/TOP5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
  
     accs = np.array(accs)
-    sens = np.array(sens)
-    spec = np.array(spec)
-
     np.save('/home/ggreiner/MENTAL/TOP5_MENTAL_EC_IMPUTED_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_MENTAL_EC_IMPUTED_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/TOP5_MENTAL_EC_IMPUTED_SPEC', spec)
+
 
     """
     labels = np.arange(0, epochs, 1)
