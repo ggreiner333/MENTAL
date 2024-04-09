@@ -675,7 +675,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 loc = 0
                 for j in range(0, 5):
                     if(output[i][0][j] > mx):
-                        mx = output[i][0][5]
+                        mx = output[i][0][j]
                         loc = j
                 print(f"row: {output[i][0]}")
                 print(f"max: {loc}")
