@@ -586,7 +586,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
     main_dataset = MSplitDataset('normalized_small_imputed_complete_samples_EC_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = [615,165, 11]
+    splits = [615, 165, 11]
 
     res = data.random_split(main_dataset, splits)
 
@@ -853,6 +853,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_EO_Multi(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EC_Multi(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="epoch1000_b15_w6_l3")
         
