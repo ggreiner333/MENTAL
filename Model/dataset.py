@@ -150,7 +150,7 @@ class MSplitDataset(data.Dataset):
         individual = self.individuals[idx]
 
         indication = individual[1]
-        output = torch.zeros([1], dtype=torch.float32)
+        output = torch.zeros([5], dtype=torch.float32)
         print(int(indication)-1)
         output[int(indication)-1] = 1.0
 
