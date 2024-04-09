@@ -608,7 +608,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
             label = label.type(torch.float32)
-            print(f"lable: {label}")
+            #print(f"lable: {label}")
 
             test = []
             for i in range(0, 60):
@@ -629,12 +629,13 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 h = h_res
 
             #output = output.type(torch.float32)
-            print(f"out  : {output}")
-            print(f"shape: {output.shape}")
+            #print(f"out  : {output}")
+            #print(f"shape: {output.shape}")
 
             loss = torch.nn.CrossEntropyLoss()
             res = loss(output, label)
-            print(res)
+            print(f"loss: {res}")
+
             optimizer.zero_grad()
             res.backward()
             optimizer.step()
@@ -646,8 +647,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         fvals = []
         for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label_reshaped = np.reshape(label, (batch_sz, 5))
-            label_reshaped = label_reshaped.type(torch.float32)
+            label = label.type(torch.float32)
 
             test = []
             for i in range(0, 60):
@@ -671,8 +671,8 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
             soft = torch.nn.Softmax(dim=1)
             output = soft(output)
             
-            print(f"out  : {output}")
-            print(f"shape: {output.shape}")
+            #print(f"out  : {output}")
+            #print(f"shape: {output.shape}")
 
             preds = []
             for i in range(0, batch_sz):
@@ -691,7 +691,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
             conds = []
             for i in range(0, batch_sz):
                 for j in range(0, 5):
-                    if(label_reshaped[i][j] > 0):
+                    if(label[i][j] > 0):
                         conds.append(j)
                         break
             
