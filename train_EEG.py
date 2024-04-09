@@ -720,7 +720,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 epoch = [1000]
 batches = [15]
 
-learn = 1e-3
+learn = 1e-2
 weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
