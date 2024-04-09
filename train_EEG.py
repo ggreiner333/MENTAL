@@ -677,10 +677,10 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                     if(output[i][0][j] > mx):
                         mx = output[i][0][j]
                         loc = j
-                if(i==14):
-                    print(f"row: {output[i][0]}")
-                    print(f"max: {loc}")
-                    print(f"val: {mx}")
+                #if(i==14):
+                #    print(f"row: {output[i][0]}")
+                #    print(f"max: {loc}")
+                #    print(f"val: {mx}")
                 preds.append(loc)
 
             conds = []
@@ -705,7 +705,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         total = (test_loader.__len__())*batch_sz
         acc = correct/total
         accs.append(acc)
-        print(acc)
+        print(f"Epoch {epoch}: {acc}")
 
         if(epoch%100==0):
             np.save('/home/ggreiner/MENTAL/TOP5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
