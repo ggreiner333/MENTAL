@@ -668,7 +668,8 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 h = h_res
 
             #out = output.squeeze_(1)
-            output = torch.nn.Softmax(dim=1)
+            soft = torch.nn.Softmax(dim=1)
+            output = soft(output)
             
             print(f"out  : {output}")
             print(f"shape: {output.shape}")
