@@ -630,6 +630,9 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
+            print(f"label: {output}")
+            print(f"shape: {output.shape}\n")
+        
             loss = torch.nn.CrossEntropyLoss()
             res = loss(output, label)
 
