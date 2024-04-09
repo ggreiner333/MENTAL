@@ -677,9 +677,10 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                     if(output[i][0][j] > mx):
                         mx = output[i][0][j]
                         loc = j
-                #print(f"row: {output[i][0]}")
-                #print(f"max: {loc}")
-                #print(f"val: {mx}")
+                if(i==14):
+                    print(f"row: {output[i][0]}")
+                    print(f"max: {loc}")
+                    print(f"val: {mx}")
                 preds.append(loc)
 
             conds = []
