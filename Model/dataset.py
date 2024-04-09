@@ -141,7 +141,7 @@ class MSplitDataset(data.Dataset):
 
     def __init__(self, individuals_file, directory):
         self.directory = directory
-        self.individuals = np.loadtxt(os.path.join(directory, individuals_file), delimiter=",", dtype="float32")
+        self.individuals = np.load(os.path.join(directory, individuals_file))
         
     def __len__(self):
         return np.size(self.individuals, axis=0)
@@ -150,23 +150,28 @@ class MSplitDataset(data.Dataset):
         individual = self.individuals[idx]
 
         indication = individual[1]
-        output = torch.zeros([5])
-        output[indication] = 1
+        output = torch.zeros([1], dtype=torch.float32)
+        print(int(indication)-1)
+        output[int(indication)-1] = 1.0
 
         dem_val = individual[2:5]
-        dem_out = np.zeros(5, dtype="float32")
-        dem_out[0] = dem_val[0]
-        dem_out[1] = dem_val[1]
-        dem_out[2] = dem_val[2]
-        dem_out = torch.from_numpy(dem_out)
 
-        neo_val = individual[5:65]
+        h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
 
-        psd_val = []
-        for i in range(0,300, 5):
-            psd_val.append(individual[i:(i+5)]) 
+        neo = individual[5:65]
+        neo_val = torch.tensor(neo, dtype=torch.float32)
+        neo = torch.reshape(neo_val, [60, 1])
+        #print(neo.shape)
 
-        return dem_out, neo_val, psd_val, output
+        psd = []
+        for i in range(65,7865, 130):
+            psd.append(individual[i:(i+130)])
+        
+        psd_val = torch.tensor(psd, dtype=torch.float32)
+        psd = torch.reshape(psd_val, [60,130,1])
+        #print(psd.shape)
+
+        return h_1, neo, psd, output
     
     def __getIndividuals__(self):
         res = []
