@@ -46,5 +46,7 @@ class EegRNN(nn.Module):
         res = self.relu2(self.o2(res))
         out = self.o3(res)
 
+        out.squeeze_(1)
+
         return out, h_1
         
