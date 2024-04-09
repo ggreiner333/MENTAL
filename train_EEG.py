@@ -631,7 +631,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
             output = output.type(torch.float32)
         
-            loss = torch.nn.CrossEntropyLoss()
+            loss = torch.nn.MSELoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
