@@ -667,8 +667,8 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 h = h_res
 
             #out = output.squeeze_(1)
-            print(f"out  : {output}")
-            print(f"shape: {output.shape}")
+            #print(f"out  : {output}")
+            #print(f"shape: {output.shape}")
             preds = []
             for i in range(0, batch_sz):
                 mx = 0
@@ -677,9 +677,9 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                     if(output[i][0][j] > mx):
                         mx = output[i][0][j]
                         loc = j
-                print(f"row: {output[i][0]}")
-                print(f"max: {loc}")
-                print(f"val: {mx}")
+                #print(f"row: {output[i][0]}")
+                #print(f"max: {loc}")
+                #print(f"val: {mx}")
                 preds.append(loc)
 
             conds = []
@@ -688,9 +688,9 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 for j in range(0, 5):
                     if(label_reshaped[i][0][j] > 0):
                         conds.append(j)
-                        print(f"row: {label_reshaped[i][0]}")
-                        print(f"max: {loc}")
-                        print(f"val: {mx}")
+                        #print(f"row: {label_reshaped[i][0]}")
+                        #print(f"max: {loc}")
+                        #print(f"val: {mx}")
                         break
 
             # Variables for calculating specificity and sensitivity
