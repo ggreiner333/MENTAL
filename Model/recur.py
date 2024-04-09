@@ -44,7 +44,7 @@ class EegRNN(nn.Module):
 
         res = self.relu1(self.o1(res))
         res = self.relu2(self.o2(res))
-        out = self.soft(self.o3(res))
+        out = self.o3(res)
 
         return out, h_1
         

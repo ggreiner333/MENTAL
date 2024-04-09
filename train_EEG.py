@@ -607,8 +607,10 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         
         for (h_entry, n_entry, p_entry, label) in train_loader:
 
-            label_reshaped = np.reshape(label, (batch_sz,1,5))
+            print(f"lable: {label}")
+            label_reshaped = np.reshape(label, (batch_sz))
             label_reshaped = label_reshaped.type(torch.float32)
+            print(f"reshaped: {label_reshaped}")
 
             test = []
             for i in range(0, 60):
@@ -630,7 +632,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
             output = output.type(torch.float32)
         
-            loss = torch.nn.MSELoss()
+            loss = torch.nn.CrossEntropyLoss()
             res = loss(output, label_reshaped)
 
             optimizer.zero_grad()
@@ -644,7 +646,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         fvals = []
         for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label_reshaped = np.reshape(label, (batch_sz,1,5))
+            label_reshaped = np.reshape(label, (batch_sz))
             label_reshaped = label_reshaped.type(torch.float32)
 
             test = []
@@ -666,8 +668,11 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 h = h_res
 
             #out = output.squeeze_(1)
-            #print(f"out  : {output}")
-            #print(f"shape: {output.shape}")
+            output = torch.nn.Softmax(dim=1)
+            
+            print(f"out  : {output}")
+            print(f"shape: {output.shape}")
+
             preds = []
             for i in range(0, batch_sz):
                 mx = 0
@@ -682,21 +687,10 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 #    print(f"val: {mx}")
                 preds.append(loc)
 
-            conds = []
-
-            for i in range(0, batch_sz):
-                for j in range(0, 5):
-                    if(label_reshaped[i][0][j] > 0):
-                        conds.append(j)
-                        #print(f"row: {label_reshaped[i][0]}")
-                        #print(f"max: {loc}")
-                        #print(f"val: {mx}")
-                        break
-
             # Variables for calculating specificity and sensitivity
             
-            for i in range(0, len(conds)):
-                lb = conds[i]
+            for i in range(0, len(label_reshaped)):
+                lb = label_reshaped[i]
                 pd = preds[i]
                 if(lb==pd): 
                     correct += 1
@@ -706,11 +700,11 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         accs.append(acc)
         print(f"Epoch {epoch}: {acc}")
 
-        if(epoch%100==0):
-            np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
+        #if(epoch%100==0):
+            #np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EC_IMPUTED_ACCS', accs)
+    #np.save('/home/ggreiner/MENTAL/TOP5_e2_MENTAL_EC_IMPUTED_ACCS', accs)
 
 def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 

@@ -952,7 +952,7 @@ def plot_MENTAL_EEG_Control_Comparison():
     #plt.tight_layout()
     #plt.savefig("mental_eeg_control_comparison")
     
-plot_MENTAL_EEG_Control_Comparison()
+#plot_MENTAL_EEG_Control_Comparison()
 
 def plot_accs():
     accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EO_EC_ADHD_HEALTHY_ACCS.npy", allow_pickle=True)
@@ -1141,3 +1141,57 @@ def plot_MENTAL_EEG_Imputed_Comparison():
     plt.savefig("modelcomparison")
     
 #plot_MENTAL_EEG_Imputed_Comparison()
+
+def plot_MENTAL_MultiClass_Comparison():
+
+    nc = "tab:blue"
+    ic = "tab:orange"
+
+    figure, axis = plt.subplots(1, 2, figsize=(15, 14)) 
+  
+    figure.suptitle("Accuracy of MENTAL vs. EEG Only", fontsize=24, weight="bold")
+
+    # For EC Multi Class
+    e2_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e2_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
+    e3_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e3_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
+    axis[0].plot(e2_accs, label="MENTAL e2", c=nc)
+    axis[0].plot(e3_accs, label="MENTAL e3" , c=ic) 
+    axis[0].set_xlabel("Epoch", fontsize=16)
+    axis[0].set_ylabel("Accuracy", fontsize=16)
+    axis[0].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[0].set_title("(a) Multi-class MENTAL EC", fontsize=16, weight="bold") 
+
+    print("\n\nMulti-class prediction EC:")
+    print(f"\tMENTAL e2: {e2_accs[999]}")
+    print(f"\tMENTAL e3: {e3_accs[999]}\n")
+
+    print(f"\tmax MENTAL e2: {np.max(e2_accs)}")
+    print(f"\tmax MENTAL e3: {np.max(e3_accs)}")
+
+    # For EO Multi Class
+    e2_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e2_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
+    e3_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e3_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
+    axis[1].plot(e2_accs, c=nc)
+    axis[1].plot(e3_accs, c=ic) 
+    axis[1].set_xlabel("Epoch", fontsize=16)
+    axis[1].set_ylabel("Accuracy", fontsize=16)
+    axis[1].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[1].set_title("(b) Multi-class MENTAL EO", fontsize=16, weight="bold") 
+
+    print("\n\nMulti-class prediction EO:")
+    print(f"\tMENTAL e2: {e2_accs[999]}")
+    print(f"\tMENTAL e3: {e3_accs[999]}\n")
+
+    print(f"\tmax MENTAL e2: {np.max(e2_accs)}")
+    print(f"\tmax MENTAL e3: {np.max(e3_accs)}")
+
+    figure.legend(loc="lower center", fontsize=20)
+    plt.subplots_adjust(hspace = 0.3, wspace=0.15)
+
+    plt.show()
+    #plt.savefig("mssscomparison")
+
+
+plot_MENTAL_MultiClass_Comparison()
