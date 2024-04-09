@@ -695,8 +695,8 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                         conds.append(j)
                         break
             
-            for i in range(0, len(label_reshaped)):
-                lb = label_reshaped[i]
+            for i in range(0, len(conds)):
+                lb = conds[i]
                 pd = preds[i]
                 if(lb==pd): 
                     correct += 1
