@@ -682,12 +682,11 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 print(f"val: {mx}")
                 preds.append(loc)
 
-            label = label.squeeze_(1)
             conds = []
 
             for i in range(0, batch_sz):
                 for j in range(0, 5):
-                    if(output[i][0][j] > 0):
+                    if(label_reshaped[i][0][j] > 0):
                         conds.append(j)
                         print(f"row: {output[i][0]}")
                         print(f"max: {loc}")
@@ -712,41 +711,6 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
  
     accs = np.array(accs)
     np.save('/home/ggreiner/MENTAL/TOP5_MENTAL_EC_IMPUTED_ACCS', accs)
-
-
-    """
-    labels = np.arange(0, epochs, 1)
-
-    plt.figure(figsize=(15,10))
-    plt.plot(labels, accs)
-    plt.title("Accuracy of BCE ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
-    plt.ylabel("Accuracy")
-    plt.xlabel("Epoch")
-    plt.yticks(ticks=np.arange(0,1.01,0.1))
-
-    plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_accuracy_ec")
-    plt.clf()
-
-    plt.figure(figsize=(15,10))
-    plt.plot(labels, sens)
-    plt.title("Sensitivity of BCE ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
-    plt.ylabel("Sensitivity")
-    plt.xlabel("Epoch")
-    plt.yticks(ticks=np.arange(0,1.01,0.1))
-
-    plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_sensitivity_ec")
-    plt.clf()
-
-    plt.figure(figsize=(15,10))
-    plt.plot(labels, spec)
-    plt.title("Specificity of BCE ADHD EC MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
-    plt.ylabel("Specificity")
-    plt.xlabel("Epoch")
-    plt.yticks(ticks=np.arange(0,1.01,0.1))
-
-    plt.savefig("BCE_adhd_mental_epoch1000_b15_w6_l3_specificity_ec")
-    plt.clf()
-    """
 
 
 
