@@ -152,7 +152,7 @@ class MSplitDataset(data.Dataset):
         indication = individual[1]
         output = torch.zeros([5], dtype=torch.float32)
         print(int(indication)-1)
-        output[int(indication)-1] = 1.0
+        output[int(indication)-1] = 1
 
         dem_val = individual[2:5]
 
