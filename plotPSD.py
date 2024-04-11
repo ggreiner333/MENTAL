@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 from matplotlib import pyplot as plt
-
+import seaborn as sns
 import mne
 
 
@@ -1153,48 +1153,56 @@ def plot_MENTAL_MultiClass_Comparison():
     figure.suptitle("Accuracy of MENTAL vs. EEG Only", fontsize=24, weight="bold")
 
     # For EC Multi Class
-    e2_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e2_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
-    e3_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e3_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
+    #e2_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e2_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
+    e3_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\e3e4Original\\TOP5_e4_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
     e4_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e4_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
+    e5_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e5_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
     #axis[0].plot(e2_accs, label="MENTAL e2", c=nc)
-    #axis[0].plot(e3_accs, label="MENTAL e3", c=ic) 
+    axis[0].plot(e3_accs, label="MENTAL e4 first", c=nc) 
     axis[0].plot(e4_accs, label="MENTAL e4", c=oc)
+    axis[0].plot(e5_accs, label="MENTAL e5", c=ic)
     axis[0].set_xlabel("Epoch", fontsize=16)
     axis[0].set_ylabel("Accuracy", fontsize=16)
-    axis[0].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[0].set_xticks(ticks=np.arange(0,2001,100), labels=np.arange(0,2001,100), fontsize=14)
     axis[0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
     axis[0].set_title("(a) Multi-class MENTAL EC", fontsize=16, weight="bold") 
 
     print("\n\nMulti-class prediction EC:")
-    print(f"\tMENTAL e2: {e2_accs[999]}")
-    print(f"\tMENTAL e3: {e3_accs[999]}")
-    print(f"\tMENTAL e4: {e4_accs[999]}\n")
+    #print(f"\tMENTAL e2: {e2_accs[999]}")
+    #print(f"\tMENTAL e3: {e3_accs[999]}")
+    print(f"\tMENTAL e4: {e4_accs[1999]}")
+    print(f"\tMENTAL e5: {e5_accs[1999]}\n")
 
-    print(f"\tmax MENTAL e2: {np.max(e2_accs)}")
-    print(f"\tmax MENTAL e3: {np.max(e3_accs)}")
+    #print(f"\tmax MENTAL e2: {np.max(e2_accs)}")
+    #print(f"\tmax MENTAL e3: {np.max(e3_accs)}")
     print(f"\tmax MENTAL e4: {np.max(e4_accs)}")
+    print(f"\tmax MENTAL e5: {np.max(e5_accs)}")
 
     # For EO Multi Class
-    e2_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e2_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
-    e3_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e3_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
+    #e2_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e2_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
+    e3_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\e3e4Original\\TOP5_e4_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
     e4_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e4_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
+    e5_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e5_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
     #axis[1].plot(e2_accs, c=nc)
-    #axis[1].plot(e3_accs, c=ic) 
-    axis[1].plot(e4_accs, c=oc) 
+    axis[1].plot(e3_accs, c=nc) 
+    axis[1].plot(e4_accs, c=oc)
+    axis[1].plot(e5_accs, c=ic) 
     axis[1].set_xlabel("Epoch", fontsize=16)
     axis[1].set_ylabel("Accuracy", fontsize=16)
-    axis[1].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[1].set_xticks(ticks=np.arange(0,2001,100), labels=np.arange(0,2001,100), fontsize=11)
     axis[1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
     axis[1].set_title("(b) Multi-class MENTAL EO", fontsize=16, weight="bold") 
 
     print("\n\nMulti-class prediction EO:")
-    print(f"\tMENTAL e2: {e2_accs[999]}")
-    print(f"\tMENTAL e3: {e3_accs[999]}")
-    print(f"\tMENTAL e4: {e4_accs[999]}\n")
+    #print(f"\tMENTAL e2: {e2_accs[999]}")
+    #print(f"\tMENTAL e3: {e3_accs[999]}")
+    print(f"\tMENTAL e4: {e4_accs[1999]}")
+    print(f"\tMENTAL e5: {e5_accs[1999]}\n")
 
-    print(f"\tmax MENTAL e2: {np.max(e2_accs)}")
-    print(f"\tmax MENTAL e3: {np.max(e3_accs)}")
+    #print(f"\tmax MENTAL e2: {np.max(e2_accs)}")
+    #print(f"\tmax MENTAL e3: {np.max(e3_accs)}")
     print(f"\tmax MENTAL e4: {np.max(e4_accs)}")
+    print(f"\tmax MENTAL e5: {np.max(e5_accs)}")
 
     figure.legend(loc="lower center", fontsize=20)
     plt.subplots_adjust(hspace = 0.3, wspace=0.15)
@@ -1204,3 +1212,11 @@ def plot_MENTAL_MultiClass_Comparison():
 
 
 plot_MENTAL_MultiClass_Comparison()
+
+def plot_confusion():
+    confusion = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e5_MENTAL_EC_IMPUTED_CONFUSION.npy", allow_pickle=True)
+    plt.figure(figsize = (10,7))
+    sns.heatmap(confusion[1999], annot=True, cmap='Blues')
+    plt.show()
+
+plot_confusion()

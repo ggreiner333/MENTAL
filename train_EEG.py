@@ -588,7 +588,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
     splits = [615, 165, 11]
 
-    res = data.random_split(main_dataset, splits)
+    res = data.random_split(main_dataset, splits, generator=torch.Generator().manual_seed(40))
 
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
@@ -708,14 +708,14 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         accs.append(acc)
         print(f"Epoch {epoch}: {acc}")
 
-        if(epoch%100==0):
-            np.save('/home/ggreiner/MENTAL/TOP5_e5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/TOP5_e5_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
+        if(epoch%500==0):
+            np.save('/home/ggreiner/MENTAL/TOP5_5e5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/TOP5_5e5_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_e5_MENTAL_EC_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/TOP5_5e5_MENTAL_EC_IMPUTED_ACCS', accs)
     confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/TOP5_e5_MENTAL_EC_IMPUTED_CONFUSION', confusion)
+    np.save('/home/ggreiner/MENTAL/TOP5_5e5_MENTAL_EC_IMPUTED_CONFUSION', confusion)
 
 def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
@@ -723,7 +723,7 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
     splits = [615, 165, 10]
 
-    res = data.random_split(main_dataset, splits)
+    res = data.random_split(main_dataset, splits, generator=torch.Generator().manual_seed(40))
 
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
@@ -843,22 +843,22 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         accs.append(acc)
         print(f"Epoch {epoch}: {acc}")
 
-        if(epoch%100==0):
-            np.save('/home/ggreiner/MENTAL/TOP5_e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/TOP5_e5_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
+        if(epoch%500==0):
+            np.save('/home/ggreiner/MENTAL/TOP5_5e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/TOP5_5e5_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_e5_MENTAL_EO_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/TOP5_5e5_MENTAL_EO_IMPUTED_ACCS', accs)
     confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/TOP5_e5_MENTAL_EO_IMPUTED_CONFUSION', confusion)
+    np.save('/home/ggreiner/MENTAL/TOP5_5e5_MENTAL_EO_IMPUTED_CONFUSION', confusion)
 
 
 # running code
 
-epoch = [2000]
+epoch = [3000]
 batches = [15]
 
-learn = 1e-5
+learn = 5e-5
 weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
