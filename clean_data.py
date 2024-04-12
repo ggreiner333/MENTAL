@@ -646,7 +646,7 @@ def testing():
 #testing()
 
 def test_findlen():
-    complete = np.load(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_top5.npy'))
+    complete = np.load(os.path.join('TDBRAIN','small_imputed_complete_samples_EO_top5.npy'))
     top3 = []
     count3 = 0
     counth = 0
@@ -665,7 +665,7 @@ def test_findlen():
     print(f"top3 count: {count3}")
     print(f"hlth count: {counth}")
     print(f"ocd  count: {counto}")
-    np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_top3.npy'), top3)
+    np.save(os.path.join('TDBRAIN','small_imputed_complete_samples_EO_top3.npy'), top3)
 
 test_findlen()
 
