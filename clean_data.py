@@ -647,7 +647,7 @@ def testing():
 
 def test_findlen():
     complete = np.load(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_top5.npy'))
-    for i in range(0, 20):
+    for i in range(0, 50):
         print(complete[i])
     print(complete.shape)
 
