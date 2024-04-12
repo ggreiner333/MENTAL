@@ -28,7 +28,7 @@ out_path = 'TDBRAIN'
 def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     # Load Data
-    inds = np.load(os.path.join(path, 'small_imputed_complete_samples_EC_top5.npy'))
+    inds = np.load(os.path.join(path, 'small_imputed_complete_samples_EC_top3.npy'))
 
     normalized = np.zeros_like(inds)
 
@@ -43,12 +43,12 @@ def normalize_data(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     print(normalized.shape)
 
-    np.save(file=os.path.join(path, 'normalized_small_imputed_complete_samples_EC_top5.npy'), arr=normalized)
+    np.save(file=os.path.join(path, 'normalized_small_imputed_complete_samples_EC_top3.npy'), arr=normalized)
 
 def normalize_data_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     # Load Data
-    inds = np.load(os.path.join(path, 'small_imputed_complete_samples_EO_top5.npy'))
+    inds = np.load(os.path.join(path, 'small_imputed_complete_samples_EO_top3.npy'))
 
     normalized = np.zeros_like(inds)
 
@@ -63,7 +63,7 @@ def normalize_data_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
     print(normalized.shape)
 
-    np.save(file=os.path.join(path, 'normalized_small_imputed_complete_samples_EO_top5.npy'), arr=normalized)
+    np.save(file=os.path.join(path, 'normalized_small_imputed_complete_samples_EO_top3.npy'), arr=normalized)
 
 def normalize_data_EC_EO(path="/data/zhanglab/ggreiner/MENTAL/TDBRAIN"):
 
