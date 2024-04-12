@@ -651,6 +651,7 @@ def test_findlen():
     for ind in complete:
         if ((ind[1] > 1) and (ind[1] < 5)):
             top3.append(ind)
+            print(ind)
     top3 = np.array(top3)
     print(complete.shape)
     print(top3.shape)
