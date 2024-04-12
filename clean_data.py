@@ -648,13 +648,23 @@ def testing():
 def test_findlen():
     complete = np.load(os.path.join('TDBRAIN','small_imputed_complete_samples_EC_top5.npy'))
     top3 = []
+    count3 = 0
+    counth = 0
+    counto = 0
     for ind in complete:
         if ((ind[1] > 1) and (ind[1] < 5)):
             top3.append(ind)
-            print(ind)
+            count3+=1
+        elif(int(ind[1]) == 1):
+            counth+=1
+        elif(int(ind[1]) == 5):
+            counto+=1
     top3 = np.array(top3)
     print(complete.shape)
     print(top3.shape)
+    print(f"top3 count: {count3}")
+    print(f"hlth count: {counth}")
+    print(f"ocd  count: {counto}")
 
 test_findlen()
 
