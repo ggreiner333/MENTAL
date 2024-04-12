@@ -178,6 +178,47 @@ class MSplitDataset(data.Dataset):
             res.append((self.__getitem__(i))[0])
         return np.array(res)
 
+class M3SplitDataset(data.Dataset):
+
+    def __init__(self, individuals_file, directory):
+        self.directory = directory
+        self.individuals = np.load(os.path.join(directory, individuals_file))
+        
+    def __len__(self):
+        return np.size(self.individuals, axis=0)
+
+    def __getitem__(self, idx):
+        individual = self.individuals[idx]
+
+        indication = individual[1]
+        output = torch.zeros([3], dtype=torch.float32)
+        output[int(indication)-2] = 1
+
+        dem_val = individual[2:5]
+
+        h_1 = torch.zeros([2, 1, 30], dtype=torch.float32)
+
+        neo = individual[5:65]
+        neo_val = torch.tensor(neo, dtype=torch.float32)
+        neo = torch.reshape(neo_val, [60, 1])
+        #print(neo.shape)
+
+        psd = []
+        for i in range(65,7865, 130):
+            psd.append(individual[i:(i+130)])
+        
+        psd_val = torch.tensor(psd, dtype=torch.float32)
+        psd = torch.reshape(psd_val, [60,130,1])
+        #print(psd.shape)
+
+        return h_1, neo, psd, output
+    
+    def __getIndividuals__(self):
+        res = []
+        for i in range(0, self.__len__()):
+            res.append((self.__getitem__(i))[0])
+        return np.array(res)
+
 class EEGDataset(data.Dataset):
 
     def __init__(self, individuals_file, directory):

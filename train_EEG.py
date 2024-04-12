@@ -15,6 +15,7 @@ from Model.dataset import MultiModalDataset
 from Model.dataset import SplitDataset
 from Model.dataset import BSplitDataset
 from Model.dataset import MSplitDataset
+from Model.dataset import M3SplitDataset
 from Model.mentalModel import MENTAL
 from Model.mental import MENTAL_EEG
 
@@ -855,16 +856,16 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
 def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = MSplitDataset('normalized_small_imputed_complete_samples_EC_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = M3SplitDataset('normalized_small_imputed_complete_samples_EC_top3.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = [615, 165, 11]
+    splits = [540, 150, 8]
 
     res = data.random_split(main_dataset, splits, generator=torch.Generator().manual_seed(40))
 
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
 
-    my_mental = MENTAL(60, 30, 5, batch_sz)
+    my_mental = MENTAL(60, 30, 3, batch_sz)
 
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate)
 
@@ -873,7 +874,7 @@ def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
     accs = []
     sens = []
     spec = []
-    confusion = [[[0]*5 for i in range(0,5)] for i in range(0, epochs)]
+    confusion = [[[0]*3 for i in range(0,3)] for i in range(0, epochs)]
 
     for epoch in range(epochs):
         
@@ -950,7 +951,7 @@ def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
             for i in range(0, batch_sz):
                 mx = 0
                 loc = 0
-                for j in range(0, 5):
+                for j in range(0, 3):
                     if(output[i][j] > mx):
                         mx = output[i][j]
                         loc = j
@@ -962,7 +963,7 @@ def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
             conds = []
             for i in range(0, batch_sz):
-                for j in range(0, 5):
+                for j in range(0, 3):
                     if(label[i][j] > 0):
                         conds.append(j)
                         break
@@ -980,26 +981,26 @@ def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
         print(f"Epoch {epoch}: {acc}")
 
         if(epoch%500==0):
-            np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
+            np.save('/home/ggreiner/MENTAL/TOP3_1e5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/TOP3_1e5_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EC_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/TOP3_1e5_MENTAL_EC_IMPUTED_ACCS', accs)
     confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION', confusion)
+    np.save('/home/ggreiner/MENTAL/TOP3_1e5_MENTAL_EC_IMPUTED_CONFUSION', confusion)
 
 def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = MSplitDataset('normalized_small_imputed_complete_samples_EO_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = M3SplitDataset('normalized_small_imputed_complete_samples_EO_top3.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = [615, 165, 10]
+    splits = [540, 150, 7]
 
     res = data.random_split(main_dataset, splits, generator=torch.Generator().manual_seed(40))
 
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
 
-    my_mental = MENTAL(60, 30, 5, batch_sz)
+    my_mental = MENTAL(60, 30, 3, batch_sz)
 
     optimizer = torch.optim.Adam(my_mental.parameters(), lr=learn_rate)
 
@@ -1008,7 +1009,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
     accs = []
     sens = []
     spec = []
-    confusion = [[[0]*5 for i in range(0,5)] for i in range(0, epochs)]
+    confusion = [[[0]*3 for i in range(0,3)] for i in range(0, epochs)]
 
     for epoch in range(epochs):
         
@@ -1085,7 +1086,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
             for i in range(0, batch_sz):
                 mx = 0
                 loc = 0
-                for j in range(0, 5):
+                for j in range(0, 3):
                     if(output[i][j] > mx):
                         mx = output[i][j]
                         loc = j
@@ -1097,7 +1098,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
             conds = []
             for i in range(0, batch_sz):
-                for j in range(0, 5):
+                for j in range(0, 3):
                     if(label[i][j] > 0):
                         conds.append(j)
                         break
@@ -1113,15 +1114,16 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
         acc = correct/total
         accs.append(acc)
         print(f"Epoch {epoch}: {acc}")
+        print(confusion)
 
         if(epoch%500==0):
-            np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
+            np.save('/home/ggreiner/MENTAL/TOP3_1e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/TOP3_1e5_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EO_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/TOP3_1e5_MENTAL_EO_IMPUTED_ACCS', accs)
     confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION', confusion)
+    np.save('/home/ggreiner/MENTAL/TOP3_1e5_MENTAL_EO_IMPUTED_CONFUSION', confusion)
 
 
 # running code
