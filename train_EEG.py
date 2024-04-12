@@ -1114,7 +1114,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
         acc = correct/total
         accs.append(acc)
         print(f"Epoch {epoch}: {acc}")
-        print(confusion)
+        #print(confusion)
 
         if(epoch%500==0):
             np.save('/home/ggreiner/MENTAL/TOP3_1e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
@@ -1136,6 +1136,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_EO_Multi_top3(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EC_Multi_top3(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="epoch2000_b15_w6_l3")
         
