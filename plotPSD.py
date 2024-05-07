@@ -779,7 +779,7 @@ def plot_MENTAL_EEG_Comparison():
 
     figure, axis = plt.subplots(3, 2, figsize=(15, 14)) 
   
-    figure.suptitle("Accuracy of MENTAL vs. EEG Only", fontsize=24, weight="bold")
+    figure.suptitle("Accuracy of MENTAL vs. EEG Only (1 Disorder vs All Disorders)", fontsize=24, weight="bold")
 
     # For ADHD EO
     adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EC_ONLY_ADHD_ACCS.npy", allow_pickle=True)
@@ -861,7 +861,7 @@ def plot_MENTAL_EEG_Control_Comparison():
 
     figure, axis = plt.subplots(3, 2, figsize=(15, 14)) 
   
-    figure.suptitle("Accuracy of MENTAL vs. EEG Only (Healthy vs Non)", fontsize=24, weight="bold")
+    figure.suptitle("Accuracy of MENTAL vs. EEG Only (One Disorder vs Healthy)", fontsize=24, weight="bold")
 
     # For ADHD EC
     adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\controls\\EC_ONLY_ADHD_HEALTHY_ACCS.npy", allow_pickle=True)
@@ -950,7 +950,7 @@ def plot_MENTAL_EEG_Control_Comparison():
     figure.legend(loc="lower center", fontsize=20)
     plt.subplots_adjust(hspace = 0.3, wspace=0.15)
     #plt.tight_layout()
-    #plt.savefig("mental_eeg_control_comparison")
+    plt.savefig("mental_eeg_control_comparison_new")
     
 #plot_MENTAL_EEG_Control_Comparison()
 
@@ -1034,7 +1034,7 @@ def plot_MENTAL_EEG_Imputed_Comparison():
 
     figure, axis = plt.subplots(3, 2, figsize=(15, 14)) 
   
-    figure.suptitle("Accuracy of MENTAL vs. EEG Only", fontsize=24, weight="bold")
+    figure.suptitle("Accuracy of MENTAL vs. EEG Only (One Disorder vs All Disorders)", fontsize=24, weight="bold")
 
     # For ADHD EC
     adhd_accs_normal = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\EC_ONLY_ADHD_ACCS.npy", allow_pickle=True)
@@ -1148,75 +1148,252 @@ def plot_MENTAL_MultiClass_Comparison():
     ic = "tab:orange"
     oc = "tab:green"
 
-    figure, axis = plt.subplots(1, 2, figsize=(15, 14)) 
+    figure, axis = plt.subplots(1, 2, figsize=(15, 5)) 
   
-    figure.suptitle("Accuracy of MENTAL vs. EEG Only", fontsize=24, weight="bold")
+    figure.suptitle("Accuracy of MENTAL (MDD, ADHD, SMC, OCD, Healthy)", fontsize=24, weight="bold")
 
     # For EC Multi Class
     #e2_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e2_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
-    e3_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\e3e4Original\\TOP5_e4_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
+    #e3_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\e3e4Original\\TOP5_e4_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
     e4_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e4_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
-    e5_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e5_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
+    #e5_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e5_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
     #axis[0].plot(e2_accs, label="MENTAL e2", c=nc)
-    axis[0].plot(e3_accs, label="MENTAL e4 first", c=nc) 
-    axis[0].plot(e4_accs, label="MENTAL e4", c=oc)
-    axis[0].plot(e5_accs, label="MENTAL e5", c=ic)
+    #axis[0].plot(e3_accs, label="MENTAL", c=ic) 
+    axis[0].plot(e4_accs[:1000], label="MENTAL", c=ic)
+    #axis[0].plot(e5_accs, label="MENTAL e5", c=ic)
     axis[0].set_xlabel("Epoch", fontsize=16)
     axis[0].set_ylabel("Accuracy", fontsize=16)
-    axis[0].set_xticks(ticks=np.arange(0,2001,100), labels=np.arange(0,2001,100), fontsize=14)
+    axis[0].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
     axis[0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
-    axis[0].set_title("(a) Multi-class MENTAL EC", fontsize=16, weight="bold") 
+    axis[0].set_title("(a) Four Disorder + Healthy MENTAL EC", fontsize=16, weight="bold") 
 
     print("\n\nMulti-class prediction EC:")
     #print(f"\tMENTAL e2: {e2_accs[999]}")
     #print(f"\tMENTAL e3: {e3_accs[999]}")
     print(f"\tMENTAL e4: {e4_accs[1999]}")
-    print(f"\tMENTAL e5: {e5_accs[1999]}\n")
+    #print(f"\tMENTAL e5: {e5_accs[1999]}\n")
 
     #print(f"\tmax MENTAL e2: {np.max(e2_accs)}")
     #print(f"\tmax MENTAL e3: {np.max(e3_accs)}")
     print(f"\tmax MENTAL e4: {np.max(e4_accs)}")
-    print(f"\tmax MENTAL e5: {np.max(e5_accs)}")
+    print(np.where(e4_accs == 0.7272727272727273))
+    #print(f"\tmax MENTAL e5: {np.max(e5_accs)}")
 
     # For EO Multi Class
     #e2_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e2_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
     e3_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\e3e4Original\\TOP5_e4_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
-    e4_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e4_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
-    e5_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e5_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
+    #e4_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e4_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
+    #e5_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e5_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
     #axis[1].plot(e2_accs, c=nc)
-    axis[1].plot(e3_accs, c=nc) 
-    axis[1].plot(e4_accs, c=oc)
-    axis[1].plot(e5_accs, c=ic) 
+    axis[1].plot(e3_accs, c=ic) 
+    #axis[1].plot(e4_accs, c=oc)
+    #axis[1].plot(e5_accs, c=ic) 
     axis[1].set_xlabel("Epoch", fontsize=16)
     axis[1].set_ylabel("Accuracy", fontsize=16)
-    axis[1].set_xticks(ticks=np.arange(0,2001,100), labels=np.arange(0,2001,100), fontsize=11)
+    axis[1].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[1].set_title("(b) Four Disorder + Healthy MENTAL EO", fontsize=16, weight="bold") 
+
+    print("\n\nMulti-class prediction EO:")
+    #print(f"\tMENTAL e2: {e2_accs[999]}")
+    print(f"\tMENTAL e3: {e3_accs[999]}")
+    #print(f"\tMENTAL e4: {e4_accs[1999]}")
+    #print(f"\tMENTAL e5: {e5_accs[1999]}\n")
+
+    #print(f"\tmax MENTAL e2: {np.max(e2_accs)}")
+    print(f"\tmax MENTAL e3: {np.max(e3_accs)}")
+    print(np.where(e3_accs == 0.7696969696969697))
+    #print(f"\tmax MENTAL e4: {np.max(e4_accs)}")
+    #print(f"\tmax MENTAL e5: {np.max(e5_accs)}")
+
+    #figure.legend(loc="lower center", fontsize=20)
+    #plt.subplots_adjust(hspace = 0.3, wspace=0.15)
+    plt.tight_layout()
+    #plt.show()
+    plt.savefig("top5_mental")
+
+
+#plot_MENTAL_MultiClass_Comparison()
+
+
+def plot_MENTAL_MultiClass_Comparison_top5():
+
+    nc = "tab:blue"
+    ic = "tab:orange"
+    oc = "tab:green"
+
+    figure, axis = plt.subplots(1, 2, figsize=(15, 14)) 
+  
+    figure.suptitle("Accuracy of MENTAL", fontsize=24, weight="bold")
+
+    # For EC Multi Class
+    e15_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_1e5_MENTAL_EC_IMPUTED_ACCS2500.npy", allow_pickle=True)
+    e55_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_5e5_MENTAL_EC_IMPUTED_ACCS2000.npy", allow_pickle=True)
+    e54_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_5e4_MENTAL_EC_IMPUTED_ACCS2000.npy", allow_pickle=True)
+    
+    axis[0].plot(e15_accs, label="MENTAL 1e5", c=ic) 
+    axis[0].plot(e55_accs, label="MENTAL 5e5", c=nc)
+    axis[0].plot(e54_accs, label="MENTAL 4e5", c=oc)
+    axis[0].set_xlabel("Epoch", fontsize=16)
+    axis[0].set_ylabel("Accuracy", fontsize=16)
+    axis[0].set_xticks(ticks=np.arange(0,2501,100), labels=np.arange(0,2501,100), fontsize=14)
+    axis[0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[0].set_title("(a) Multi-class MENTAL EC", fontsize=16, weight="bold") 
+
+    print("\n\nMulti-class prediction EC:")
+    print(f"\tMENTAL 1e5: {e15_accs[2499]}")
+    print(f"\tMENTAL 5e5: {e55_accs[1999]}")
+    print(f"\tMENTAL 5e4: {e54_accs[1999]}\n")
+
+    print(f"\tmax MENTAL 1e5: {np.max(e15_accs)}")
+    print(f"\tmax MENTAL 5e5: {np.max(e55_accs)}")
+    print(f"\tmax MENTAL 5e4: {np.max(e54_accs)}")
+
+    # For EO Multi Class
+    e15_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_1e5_MENTAL_EO_IMPUTED_ACCS2500.npy", allow_pickle=True)
+    e55_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_5e5_MENTAL_EO_IMPUTED_ACCS2000.npy", allow_pickle=True)
+    e54_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_5e4_MENTAL_EO_IMPUTED_ACCS2000.npy", allow_pickle=True)
+    
+    axis[1].plot(e15_accs, c=ic) 
+    axis[1].plot(e55_accs, c=nc)
+    axis[1].plot(e54_accs, c=oc)
+    axis[1].set_xlabel("Epoch", fontsize=16)
+    axis[1].set_ylabel("Accuracy", fontsize=16)
+    axis[1].set_xticks(ticks=np.arange(0,2501,100), labels=np.arange(0,2501,100), fontsize=11)
     axis[1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
     axis[1].set_title("(b) Multi-class MENTAL EO", fontsize=16, weight="bold") 
 
     print("\n\nMulti-class prediction EO:")
-    #print(f"\tMENTAL e2: {e2_accs[999]}")
-    #print(f"\tMENTAL e3: {e3_accs[999]}")
-    print(f"\tMENTAL e4: {e4_accs[1999]}")
-    print(f"\tMENTAL e5: {e5_accs[1999]}\n")
+    print(f"\tMENTAL 1e5: {e15_accs[2499]}")
+    print(f"\tMENTAL 5e5: {e55_accs[1999]}")
+    print(f"\tMENTAL 5e4: {e54_accs[1999]}\n")
 
-    #print(f"\tmax MENTAL e2: {np.max(e2_accs)}")
-    #print(f"\tmax MENTAL e3: {np.max(e3_accs)}")
-    print(f"\tmax MENTAL e4: {np.max(e4_accs)}")
-    print(f"\tmax MENTAL e5: {np.max(e5_accs)}")
+    print(f"\tmax MENTAL 1e5: {np.max(e15_accs)}")
+    print(f"\tmax MENTAL 5e5: {np.max(e55_accs)}")
+    print(f"\tmax MENTAL 5e4: {np.max(e54_accs)}")
 
     figure.legend(loc="lower center", fontsize=20)
     plt.subplots_adjust(hspace = 0.3, wspace=0.15)
 
     plt.show()
-    #plt.savefig("mssscomparison")
+    #plt.savefig("top3_mental")
 
+#plot_MENTAL_MultiClass_Comparison_top5()
 
-plot_MENTAL_MultiClass_Comparison()
+def plot_MENTAL_MultiClass_Comparison_top3():
+
+    nc = "tab:blue"
+    ic = "tab:orange"
+    oc = "tab:green"
+
+    figure, axis = plt.subplots(1, 2, figsize=(15, 5)) 
+  
+    figure.suptitle("Accuracy of MENTAL (MDD, ADHD, SMC)", fontsize=24, weight="bold")
+
+    # For EC Multi Class
+    e14_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP3_1e4_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
+    e15_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP3_1e5_MENTAL_EC_IMPUTED_ACCS.npy", allow_pickle=True)
+    
+    axis[0].plot(e14_accs[:1000], label="MENTAL 1e4", c=ic) 
+    #axis[0].plot(e15_accs, label="MENTAL 1e5", c=nc)
+    axis[0].set_xlabel("Epoch", fontsize=16)
+    axis[0].set_ylabel("Accuracy", fontsize=16)
+    axis[0].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[0].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[0].set_title("(a) Three Disorder MENTAL EC", fontsize=16, weight="bold") 
+
+    print("\n\nMulti-class prediction EC:")
+    print(f"\tMENTAL 1e4: {e14_accs[999]}")
+    print(f"\tMENTAL 1e5: {e15_accs[999]}\n")
+
+    print(f"\tmax MENTAL 1e4: {np.max(e14_accs)}")
+    print(f"\tmax MENTAL 1e5: {np.max(e15_accs)}")
+
+    print(np.where(e14_accs == 0.8))
+
+    # For EO Multi Class
+    e14_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP3_1e4_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
+    e15_accs = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP3_1e5_MENTAL_EO_IMPUTED_ACCS.npy", allow_pickle=True)
+    
+    axis[1].plot(e14_accs[:1000], c=ic) 
+    #axis[1].plot(e15_accs, c=nc)
+    axis[1].set_xlabel("Epoch", fontsize=16)
+    axis[1].set_ylabel("Accuracy", fontsize=16)
+    axis[1].set_xticks(ticks=np.arange(0,1001,100), labels=np.arange(0,1001,100), fontsize=14)
+    axis[1].set_yticks(ticks=np.arange(0,1.01,0.1), labels=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], fontsize=14)
+    axis[1].set_title("(b) Three Disorder MENTAL EO", fontsize=16, weight="bold") 
+
+    print("\n\nMulti-class prediction EO:")
+    print(f"\tMENTAL 1e4: {e14_accs[999]}")
+    print(f"\tMENTAL 1e5: {e15_accs[999]}\n")
+
+    print(f"\tmax MENTAL 1e4: {np.max(e14_accs)}")
+    print(f"\tmax MENTAL 1e5: {np.max(e15_accs)}")
+
+    print(np.where(e14_accs == 0.84))
+
+    #figure.legend(loc="lower center", fontsize=20)
+    plt.tight_layout()
+    #plt.show()
+    plt.savefig("top3_mental")
+    #plt.clf()
+
+#plot_MENTAL_MultiClass_Comparison_top3()
 
 def plot_confusion():
-    confusion = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e5_MENTAL_EC_IMPUTED_CONFUSION.npy", allow_pickle=True)
-    plt.figure(figsize = (10,7))
-    sns.heatmap(confusion[1999], annot=True, cmap='Blues')
-    plt.show()
+
+    figure, axis = plt.subplots(1, 2, figsize=(15, 7)) 
+  
+    figure.suptitle("Confusion Matrix of MENTAL (MDD, ADHD, SMC)", fontsize=24, weight="bold")
+
+    # For EC Multi Class
+    confusion_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP3_1e4_MENTAL_EC_IMPUTED_CONFUSION.npy", allow_pickle=True)
+    confusion_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP3_1e4_MENTAL_EO_IMPUTED_CONFUSION.npy", allow_pickle=True)
+    
+    g = sns.heatmap(confusion_ec[262], annot=True, cmap='Blues', xticklabels=['MDD', 'ADHD', 'SMC'], yticklabels=['MDD', 'ADHD', 'SMC'], cbar=False, ax=axis[0], annot_kws={'size': 25})
+    g.set_xticklabels(g.get_xmajorticklabels(), fontsize = 14)
+    g.set_yticklabels(g.get_ymajorticklabels(), fontsize = 14)
+    axis[0].set_xlabel(xlabel='Predicted Label', fontsize=15, weight="bold")
+    axis[0].set_ylabel(ylabel='Actual Label', fontsize=15, weight="bold")
+    axis[0].set_title("(a) Three Disorder MENTAL (EC)", fontsize=16, weight="bold") 
+
+    g = sns.heatmap(confusion_eo[174], annot=True, cmap='Blues', xticklabels=['MDD', 'ADHD', 'SMC'], yticklabels=['MDD', 'ADHD', 'SMC'], cbar=False, ax=axis[1], annot_kws={'size': 25})
+    g.set_xticklabels(g.get_xmajorticklabels(), fontsize = 14)
+    g.set_yticklabels(g.get_ymajorticklabels(), fontsize = 14)
+    axis[1].set_xlabel(xlabel='Predicted Label', fontsize=15, weight="bold")
+    axis[1].set_ylabel(ylabel='Actual Label', fontsize=15, weight="bold")
+    axis[1].set_title("(b) Three Disorder MENTAL (EO)", fontsize=16, weight="bold") 
+
+    #plt.show()
+    plt.savefig("Confusions")
 
 plot_confusion()
+
+def plot_confusion_top5():
+
+    figure, axis = plt.subplots(1, 2, figsize=(15, 7)) 
+  
+    figure.suptitle("Confusion Matrix of MENTAL (MDD, ADHD, SMC, OCD, Healthy)", fontsize=24, weight="bold")
+
+    # For EC Multi Class
+    confusion_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e4_MENTAL_EC_IMPUTED_CONFUSION.npy", allow_pickle=True)
+    confusion_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\TOP5_e4_MENTAL_EO_IMPUTED_CONFUSION.npy", allow_pickle=True)
+    
+    g = sns.heatmap(confusion_ec[262], annot=True, cmap='Blues', xticklabels=['MDD', 'ADHD', 'SMC', 'OCD', 'Healthy'], yticklabels=['MDD', 'ADHD', 'SMC', 'OCD', 'Healthy'], cbar=False, ax=axis[0], annot_kws={'size': 20})
+    g.set_xticklabels(g.get_xmajorticklabels(), fontsize = 14)
+    g.set_yticklabels(g.get_ymajorticklabels(), fontsize = 14)
+    axis[0].set_xlabel(xlabel='Predicted Label', fontsize=15, weight="bold")
+    axis[0].set_ylabel(ylabel='Actual Label', fontsize=15, weight="bold")
+    axis[0].set_title("(a) Four Disorder + Healthy MENTAL (EC)", fontsize=16, weight="bold") 
+
+    g=sns.heatmap(confusion_eo[174], annot=True, cmap='Blues', xticklabels=['MDD', 'ADHD', 'SMC', 'OCD', 'Healthy'], yticklabels=['MDD', 'ADHD', 'SMC', 'OCD', 'Healthy'], cbar=False, ax=axis[1], annot_kws={'size': 20})
+    g.set_xticklabels(g.get_xmajorticklabels(), fontsize = 14)
+    g.set_yticklabels(g.get_ymajorticklabels(), fontsize = 14)
+    axis[1].set_xlabel(xlabel='Predicted Label', fontsize=15, weight="bold")
+    axis[1].set_ylabel(ylabel='Actual Label', fontsize=15, weight="bold")
+    axis[1].set_title("(b) Four Disorder + Healthy MENTAL (EO)", fontsize=16, weight="bold") 
+
+    #plt.show()
+    plt.savefig("Confusions_top5")
+
+plot_confusion_top5()

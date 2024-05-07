@@ -709,14 +709,14 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         accs.append(acc)
         print(f"Epoch {epoch}: {acc}")
 
-        if(epoch%500==0):
-            np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
+        if(epoch%750==0):
+            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EC_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_ACCS', accs)
     confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION', confusion)
+    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION', confusion)
 
 def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
@@ -844,14 +844,14 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         accs.append(acc)
         print(f"Epoch {epoch}: {acc}")
 
-        if(epoch%500==0):
-            np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
+        if(epoch%750==0):
+            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EO_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_ACCS', accs)
     confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION', confusion)
+    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION', confusion)
 
 
 def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
@@ -1131,11 +1131,11 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 epoch = [3000]
 batches = [15]
 
-learn = 1e-4
+learn = 1e-5
 weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_EO_Multi_top3(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
-                  outfile="epoch2000_b15_w6_l3")
+        run_train_EO_Multi(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+                  outfile="epoch3000_b15_w6_l3")
         

@@ -89,7 +89,7 @@ def plot_missing(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAI
     #print(counts_test)
 
 
-    f, ax = plt.subplots(2, 1, figsize=(10, 22), gridspec_kw={'height_ratios': [1, 1.0/37]})
+    f, ax = plt.subplots(2, 1, figsize=(8, 10), gridspec_kw={'height_ratios': [1, 1.0/37]})
     #f, ax = plt.subplots(2, 1, figsize=(10, 20))
 
     myMask = counts_test['Samples'] == 1301
@@ -98,7 +98,7 @@ def plot_missing(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAI
     myMask2 = counts_test['Samples'] != 1301
     #print(counts_test[myMask2])
 
-    x_axis_labels = ['NEO-FFI', 'Age', 'Education', 'Gender', 'Samples']
+    x_axis_labels = ['NEO-FFI', 'Age', 'Education', 'Gender', 'Indications']
 
     d = sns.heatmap(counts_test[myMask2], annot=True, fmt="d", linewidth=0.5, square=False, yticklabels=column_headers, xticklabels=False, ax=ax[0], cmap="Reds", cbar=False, vmin=0, vmax=400)
     d.set_yticklabels(d.get_yticklabels(), rotation=0, fontsize=13)
@@ -112,7 +112,8 @@ def plot_missing(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL\\TDBRAI
 
     plt.tight_layout()
     plt.subplots_adjust(hspace=0)
-    plt.show()
+    plt.savefig("indicationtable")
+    #plt.show()
 
 
 #count_missing()
@@ -275,5 +276,5 @@ def plot_female_disorder(path="C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL
     plt.subplots_adjust(hspace=0)
     plt.show()
 
-plot_male_disorder()
-plot_female_disorder()
+#plot_male_disorder()
+#plot_female_disorder()
