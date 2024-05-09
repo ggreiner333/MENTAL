@@ -710,13 +710,13 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         print(f"Epoch {epoch}: {acc}")
 
         if(epoch%750==0):
-            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
+            np.save('/home/ggreiner/MENTAL/new_TOP5_2e5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/new_TOP5_2e5_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/new_TOP5_2e5_MENTAL_EC_IMPUTED_ACCS', accs)
     confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION', confusion)
+    np.save('/home/ggreiner/MENTAL/new_TOP5_2e5_MENTAL_EC_IMPUTED_CONFUSION', confusion)
 
 def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
@@ -845,13 +845,13 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
         print(f"Epoch {epoch}: {acc}")
 
         if(epoch%750==0):
-            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
+            np.save('/home/ggreiner/MENTAL/new_TOP5_2e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
+            np.save('/home/ggreiner/MENTAL/new_TOP5_2e5_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
  
     accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_ACCS', accs)
+    np.save('/home/ggreiner/MENTAL/new_TOP5_2e5_MENTAL_EO_IMPUTED_ACCS', accs)
     confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION', confusion)
+    np.save('/home/ggreiner/MENTAL/new_TOP5_2e5_MENTAL_EO_IMPUTED_CONFUSION', confusion)
 
 
 def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
