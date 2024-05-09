@@ -1128,10 +1128,10 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [3000]
+epoch = [5000]
 batches = [15]
 
-learn = 6e-4
+learn = 1e-5
 weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
