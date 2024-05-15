@@ -589,7 +589,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
     splits = [615, 165, 11]
 
-    res = data.random_split(main_dataset, splits, generator=torch.Generator().manual_seed(40))
+    res = data.random_split(main_dataset, splits, generator=torch.Generator().manual_seed(43))
 
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
@@ -724,7 +724,7 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
     splits = [615, 165, 10]
 
-    res = data.random_split(main_dataset, splits, generator=torch.Generator().manual_seed(40))
+    res = data.random_split(main_dataset, splits, generator=torch.Generator().manual_seed(43))
 
     train_loader = data.DataLoader(res[0], batch_size=batch_sz, shuffle=True)
     test_loader  = data.DataLoader(res[1], batch_size=batch_sz, shuffle=True)
@@ -1131,7 +1131,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 epoch = [5000]
 batches = [15]
 
-learn = 2e-5
+learn = 1e-5
 weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
