@@ -107,12 +107,13 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
+            sig = torch.nn.Sigmoid()
+            output = sig(output)
+
             print(output)
             out = output.squeeze_(1)
             for i in range(0, batch_sz):
-                for j in range(0, len(out[i])):
-                    preds.append(out[i][j].detach())
-                    print(preds)
+                preds.append(out[i].detach())
 
             label = label.squeeze_(1)
             for i in range(0, len(label)):
