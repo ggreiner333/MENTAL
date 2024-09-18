@@ -74,6 +74,9 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
+            sig = torch.nn.Sigmoid()
+            output = sig(output)
+
             loss = torch.nn.BCELoss()
             res = loss(output, label)
 
