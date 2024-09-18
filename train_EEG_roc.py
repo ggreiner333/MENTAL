@@ -107,6 +107,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
+            print(output)
             out = output.squeeze_(1)
             for i in range(0, batch_sz):
                 for j in range(0, len(out[i])):
@@ -1045,7 +1046,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [10]
+epoch = [1]
 batches = [15]
 
 learn = 1e-5
