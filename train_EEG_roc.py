@@ -250,15 +250,12 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
     torch.autograd.set_detect_anomaly(True)
 
-    accs = []
-    sens = []
-    spec = []
+    preds = []
+    conds = []
 
     for epoch in range(epochs):
-        
+        print(epoch)
         for (h_entry, n_entry, p_entry, label) in train_loader:
-
-            label_reshaped = np.reshape(label, (batch_sz,1,1))
 
             test = []
             for i in range(0, 120):
@@ -271,147 +268,63 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
             formatted = np.array(test)
             psd_tensor = torch.from_numpy(formatted)
-
+            
             h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
 
             for p in psd_tensor:
                 output, h_res = my_mental.forward(p, n_entry, h_1)
                 h = h_res
 
+            sig = torch.nn.Sigmoid()
+            output = sig(output)
+
             loss = torch.nn.BCELoss()
-            res = loss(output, label_reshaped)
+            res = loss(output, label)
 
             optimizer.zero_grad()
             res.backward()
             optimizer.step()
         
-        
-        correct = 0
-        vals = []
-        cvals = []
-        fvals = []
-        for (h_entry, n_entry, p_entry, label) in test_loader:
+        if(epoch == (epochs-1)):
+            for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label_reshaped = np.reshape(label, (batch_sz,1,1))
+                test = []
+                for i in range(0, 120):
+                    batch = []
+                    for j in range(0,batch_sz):
+                        cur = p_entry[j][i]
+                        arr_cur = np.asarray(cur)
+                        batch.append(arr_cur)
+                    test.append(batch)
 
-            test = []
-            for i in range(0, 120):
-                batch = []
-                for j in range(0,batch_sz):
-                    cur = p_entry[j][i]
-                    arr_cur = np.asarray(cur)
-                    batch.append(arr_cur)
-                test.append(batch)
+                formatted = np.array(test)
+                psd_tensor = torch.from_numpy(formatted)
+                
+                h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
+                
+                for p in psd_tensor:
+                    output, h_res = my_mental.forward(p, n_entry, h_1)
+                    h = h_res
 
-            formatted = np.array(test)
-            psd_tensor = torch.from_numpy(formatted)
-            
-            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
-            
-            for p in psd_tensor:
-                output, h_res = my_mental.forward(p, n_entry, h_1)
-                h = h_res
+                sig = torch.nn.Sigmoid()
+                output = sig(output)
 
-            out = output.squeeze_(1)
-            preds = []
-            for i in range(0, batch_sz):
-                for j in range(0, len(out[i])):
-                    if(out[i][j] >= 0.5):
-                        preds.append(1)
-                    else:
-                        preds.append(0)
-                    vals.append(out[i][j].detach())
+                out = output.squeeze_(1)
+                for i in range(0, batch_sz):
+                    preds.append(out[i].detach())
 
-            label = label.squeeze_(1)
-            conds = []
+                label = label.squeeze_(1)
+                for i in range(0, len(label)):
+                    conds.append(label[i].item())
 
-            for i in range(0, len(label)):
-                conds.append(label[i].item())
+ 
+    preds = np.array(preds)
+    print(preds)
+    conds = np.array(conds)
+    print(conds)
 
-            # Variables for calculating specificity and sensitivity
-            N = 0
-            P = 0
-            TP = 0
-            TN = 0
-            for i in range(0, len(conds)):
-                lb = conds[i]
-                pd = preds[i]
-                if(lb == 1):
-                    P+=1
-                    if(lb==pd): 
-                        correct += 1
-                        TP+=1
-                        cvals.append(vals[i])
-                    else:
-                        fvals.append(vals[i])
-                if(lb == 0):
-                    N+=1
-                    if(lb==pd):
-                        correct += 1
-                        TN+=1
-                        cvals.append(vals[i])
-                    else:
-                        fvals.append(vals[i])
-
-            
-
-        total = (test_loader.__len__())*batch_sz
-        acc = correct/total
-        accs.append(acc)
-        print(acc)
-
-        sensitivity = 1 if(P == 0) else TP/P
-        sens.append(sensitivity)
-
-        specificity = 1 if(N==0) else TN/N
-        spec.append(specificity)
-
-        if(epoch%100==0):
-            np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_ACCS'+str(epoch), accs)
-
-       
-    accs = np.array(accs)
-    sens = np.array(sens)
-    spec = np.array(spec)
-
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_ACCS', accs)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_SENS', sens)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_SPEC', spec)
-
-    """
-    labels = np.arange(0, epochs, 1)
-
-    plt.figure(figsize=(15,10))
-    plt.plot(labels, accs)
-    plt.title("Accuracy of ADHD EC+EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
-    plt.ylabel("Accuracy")
-    plt.xlabel("Epoch")
-    plt.yticks(ticks=np.arange(0,1.01,0.1))
-
-    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_accuracy_ec_eo")
-    plt.clf()
-
-    plt.figure(figsize=(15,10))
-    plt.plot(labels, sens)
-    plt.title("Sensitivity of ADHD EC+EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
-    plt.ylabel("Sensitivity")
-    plt.xlabel("Epoch")
-    plt.yticks(ticks=np.arange(0,1.01,0.1))
-
-    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_sensitivity_ec_eo")
-    plt.clf()
-
-    plt.figure(figsize=(15,10))
-    plt.plot(labels, spec)
-    plt.title("Specificity of ADHD EC+EO MENTAL for " + str(epoch+1) + " epochs, batch size " + str(batch_sz))
-    plt.ylabel("Specificity")
-    plt.xlabel("Epoch")
-    plt.yticks(ticks=np.arange(0,1.01,0.1))
-
-    plt.savefig("adhd_mental_epoch1000_b15_w6_l3_specificity_ec_eo")
-    plt.clf()
-    """
-
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_CONDITIONS', conds)
 
 def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
@@ -958,7 +871,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [1000]
+epoch = [1]
 batches = [15]
 
 learn = 1e-5
@@ -966,6 +879,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_EO(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="tester")
         
