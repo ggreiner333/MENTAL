@@ -326,6 +326,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
     np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_PREDICTIONS', preds)
     np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_CONDITIONS', conds)
 
+
 def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
     main_dataset = MSplitDataset('normalized_small_imputed_complete_samples_EC_top5.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
@@ -871,7 +872,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [1]
+epoch = [1000]
 batches = [15]
 
 learn = 1e-5
