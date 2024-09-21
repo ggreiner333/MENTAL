@@ -343,9 +343,8 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
     torch.autograd.set_detect_anomaly(True)
 
-    accs = []
-    sens = []
-    spec = []
+    preds = []
+    conds = []
     confusion = [[[0]*5 for i in range(0,5)] for i in range(0, epochs)]
 
     for epoch in range(epochs):
@@ -386,80 +385,47 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
             optimizer.step()
         
         
-        correct = 0
-        vals = []
-        cvals = []
-        fvals = []
-        for (h_entry, n_entry, p_entry, label) in test_loader:
+        if(epoch == (epochs-1)):
+            for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label = label.type(torch.float32)
+                label = label.type(torch.float32)
 
-            test = []
-            for i in range(0, 60):
-                batch = []
-                for j in range(0,batch_sz):
-                    cur = p_entry[j][i]
-                    arr_cur = np.asarray(cur)
-                    batch.append(arr_cur)
-                test.append(batch)
+                test = []
+                for i in range(0, 60):
+                    batch = []
+                    for j in range(0,batch_sz):
+                        cur = p_entry[j][i]
+                        arr_cur = np.asarray(cur)
+                        batch.append(arr_cur)
+                    test.append(batch)
 
-            formatted = np.array(test)
-            psd_tensor = torch.from_numpy(formatted)
+                formatted = np.array(test)
+                psd_tensor = torch.from_numpy(formatted)
+                
+                h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
+                
+                for p in psd_tensor:
+                    output, h_res = my_mental.forward(p, n_entry, h_1)
+                    h = h_res
+
+                #out = output.squeeze_(1)
+                soft = torch.nn.Softmax(dim=1)
+                output = soft(output)
+
+                for i in range(0, batch_sz):
+                    preds.append(output[i])
+
+                for i in range(0, batch_sz):
+                    conds.append(label[i])
             
-            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
-            
-            for p in psd_tensor:
-                output, h_res = my_mental.forward(p, n_entry, h_1)
-                h = h_res
-
-            #out = output.squeeze_(1)
-            soft = torch.nn.Softmax(dim=1)
-            output = soft(output)
-            
-            #print(f"out  : {output}")
-            #print(f"shape: {output.shape}")
-
-            preds = []
-            for i in range(0, batch_sz):
-                mx = 0
-                loc = 0
-                for j in range(0, 5):
-                    if(output[i][j] > mx):
-                        mx = output[i][j]
-                        loc = j
-                #if(i==14):
-                #    print(f"row: {output[i][0]}")
-                #    print(f"max: {loc}")
-                #    print(f"val: {mx}")
-                preds.append(loc)
-
-            conds = []
-            for i in range(0, batch_sz):
-                for j in range(0, 5):
-                    if(label[i][j] > 0):
-                        conds.append(j)
-                        break
-            
-            for i in range(0, len(conds)):
-                lb = conds[i]
-                pd = preds[i]
-                if(lb==pd): 
-                    correct += 1
-                confusion[epoch][lb][pd] = confusion[epoch][lb][pd] + 1
-            
-        total = (test_loader.__len__())*batch_sz
-        acc = correct/total
-        accs.append(acc)
-        print(f"Epoch {epoch}: {acc}")
-
-        if(epoch%750==0):
-            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
  
-    accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_ACCS', accs)
-    confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EC_IMPUTED_CONFUSION', confusion)
+    preds = np.array(preds)
+    print(preds)
+    conds = np.array(conds)
+    print(conds)
+
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_TOP5_IMPUTED_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_TOP5_IMPUTED_CONDITIONS', conds)
 
 def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
@@ -478,9 +444,8 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
     torch.autograd.set_detect_anomaly(True)
 
-    accs = []
-    sens = []
-    spec = []
+    preds = []
+    conds = []
     confusion = [[[0]*5 for i in range(0,5)] for i in range(0, epochs)]
 
     for epoch in range(epochs):
@@ -521,80 +486,51 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
             optimizer.step()
         
         
-        correct = 0
-        vals = []
-        cvals = []
-        fvals = []
-        for (h_entry, n_entry, p_entry, label) in test_loader:
+        if(epoch == (epochs-1)):
+            for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label = label.type(torch.float32)
+                label = label.type(torch.float32)
 
-            test = []
-            for i in range(0, 60):
-                batch = []
-                for j in range(0,batch_sz):
-                    cur = p_entry[j][i]
-                    arr_cur = np.asarray(cur)
-                    batch.append(arr_cur)
-                test.append(batch)
+                test = []
+                for i in range(0, 60):
+                    batch = []
+                    for j in range(0,batch_sz):
+                        cur = p_entry[j][i]
+                        arr_cur = np.asarray(cur)
+                        batch.append(arr_cur)
+                    test.append(batch)
 
-            formatted = np.array(test)
-            psd_tensor = torch.from_numpy(formatted)
+                formatted = np.array(test)
+                psd_tensor = torch.from_numpy(formatted)
+                
+                h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
+                
+                for p in psd_tensor:
+                    output, h_res = my_mental.forward(p, n_entry, h_1)
+                    h = h_res
+
+                #out = output.squeeze_(1)
+                soft = torch.nn.Softmax(dim=1)
+                output = soft(output)
+                
+                #print(f"out  : {output}")
+                #print(f"shape: {output.shape}")
+
             
-            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
-            
-            for p in psd_tensor:
-                output, h_res = my_mental.forward(p, n_entry, h_1)
-                h = h_res
+                for i in range(0, batch_sz):
+                    preds.append(output[i])
 
-            #out = output.squeeze_(1)
-            soft = torch.nn.Softmax(dim=1)
-            output = soft(output)
-            
-            #print(f"out  : {output}")
-            #print(f"shape: {output.shape}")
-
-            preds = []
-            for i in range(0, batch_sz):
-                mx = 0
-                loc = 0
-                for j in range(0, 5):
-                    if(output[i][j] > mx):
-                        mx = output[i][j]
-                        loc = j
-                #if(i==14):
-                #    print(f"row: {output[i][0]}")
-                #    print(f"max: {loc}")
-                #    print(f"val: {mx}")
-                preds.append(loc)
-
-            conds = []
-            for i in range(0, batch_sz):
-                for j in range(0, 5):
-                    if(label[i][j] > 0):
-                        conds.append(j)
-                        break
-            
-            for i in range(0, len(conds)):
-                lb = conds[i]
-                pd = preds[i]
-                if(lb==pd): 
-                    correct += 1
-                confusion[epoch][lb][pd] = confusion[epoch][lb][pd] + 1
-            
-        total = (test_loader.__len__())*batch_sz
-        acc = correct/total
-        accs.append(acc)
-        print(f"Epoch {epoch}: {acc}")
-
-        if(epoch%750==0):
-            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
+                for i in range(0, batch_sz):
+                    conds.append(label[i])
+        
  
-    accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_ACCS', accs)
-    confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/new_TOP5_1e5_MENTAL_EO_IMPUTED_CONFUSION', confusion)
+    preds = np.array(preds)
+    print(preds)
+    conds = np.array(conds)
+    print(conds)
+
+    np.save('/home/ggreiner/MENTAL/MENTAL_EO_TOP5_IMPUTED_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EO_TOP5_IMPUTED_CONDITIONS', conds)
 
 
 def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
@@ -614,9 +550,8 @@ def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
     torch.autograd.set_detect_anomaly(True)
 
-    accs = []
-    sens = []
-    spec = []
+    preds = []
+    conds = []
     confusion = [[[0]*3 for i in range(0,3)] for i in range(0, epochs)]
 
     for epoch in range(epochs):
@@ -656,81 +591,49 @@ def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
             res.backward()
             optimizer.step()
         
-        
-        correct = 0
-        vals = []
-        cvals = []
-        fvals = []
-        for (h_entry, n_entry, p_entry, label) in test_loader:
+        if(epoch == (epochs-1)):
+            for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label = label.type(torch.float32)
+                label = label.type(torch.float32)
 
-            test = []
-            for i in range(0, 60):
-                batch = []
-                for j in range(0,batch_sz):
-                    cur = p_entry[j][i]
-                    arr_cur = np.asarray(cur)
-                    batch.append(arr_cur)
-                test.append(batch)
+                test = []
+                for i in range(0, 60):
+                    batch = []
+                    for j in range(0,batch_sz):
+                        cur = p_entry[j][i]
+                        arr_cur = np.asarray(cur)
+                        batch.append(arr_cur)
+                    test.append(batch)
 
-            formatted = np.array(test)
-            psd_tensor = torch.from_numpy(formatted)
-            
-            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
-            
-            for p in psd_tensor:
-                output, h_res = my_mental.forward(p, n_entry, h_1)
-                h = h_res
+                formatted = np.array(test)
+                psd_tensor = torch.from_numpy(formatted)
+                
+                h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
+                
+                for p in psd_tensor:
+                    output, h_res = my_mental.forward(p, n_entry, h_1)
+                    h = h_res
 
-            #out = output.squeeze_(1)
-            soft = torch.nn.Softmax(dim=1)
-            output = soft(output)
-            
-            #print(f"out  : {output}")
-            #print(f"shape: {output.shape}")
+                #out = output.squeeze_(1)
+                soft = torch.nn.Softmax(dim=1)
+                output = soft(output)
+                
+                #print(f"out  : {output}")
+                #print(f"shape: {output.shape}")
 
-            preds = []
-            for i in range(0, batch_sz):
-                mx = 0
-                loc = 0
-                for j in range(0, 3):
-                    if(output[i][j] > mx):
-                        mx = output[i][j]
-                        loc = j
-                #if(i==14):
-                #    print(f"row: {output[i][0]}")
-                #    print(f"max: {loc}")
-                #    print(f"val: {mx}")
-                preds.append(loc)
+                for i in range(0, batch_sz):
+                    preds.append(output[i])
 
-            conds = []
-            for i in range(0, batch_sz):
-                for j in range(0, 3):
-                    if(label[i][j] > 0):
-                        conds.append(j)
-                        break
-            
-            for i in range(0, len(conds)):
-                lb = conds[i]
-                pd = preds[i]
-                if(lb==pd): 
-                    correct += 1
-                confusion[epoch][lb][pd] = confusion[epoch][lb][pd] + 1
-            
-        total = (test_loader.__len__())*batch_sz
-        acc = correct/total
-        accs.append(acc)
-        print(f"Epoch {epoch}: {acc}")
-
-        if(epoch%500==0):
-            np.save('/home/ggreiner/MENTAL/TOP3_1e4_MENTAL_EC_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/TOP3_1e4_MENTAL_EC_IMPUTED_CONFUSION'+str(epoch), confusion)
+                for i in range(0, batch_sz):
+                    conds.append(label[i])
  
-    accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP3_1e4_MENTAL_EC_IMPUTED_ACCS', accs)
-    confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/TOP3_1e4_MENTAL_EC_IMPUTED_CONFUSION', confusion)
+    preds = np.array(preds)
+    print(preds)
+    conds = np.array(conds)
+    print(conds)
+
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_TOP3_IMPUTED_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_TOP3_IMPUTED_CONDITIONS', conds)
 
 def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
@@ -749,9 +652,8 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
     torch.autograd.set_detect_anomaly(True)
 
-    accs = []
-    sens = []
-    spec = []
+    preds = []
+    conds = []
     confusion = [[[0]*3 for i in range(0,3)] for i in range(0, epochs)]
 
     for epoch in range(epochs):
@@ -791,87 +693,54 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
             res.backward()
             optimizer.step()
         
-        
-        correct = 0
-        vals = []
-        cvals = []
-        fvals = []
-        for (h_entry, n_entry, p_entry, label) in test_loader:
+        if(epoch == (epochs-1)):
+            for (h_entry, n_entry, p_entry, label) in test_loader:
 
-            label = label.type(torch.float32)
+                label = label.type(torch.float32)
 
-            test = []
-            for i in range(0, 60):
-                batch = []
-                for j in range(0,batch_sz):
-                    cur = p_entry[j][i]
-                    arr_cur = np.asarray(cur)
-                    batch.append(arr_cur)
-                test.append(batch)
+                test = []
+                for i in range(0, 60):
+                    batch = []
+                    for j in range(0,batch_sz):
+                        cur = p_entry[j][i]
+                        arr_cur = np.asarray(cur)
+                        batch.append(arr_cur)
+                    test.append(batch)
 
-            formatted = np.array(test)
-            psd_tensor = torch.from_numpy(formatted)
-            
-            h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
-            
-            for p in psd_tensor:
-                output, h_res = my_mental.forward(p, n_entry, h_1)
-                h = h_res
+                formatted = np.array(test)
+                psd_tensor = torch.from_numpy(formatted)
+                
+                h_1 = torch.zeros([2, batch_sz, 30], dtype=torch.float32)
+                
+                for p in psd_tensor:
+                    output, h_res = my_mental.forward(p, n_entry, h_1)
+                    h = h_res
 
-            #out = output.squeeze_(1)
-            soft = torch.nn.Softmax(dim=1)
-            output = soft(output)
-            
-            #print(f"out  : {output}")
-            #print(f"shape: {output.shape}")
+                #out = output.squeeze_(1)
+                soft = torch.nn.Softmax(dim=1)
+                output = soft(output)
+                
+                #print(f"out  : {output}")
+                #print(f"shape: {output.shape}")
 
-            preds = []
-            for i in range(0, batch_sz):
-                mx = 0
-                loc = 0
-                for j in range(0, 3):
-                    if(output[i][j] > mx):
-                        mx = output[i][j]
-                        loc = j
-                #if(i==14):
-                #    print(f"row: {output[i][0]}")
-                #    print(f"max: {loc}")
-                #    print(f"val: {mx}")
-                preds.append(loc)
+                for i in range(0, batch_sz):
+                    preds.append(output[i])
 
-            conds = []
-            for i in range(0, batch_sz):
-                for j in range(0, 3):
-                    if(label[i][j] > 0):
-                        conds.append(j)
-                        break
-            
-            for i in range(0, len(conds)):
-                lb = conds[i]
-                pd = preds[i]
-                if(lb==pd): 
-                    correct += 1
-                confusion[epoch][lb][pd] = confusion[epoch][lb][pd] + 1
-            
-        total = (test_loader.__len__())*batch_sz
-        acc = correct/total
-        accs.append(acc)
-        print(f"Epoch {epoch}: {acc}")
-        #print(confusion)
-
-        if(epoch%500==0):
-            np.save('/home/ggreiner/MENTAL/TOP3_1e4_MENTAL_EO_IMPUTED_ACCS'+str(epoch), accs)
-            np.save('/home/ggreiner/MENTAL/TOP3_1e4_MENTAL_EO_IMPUTED_CONFUSION'+str(epoch), confusion)
+                for i in range(0, batch_sz):
+                    conds.append(label[i])
  
-    accs = np.array(accs)
-    np.save('/home/ggreiner/MENTAL/TOP3_1e4_MENTAL_EO_IMPUTED_ACCS', accs)
-    confusion = np.array(confusion)
-    np.save('/home/ggreiner/MENTAL/TOP3_1e4_MENTAL_EO_IMPUTED_CONFUSION', confusion)
+    preds = np.array(preds)
+    print(preds)
+    conds = np.array(conds)
+    print(conds)
+
+    np.save('/home/ggreiner/MENTAL/MENTAL_EO_TOP3_IMPUTED_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EO_TOP3_IMPUTED_CONDITIONS', conds)
 
 
 # running code
 
-epoch = [1000]
+epoch = [1]
 batches = [15]
 
 learn = 1e-5
@@ -879,6 +748,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EC_Multi(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="tester")
         
