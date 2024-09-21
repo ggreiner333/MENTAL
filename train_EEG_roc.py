@@ -413,7 +413,7 @@ def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
                 output = soft(output)
 
                 for i in range(0, batch_sz):
-                    preds.append(output[i])
+                    preds.append(output[i].detach())
 
                 for i in range(0, batch_sz):
                     conds.append(label[i])
@@ -518,7 +518,7 @@ def run_train_EO_Multi(learn_rate, wd, batch_sz, epochs, outfile):
 
             
                 for i in range(0, batch_sz):
-                    preds.append(output[i])
+                    preds.append(output[i].detach())
 
                 for i in range(0, batch_sz):
                     conds.append(label[i])
@@ -622,7 +622,7 @@ def run_train_EC_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
                 #print(f"shape: {output.shape}")
 
                 for i in range(0, batch_sz):
-                    preds.append(output[i])
+                    preds.append(output[i].detach())
 
                 for i in range(0, batch_sz):
                     conds.append(label[i])
@@ -724,7 +724,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
                 #print(f"shape: {output.shape}")
 
                 for i in range(0, batch_sz):
-                    preds.append(output[i])
+                    preds.append(output[i].detach())
 
                 for i in range(0, batch_sz):
                     conds.append(label[i])
