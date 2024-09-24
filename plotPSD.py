@@ -7,6 +7,8 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import mne
 
+from sklearn.metrics import roc_curve, auc
+
 
 ##################################################################################################
 ##################################################################################################
@@ -1453,3 +1455,65 @@ def calculate_metrics_eo():
     print(f"EO F1-Score: {f1_score}")
 
 #calculate_metrics_eo()
+
+def test_roc():
+    conds = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_TOP3_IMPUTED_CONDITIONS.npy")
+    preds = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_TOP3_IMPUTED_PREDICTIONS.npy")
+
+    print(conds)
+    print(preds)
+
+    # fpr, tpr, thresholds = roc_curve(conds, preds)
+    # roc_auc = auc(fpr, tpr)
+    # plt.figure()  
+    # plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc)
+    # plt.plot([0, 1], [0, 1], 'k--', label='No Skill')
+    # plt.xlim([0.0, 1.0])
+    # plt.ylim([0.0, 1.05])
+    # plt.xlabel('False Positive Rate')
+    # plt.ylabel('True Positive Rate')
+    # plt.title('ROC Curve for Breast Cancer Classification')
+    # plt.legend() 
+    # plt.show()
+    fpr = dict()
+    tpr = dict()
+    roc_auc = dict()
+    for i in range(3):
+        fpr[i], tpr[i], _ = roc_curve(conds[:, i], preds[:, i])
+        roc_auc[i] = auc(fpr[i], tpr[i])
+
+    # Compute micro-average ROC curve and ROC area
+    fpr["micro"], tpr["micro"], _ = roc_curve(conds.ravel(), preds.ravel())
+    roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+
+    # Plot of a ROC curve for a specific class
+    plt.figure()
+    plt.plot(fpr[2], tpr[2], label='ROC curve (area = %0.2f)' % roc_auc[2])
+    plt.plot([0, 1], [0, 1], 'k--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver operating characteristic example')
+    plt.legend(loc="lower right")
+    plt.show()
+
+    # Plot ROC curve
+    plt.figure()
+    plt.plot(fpr["micro"], tpr["micro"],
+            label='micro-average ROC curve (area = {0:0.2f})'
+                ''.format(roc_auc["micro"]))
+    for i in range(3):
+        plt.plot(fpr[i], tpr[i], label='ROC curve of class {0} (area = {1:0.2f})'
+                                    ''.format(i, roc_auc[i]))
+
+    plt.plot([0, 1], [0, 1], 'k--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Some extension of Receiver operating characteristic to multi-class')
+    plt.legend(loc="lower right")
+    plt.show()
+
+test_roc()
