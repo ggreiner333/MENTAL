@@ -112,6 +112,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
                     preds.append(out[i].detach())
 
                 label = label.squeeze_(1)
+                print(label)
                 for i in range(0, len(label)):
                     conds.append(label[i].item())
 
