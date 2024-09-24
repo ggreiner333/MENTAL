@@ -26,7 +26,7 @@ from Model.mental import MENTAL_EEG
 
 def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_imputed_complete_samples_EC_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_imputed_complete_samples_EC_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
     splits = [735,225, 8]
@@ -121,8 +121,8 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
     conds = np.array(conds)
     print(conds)
 
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_IMPUTED_ADHD_PREDICTIONS', preds)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_IMPUTED_ADHD_CONDITIONS', conds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_IMPUTED_MDD_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_IMPUTED_MDD_CONDITIONS', conds)
 
 def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
@@ -740,7 +740,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [1000]
+epoch = [3]
 batches = [15]
 
 learn = 1e-5
@@ -748,6 +748,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EC(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="tester")
         
