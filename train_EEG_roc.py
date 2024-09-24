@@ -126,7 +126,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
 def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_imputed_complete_samples_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_imputed_complete_samples_EO_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
     splits = [735,225, 8]
@@ -222,12 +222,12 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
     conds = np.array(conds)
     print(conds)
 
-    np.save('/home/ggreiner/MENTAL/MENTAL_EO_IMPUTED_ADHD_PREDICTIONS', preds)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EO_IMPUTED_ADHD_CONDITIONS', conds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EO_IMPUTED_MDD_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EO_IMPUTED_MDD_CONDITIONS', conds)
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = BSplitDataset('normalized_small_imputed_complete_samples_EC_EO_adhd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = BSplitDataset('normalized_small_imputed_complete_samples_EC_EO_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
     splits = []
     splits = [735,225,8]
@@ -322,8 +322,8 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
     conds = np.array(conds)
     print(conds)
 
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_ADHD_PREDICTIONS', preds)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_ADHD_CONDITIONS', conds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/MENTAL_EC_EO_IMPUTED_MDD_CONDITIONS', conds)
 
 
 def run_train_EC_Multi(learn_rate, wd, batch_sz, epochs, outfile):
@@ -740,7 +740,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [3]
+epoch = [1000]
 batches = [15]
 
 learn = 1e-5
