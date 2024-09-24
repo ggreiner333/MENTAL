@@ -54,6 +54,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
     for epoch in range(epochs):
         print(epoch)
         for (h_entry, n_entry, p_entry, label) in train_loader:
+            print(label)
 
             test = []
             for i in range(0, 60):
@@ -111,6 +112,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
                 for i in range(0, batch_sz):
                     preds.append(out[i].detach())
 
+                print(label)
                 label = label.squeeze_(1)
                 print(label)
                 for i in range(0, len(label)):
