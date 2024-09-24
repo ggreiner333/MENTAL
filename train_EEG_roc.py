@@ -740,7 +740,7 @@ def run_train_EO_Multi_top3(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [3]
+epoch = [1000]
 batches = [15]
 
 learn = 1e-5
