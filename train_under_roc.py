@@ -116,21 +116,14 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
     conds = np.array(conds)
     print(conds)
 
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_HEALTH_MDD_PREDICTIONS', preds)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EC_HEALTH_MDD_CONDITIONS', conds)
+    np.save('/home/ggreiner/MENTAL/roc2/MENTAL_EC_HEALTH_MDD_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/roc2/MENTAL_EC_HEALTH_MDD_CONDITIONS', conds)
 
 def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
 
-    main_dataset = SplitDataset('normalized_small_imputed_complete_samples_EO_depression.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
+    main_dataset = SplitDataset('normalized_small_complete_samples_EO_health_mdd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
-    splits = []
-    splits = [735,225, 8]
-    """
-    if(batch_sz != 15):
-        splits = [560, 140, 5]
-    else:
-        splits = [555, 150]
-    """
+    splits = [60, 35,1]
 
     res = data.random_split(main_dataset, splits)
 
@@ -217,8 +210,8 @@ def run_train_EO(learn_rate, wd, batch_sz, epochs, outfile):
     conds = np.array(conds)
     print(conds)
 
-    np.save('/home/ggreiner/MENTAL/MENTAL_EO_IMPUTED_MDD_PREDICTIONS', preds)
-    np.save('/home/ggreiner/MENTAL/MENTAL_EO_IMPUTED_MDD_CONDITIONS', conds)
+    np.save('/home/ggreiner/MENTAL/roc2/MENTAL_EO_HEALTH_MDD_PREDICTIONS', preds)
+    np.save('/home/ggreiner/MENTAL/roc2/MENTAL_EO_HEALTH_MDD_CONDITIONS', conds)
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
@@ -331,6 +324,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_EC(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EO(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="tester")
         
