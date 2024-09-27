@@ -1456,64 +1456,201 @@ def calculate_metrics_eo():
 
 #calculate_metrics_eo()
 
-def test_roc():
-    conds = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_TOP3_IMPUTED_CONDITIONS.npy")
-    preds = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\MENTAL_EC_TOP3_IMPUTED_PREDICTIONS.npy")
+def roc_MENTAL_binary():
+    figure, ax = plt.subplots(1, 2, figsize=(12, 5))
 
-    print(conds)
-    print(preds)
+    figure.suptitle("ROC Curves of MENTAL (One Disorder vs All Disorders)", fontsize=24, weight="bold")
 
-    # fpr, tpr, thresholds = roc_curve(conds, preds)
-    # roc_auc = auc(fpr, tpr)
-    # plt.figure()  
-    # plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc)
-    # plt.plot([0, 1], [0, 1], 'k--', label='No Skill')
-    # plt.xlim([0.0, 1.0])
-    # plt.ylim([0.0, 1.05])
-    # plt.xlabel('False Positive Rate')
-    # plt.ylabel('True Positive Rate')
-    # plt.title('ROC Curve for Breast Cancer Classification')
-    # plt.legend() 
-    # plt.show()
-    fpr = dict()
-    tpr = dict()
-    roc_auc = dict()
+    # get ec roc mdd
+    conds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_IMPUTED_MDD_CONDITIONS.npy")
+    preds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_IMPUTED_MDD_PREDICTIONS.npy")
+
+    fpr_ec, tpr_ec, thresholds_ec = roc_curve(conds_ec, preds_ec)
+    roc_auc_ec = auc(fpr_ec, tpr_ec)
+
+    # get eo roc mdd
+    conds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EO_IMPUTED_MDD_CONDITIONS.npy")
+    preds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EO_IMPUTED_MDD_PREDICTIONS.npy")
+
+    fpr_eo, tpr_eo, thresholds_eo = roc_curve(conds_eo, preds_eo)
+    roc_auc_eo = auc(fpr_eo, tpr_eo)
+
+    # get eo roc mdd
+    conds_ec_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_EO_IMPUTED_MDD_CONDITIONS.npy")
+    preds_ec_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_EO_IMPUTED_MDD_PREDICTIONS.npy")
+
+    fpr_ec_eo, tpr_ec_eo, thresholds_ec_eo = roc_curve(conds_ec_eo, preds_ec_eo)
+    roc_auc_ec_eo = auc(fpr_ec_eo, tpr_ec_eo)
+
+    # plot mdd roc
+    ax[0].plot(fpr_ec, tpr_ec, label='EC (area = %0.2f)' % roc_auc_ec)
+    ax[0].plot(fpr_eo, tpr_eo, label='EO (area = %0.2f)' % roc_auc_eo)
+    ax[0].plot(fpr_ec_eo, tpr_ec_eo, label='EC+EO (area = %0.2f)' % roc_auc_ec_eo)
+    ax[0].plot([0, 1], [0, 1], 'k--', label='No Skill')
+    ax[0].set_xlim([0.0, 1.0])
+    ax[0].set_ylim([0.0, 1.05])
+    ax[0].set_xlabel('False Positive Rate', fontsize=14)
+    ax[0].set_ylabel('True Positive Rate', fontsize=14)
+    ax[0].set_title('(a) MDD', fontsize=16, weight='bold')
+    ax[0].legend(loc="lower right") 
+
+    # get ec roc adhd
+    conds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_IMPUTED_ADHD_CONDITIONS.npy")
+    preds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_IMPUTED_ADHD_PREDICTIONS.npy")
+
+    fpr_ec, tpr_ec, thresholds_ec = roc_curve(conds_ec, preds_ec)
+    roc_auc_ec = auc(fpr_ec, tpr_ec)
+
+    # get eo roc adhd
+    conds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EO_IMPUTED_ADHD_CONDITIONS.npy")
+    preds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EO_IMPUTED_ADHD_PREDICTIONS.npy")
+
+    fpr_eo, tpr_eo, thresholds_eo = roc_curve(conds_eo, preds_eo)
+    roc_auc_eo = auc(fpr_eo, tpr_eo)
+
+    # get eo roc adhd
+    conds_ec_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_EO_IMPUTED_ADHD_CONDITIONS.npy")
+    preds_ec_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_EO_IMPUTED_ADHD_PREDICTIONS.npy")
+
+    fpr_ec_eo, tpr_ec_eo, thresholds_ec_eo = roc_curve(conds_ec_eo, preds_ec_eo)
+    roc_auc_ec_eo = auc(fpr_ec_eo, tpr_ec_eo)
+
+   # plot adhd roc
+    ax[1].plot(fpr_ec, tpr_ec, label='EC (area = %0.2f)' % roc_auc_ec)
+    ax[1].plot(fpr_eo, tpr_eo, label='EO (area = %0.2f)' % roc_auc_eo)
+    ax[1].plot(fpr_ec_eo, tpr_ec_eo, label='EC+EO (area = %0.2f)' % roc_auc_ec_eo)
+    ax[1].plot([0, 1], [0, 1], 'k--', label='No Skill')
+    ax[1].set_xlim([0.0, 1.0])
+    ax[1].set_ylim([0.0, 1.05])
+    ax[1].set_xlabel('False Positive Rate', fontsize=14)
+    ax[1].set_ylabel('True Positive Rate', fontsize=14)
+    ax[1].set_title('(b) ADHD', fontsize=16, weight='bold')
+    ax[1].legend(loc="lower right") 
+
+    plt.tight_layout()
+    plt.savefig("mental_binary_roc")
+
+#roc_MENTAL_binary()
+
+def roc_MENTAL_top3():
+    figure, ax = plt.subplots(1, 2, figsize=(12, 5))
+
+    figure.suptitle("ROC Curves of MENTAL (MDD, ADHD, SMC)", fontsize=24, weight="bold")
+
+    # get ec roc top3
+    conds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_TOP3_IMPUTED_CONDITIONS.npy")
+    preds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_TOP3_IMPUTED_PREDICTIONS.npy")
+
+    fpr_ec = dict()
+    tpr_ec = dict()
+    roc_auc_ec = dict()
     for i in range(3):
-        fpr[i], tpr[i], _ = roc_curve(conds[:, i], preds[:, i])
-        roc_auc[i] = auc(fpr[i], tpr[i])
+        fpr_ec[i], tpr_ec[i], _ = roc_curve(conds_ec[:, i], preds_ec[:, i])
+        roc_auc_ec[i] = auc(fpr_ec[i], tpr_ec[i])
 
     # Compute micro-average ROC curve and ROC area
-    fpr["micro"], tpr["micro"], _ = roc_curve(conds.ravel(), preds.ravel())
-    roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+    fpr_ec["micro"], tpr_ec["micro"], _ = roc_curve(conds_ec.ravel(), preds_ec.ravel())
+    roc_auc_ec["micro"] = auc(fpr_ec["micro"], tpr_ec["micro"])
 
-    # Plot of a ROC curve for a specific class
-    plt.figure()
-    plt.plot(fpr[2], tpr[2], label='ROC curve (area = %0.2f)' % roc_auc[2])
-    plt.plot([0, 1], [0, 1], 'k--')
-    plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.05])
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('Receiver operating characteristic example')
-    plt.legend(loc="lower right")
-    plt.show()
 
-    # Plot ROC curve
-    plt.figure()
-    plt.plot(fpr["micro"], tpr["micro"],
-            label='micro-average ROC curve (area = {0:0.2f})'
-                ''.format(roc_auc["micro"]))
+    # plot top3 ec roc
+    ax[0].plot(fpr_ec["micro"], tpr_ec["micro"], label='EC (area = {0:0.2f})' ''.format(roc_auc_ec["micro"]), color='tab:orange')
+    ax[0].plot([0, 1], [0, 1], 'k--', label='No Skill')
+    ax[0].set_xlim([0.0, 1.0])
+    ax[0].set_ylim([0.0, 1.05])
+    ax[0].set_xlabel('False Positive Rate', fontsize=14)
+    ax[0].set_ylabel('True Positive Rate', fontsize=14)
+    ax[0].set_title('(a) Three Disorder MENTAL (EC)', fontsize=16, weight='bold')
+    ax[0].legend(loc="lower right", fontsize=14) 
+
+
+    # get eo roc top3
+    conds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EO_TOP3_IMPUTED_CONDITIONS.npy")
+    preds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EO_TOP3_IMPUTED_PREDICTIONS.npy")
+
+    fpr_eo = dict()
+    tpr_eo = dict()
+    roc_auc_eo = dict()
     for i in range(3):
-        plt.plot(fpr[i], tpr[i], label='ROC curve of class {0} (area = {1:0.2f})'
-                                    ''.format(i, roc_auc[i]))
+        fpr_eo[i], tpr_eo[i], _ = roc_curve(conds_eo[:, i], preds_eo[:, i])
+        roc_auc_eo[i] = auc(fpr_eo[i], tpr_eo[i])
 
-    plt.plot([0, 1], [0, 1], 'k--')
-    plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.05])
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('Some extension of Receiver operating characteristic to multi-class')
-    plt.legend(loc="lower right")
-    plt.show()
+    # Compute micro-average ROC curve and ROC area
+    fpr_eo["micro"], tpr_eo["micro"], _ = roc_curve(conds_eo.ravel(), preds_eo.ravel())
+    roc_auc_eo["micro"] = auc(fpr_eo["micro"], tpr_eo["micro"])
 
-test_roc()
+    # plot top3 eo roc
+    ax[1].plot(fpr_eo["micro"], tpr_eo["micro"], label='EO (area = {0:0.2f})' ''.format(roc_auc_eo["micro"]), color='tab:orange')
+    ax[1].plot([0, 1], [0, 1], 'k--', label='No Skill')
+    ax[1].set_xlim([0.0, 1.0])
+    ax[1].set_ylim([0.0, 1.05])
+    ax[1].set_xlabel('False Positive Rate', fontsize=14)
+    ax[1].set_ylabel('True Positive Rate', fontsize=14)
+    ax[1].set_title('(b) Three Disorder MENTAL (EO)', fontsize=16, weight='bold')
+    ax[1].legend(loc="lower right", fontsize=14) 
+
+    plt.tight_layout()
+    #plt.show()
+    plt.savefig("mental_top3_roc")
+
+roc_MENTAL_top3()
+
+def roc_MENTAL_top5():
+    figure, ax = plt.subplots(1, 2, figsize=(12, 5))
+
+    figure.suptitle("ROC Curves of MENTAL (MDD, ADHD, SMC, OCD, Healthy)", fontsize=24, weight="bold")
+
+    # get ec roc top 5
+    conds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_TOP5_IMPUTED_CONDITIONS.npy")
+    preds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EC_TOP5_IMPUTED_PREDICTIONS.npy")
+
+    fpr_ec = dict()
+    tpr_ec = dict()
+    roc_auc_ec = dict()
+    for i in range(3):
+        fpr_ec[i], tpr_ec[i], _ = roc_curve(conds_ec[:, i], preds_ec[:, i])
+        roc_auc_ec[i] = auc(fpr_ec[i], tpr_ec[i])
+
+    # Compute micro-average ROC curve and ROC area
+    fpr_ec["micro"], tpr_ec["micro"], _ = roc_curve(conds_ec.ravel(), preds_ec.ravel())
+    roc_auc_ec["micro"] = auc(fpr_ec["micro"], tpr_ec["micro"])
+
+    # plot top5 roc
+    ax[0].plot(fpr_ec["micro"], tpr_ec["micro"], label='EC (area = {0:0.2f})' ''.format(roc_auc_ec["micro"]), color='tab:orange')
+    ax[0].plot([0, 1], [0, 1], 'k--', label='No Skill')
+    ax[0].set_xlim([0.0, 1.0])
+    ax[0].set_ylim([0.0, 1.05])
+    ax[0].set_xlabel('False Positive Rate', fontsize=14)
+    ax[0].set_ylabel('True Positive Rate', fontsize=14)
+    ax[0].set_title('(a) Four Disorder + Healthy MENTAL (EC)', fontsize=16, weight='bold')
+    ax[0].legend(loc="lower right", fontsize=14) 
+
+    # get eo roc top5
+    conds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EO_TOP5_IMPUTED_CONDITIONS.npy")
+    preds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\outs\\MENTAL_EO_TOP5_IMPUTED_PREDICTIONS.npy")
+
+    fpr_eo = dict()
+    tpr_eo = dict()
+    roc_auc_eo = dict()
+    for i in range(3):
+        fpr_eo[i], tpr_eo[i], _ = roc_curve(conds_eo[:, i], preds_eo[:, i])
+        roc_auc_eo[i] = auc(fpr_eo[i], tpr_eo[i])
+
+    # Compute micro-average ROC curve and ROC area
+    fpr_eo["micro"], tpr_eo["micro"], _ = roc_curve(conds_eo.ravel(), preds_eo.ravel())
+    roc_auc_eo["micro"] = auc(fpr_eo["micro"], tpr_eo["micro"])
+
+    # plot top5 roc
+    ax[1].plot(fpr_eo["micro"], tpr_eo["micro"], label='EO (area = {0:0.2f})' ''.format(roc_auc_eo["micro"]), color='tab:orange')
+    ax[1].plot([0, 1], [0, 1], 'k--', label='No Skill')
+    ax[1].set_xlim([0.0, 1.0])
+    ax[1].set_ylim([0.0, 1.05])
+    ax[1].set_xlabel('False Positive Rate', fontsize=14)
+    ax[1].set_ylabel('True Positive Rate', fontsize=14)
+    ax[1].set_title('(b) Four Disorder + Healthy MENTAL (EO)', fontsize=16, weight='bold')
+    ax[1].legend(loc="lower right", fontsize=14) 
+
+    plt.tight_layout()
+    plt.savefig("mental_top5_roc")
+
+roc_MENTAL_top5()
