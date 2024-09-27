@@ -124,7 +124,7 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
 def run_EC():
     # running code
 
-    epoch = [1000]
+    epoch = [5]
     batches = [5]
 
     learn = 1e-3
