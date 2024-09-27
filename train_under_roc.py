@@ -309,7 +309,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
 # running code
 
-epoch = [5]
+epoch = [100]
 batches = [5]
 
 learn = 1e-4
@@ -317,6 +317,6 @@ weight_decay = 1e-6
 
 for i in range(0, len(epoch)):
     for j in range(0, len(batches)):
-        run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
+        run_train_EC(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                   outfile="tester")
         
