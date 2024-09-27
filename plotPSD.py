@@ -1593,7 +1593,7 @@ def roc_MENTAL_top3():
     #plt.show()
     plt.savefig("mental_top3_roc")
 
-roc_MENTAL_top3()
+#roc_MENTAL_top3()
 
 def roc_MENTAL_top5():
     figure, ax = plt.subplots(1, 2, figsize=(12, 5))
@@ -1653,4 +1653,84 @@ def roc_MENTAL_top5():
     plt.tight_layout()
     plt.savefig("mental_top5_roc")
 
-roc_MENTAL_top5()
+#roc_MENTAL_top5()
+
+def roc_MENTAL_under_binary():
+    figure, ax = plt.subplots(1, 2, figsize=(12, 5))
+
+    figure.suptitle("ROC Curves of MENTAL (One Disorder vs Healthy)", fontsize=24, weight="bold")
+
+    # get ec roc mdd
+    conds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EC_HEALTH_MDD_CONDITIONS.npy")
+    preds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EC_HEALTH_MDD_PREDICTIONS.npy")
+    #print(conds_ec)
+    #print(preds_ec)
+
+    fpr_ec, tpr_ec, thresholds_ec = roc_curve(conds_ec, preds_ec)
+    roc_auc_ec = auc(fpr_ec, tpr_ec)
+
+    # get eo roc mdd
+    conds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EO_HEALTH_MDD_CONDITIONS.npy")
+    preds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EO_HEALTH_MDD_PREDICTIONS.npy")
+    #print(conds_eo)
+    #print(preds_eo)
+
+    fpr_eo, tpr_eo, thresholds_eo = roc_curve(conds_eo, preds_eo)
+    roc_auc_eo = auc(fpr_eo, tpr_eo)
+
+    # get eo roc mdd
+    conds_ec_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EC_EO_HEALTH_MDD_CONDITIONS.npy")
+    preds_ec_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EC_EO_HEALTH_MDD_PREDICTIONS.npy")
+
+    fpr_ec_eo, tpr_ec_eo, thresholds_ec_eo = roc_curve(conds_ec_eo, preds_ec_eo)
+    roc_auc_ec_eo = auc(fpr_ec_eo, tpr_ec_eo)
+
+    # plot mdd roc
+    ax[0].plot(fpr_ec, tpr_ec, label='EC (area = %0.2f)' % roc_auc_ec)
+    ax[0].plot(fpr_eo, tpr_eo, label='EO (area = %0.2f)' % roc_auc_eo)
+    ax[0].plot(fpr_ec_eo, tpr_ec_eo, label='EC+EO (area = %0.2f)' % roc_auc_ec_eo)
+    ax[0].plot([0, 1], [0, 1], 'k--', label='No Skill')
+    ax[0].set_xlim([0.0, 1.0])
+    ax[0].set_ylim([0.0, 1.05])
+    ax[0].set_xlabel('False Positive Rate', fontsize=14)
+    ax[0].set_ylabel('True Positive Rate', fontsize=14)
+    ax[0].set_title('(a) MDD', fontsize=16, weight='bold')
+    ax[0].legend(loc="lower right") 
+
+    # get ec roc adhd
+    conds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EC_HEALTH_ADHD_CONDITIONS.npy")
+    preds_ec = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EC_HEALTH_ADHD_PREDICTIONS.npy")
+
+    fpr_ec, tpr_ec, thresholds_ec = roc_curve(conds_ec, preds_ec)
+    roc_auc_ec = auc(fpr_ec, tpr_ec)
+
+    # get eo roc adhd
+    conds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EO_HEALTH_ADHD_CONDITIONS.npy")
+    preds_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EO_HEALTH_ADHD_PREDICTIONS.npy")
+
+    fpr_eo, tpr_eo, thresholds_eo = roc_curve(conds_eo, preds_eo)
+    roc_auc_eo = auc(fpr_eo, tpr_eo)
+
+    # get eo roc adhd
+    conds_ec_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EC_EO_HEALTH_ADHD_CONDITIONS.npy")
+    preds_ec_eo = np.load("C:\\Users\\glgre\\Documents\\ResearchCode\\underouts\\MENTAL_EC_EO_HEALTH_ADHD_PREDICTIONS.npy")
+
+    fpr_ec_eo, tpr_ec_eo, thresholds_ec_eo = roc_curve(conds_ec_eo, preds_ec_eo)
+    roc_auc_ec_eo = auc(fpr_ec_eo, tpr_ec_eo)
+
+   # plot adhd roc
+    ax[1].plot(fpr_ec, tpr_ec, label='EC (area = %0.2f)' % roc_auc_ec)
+    ax[1].plot(fpr_eo, tpr_eo, label='EO (area = %0.2f)' % roc_auc_eo)
+    ax[1].plot(fpr_ec_eo, tpr_ec_eo, label='EC+EO (area = %0.2f)' % roc_auc_ec_eo)
+    ax[1].plot([0, 1], [0, 1], 'k--', label='No Skill')
+    ax[1].set_xlim([0.0, 1.0])
+    ax[1].set_ylim([0.0, 1.05])
+    ax[1].set_xlabel('False Positive Rate', fontsize=14)
+    ax[1].set_ylabel('True Positive Rate', fontsize=14)
+    ax[1].set_title('(b) ADHD', fontsize=16, weight='bold')
+    ax[1].legend(loc="lower right") 
+
+    plt.tight_layout()
+    plt.show()
+
+roc_MENTAL_under_binary()
