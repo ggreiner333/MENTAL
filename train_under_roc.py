@@ -30,7 +30,7 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
     print(main_dataset.__len__())
 
-    splits = [60, 35, 1]
+    splits = [60, 30]
 
     res = data.random_split(main_dataset, splits)
 
