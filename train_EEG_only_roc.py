@@ -106,7 +106,7 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
 
                 out = output.squeeze_(1)
                 for i in range(0, batch_sz):
-                    preds.append(out[i].detach())
+                    preds.append(out[i][0].detach())
 
                 label = label.squeeze_(1)
                 for i in range(0, len(label)):
