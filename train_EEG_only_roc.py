@@ -250,7 +250,7 @@ def run_EO():
             run_train_eo(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="eo_epoch1000_b15_w6_l3")
 
-run_EO()
+#run_EO()
 
 def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 
@@ -355,7 +355,7 @@ def run_train_both(learn_rate, wd, batch_sz, epochs, outfile):
 def run_EC_EO():
     # running code
 
-    epoch = [100]
+    epoch = [5]
     batches = [5]
 
     learn = 1e-3
@@ -366,4 +366,4 @@ def run_EC_EO():
             run_train_both(learn_rate=learn, wd=weight_decay, batch_sz=batches[j], epochs=epoch[i], 
                     outfile="ec_eo_epoch1000_b15_w6_l3")
 
-#run_EC_EO()
+run_EC_EO()
