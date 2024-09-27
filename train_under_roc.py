@@ -28,6 +28,8 @@ def run_train_EC(learn_rate, wd, batch_sz, epochs, outfile):
 
     main_dataset = SplitDataset('normalized_small_complete_samples_EC_health_mdd.npy', '/data/zhanglab/ggreiner/MENTAL/TDBRAIN')
 
+    print(main_dataset.__len__())
+
     splits = [60, 30]
 
     res = data.random_split(main_dataset, splits)
