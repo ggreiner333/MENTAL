@@ -77,7 +77,7 @@ def run_train_ec(learn_rate, wd, batch_sz, epochs, outfile):
             optimizer.step()
         
         
-        if(epoch==epoch-1):
+        if(epoch==epochs-1):
             for (h_entry, p_entry, label) in test_loader:
 
                 label_reshaped = np.reshape(label, (batch_sz,1,1))
